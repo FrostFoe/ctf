@@ -17,9 +17,9 @@ async function getChallenges(): Promise<Challenge[]> {
 export default async function AdminPage() {
   const challenges = await getChallenges();
   return (
-    <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-8">
+    <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
       <DashboardPageHeader pageTitle={'অ্যাডমিন প্যানেল'} />
-      <div className="flex-1 rounded-lg border bg-card text-card-foreground shadow-xs p-6">
+      <div className="flex-1 rounded-lg border bg-card text-card-foreground shadow-xs p-2 sm:p-6">
         <AdminChallengesTable challenges={challenges} />
       </div>
     </main>

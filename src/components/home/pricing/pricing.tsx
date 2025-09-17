@@ -14,7 +14,7 @@ export function Pricing({ challenges }: Props) {
   const [difficulty, setDifficulty] = useState<IChallengeDifficulty>(ChallengeDifficulty[0]);
 
   return (
-    <div className="mx-auto max-w-7xl relative px-[32px] flex flex-col items-center justify-between">
+    <div className="mx-auto max-w-7xl relative px-6 md:px-8 flex flex-col items-center justify-between">
       <Toggle difficulty={difficulty} setDifficulty={setDifficulty} />
       <Suspense
         fallback={

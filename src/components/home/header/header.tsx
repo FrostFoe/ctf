@@ -10,7 +10,7 @@ interface Props {
 export default function Header({ user }: Props) {
   return (
     <nav>
-      <div className="mx-auto max-w-7xl relative px-[32px] py-[18px] flex items-center justify-between">
+      <div className="mx-auto max-w-7xl relative px-6 md:px-8 py-[18px] flex items-center justify-between">
         <div className="flex flex-1 items-center justify-start">
           <Link className="flex items-center" href={'/'}>
             <Image

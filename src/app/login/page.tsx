@@ -8,12 +8,12 @@ import { Separator } from '@/components/ui/separator';
 
 export default function LoginPage() {
   return (
-    <div>
+    <div className="p-4">
       <LoginGradient />
       <div className={'flex flex-col'}>
         <div
           className={
-            'mx-auto mt-[112px] bg-background/80 w-[343px] md:w-[488px] gap-5 flex-col rounded-lg rounded-b-none login-card-border backdrop-blur-[6px]'
+            'mx-auto mt-[112px] bg-background/80 w-full max-w-md gap-5 flex-col rounded-lg rounded-b-none login-card-border backdrop-blur-[6px]'
           }
         >
           <LoginCardGradient />
@@ -21,7 +21,7 @@ export default function LoginPage() {
         </div>
         <div
           className={
-            'mx-auto w-[343px] md:w-[488px] bg-background/80 backdrop-blur-[6px] px-6 md:px-16 pt-0 pb-8 gap-6 flex flex-col items-center justify-center'
+            'mx-auto w-full max-w-md bg-background/80 backdrop-blur-[6px] px-6 md:px-16 pt-0 pb-8 gap-6 flex flex-col items-center justify-center'
           }
         >
           <div className={'flex w-full items-center justify-center'}>
@@ -36,7 +36,7 @@ export default function LoginPage() {
         </div>
         <div
           className={
-            'mx-auto w-[343px] md:w-[488px] bg-background/80 backdrop-blur-[6px] px-6 md:px-16 pt-0 py-8 gap-6 flex flex-col items-center justify-center rounded-b-lg'
+            'mx-auto w-full max-w-md bg-background/80 backdrop-blur-[6px] px-6 md:px-16 pt-0 py-8 gap-6 flex flex-col items-center justify-center rounded-b-lg'
           }
         >
           <div className={'text-center text-muted-foreground text-sm mt-4 font-medium'}>

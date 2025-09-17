@@ -36,7 +36,7 @@ export default async function ChallengesPage() {
   const solvedChallengeIds = await getSolvedChallenges(user?.id);
 
   return (
-    <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-8">
+    <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
       <DashboardPageHeader pageTitle={'চ্যালেঞ্জসমূহ'} />
       <ChallengesList challenges={challenges} solvedChallengeIds={solvedChallengeIds} />
     </main>
