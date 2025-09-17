@@ -1,6 +1,6 @@
 import { ReactNode, Suspense } from 'react';
 import { DashboardLayout } from '@/components/dashboard/layout/dashboard-layout';
-import { createServerClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 import { LoadingScreen } from '@/components/dashboard/layout/loading-screen';
 import { redirect } from 'next/navigation';
 import { ADMIN_EMAIL } from '@/constants';
@@ -10,7 +10,7 @@ interface Props {
 }
 
 async function AuthWrapper({ children }: Props) {
-  const supabase = createServerClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

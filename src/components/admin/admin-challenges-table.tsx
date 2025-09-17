@@ -11,10 +11,10 @@ import { Confirmation } from '../shared/confirmation/confirmation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 
 interface Props {
-  challenges: Challenge[];
+  initialChallenges: Challenge[];
 }
 
-export function AdminChallengesTable({ challenges: initialChallenges }: Props) {
+export function AdminChallengesTable({ initialChallenges }: Props) {
   const { toast } = useToast();
   const [challenges, setChallenges] = useState(initialChallenges);
   const [isFormOpen, setIsFormOpen] = useState(false);

@@ -1,12 +1,12 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createServerClient } from '@/utils/supabase/server';
-import type { Challenge } from '@/lib/database.types';
+import { createClient } from '@/utils/supabase/server';
+import type { Challenge, LeaderboardEntry, TeamLeaderboardEntry } from '@/lib/database.types';
 import { ADMIN_EMAIL } from '@/constants';
 
 async function verifyAdmin() {
-  const supabase = createServerClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -15,6 +15,32 @@ async function verifyAdmin() {
     throw new Error('Unauthorized: You do not have permission to perform this action.');
   }
   return supabase;
+}
+
+export interface AdminData {
+  challenges: Challenge[];
+  users: LeaderboardEntry[];
+  teams: TeamLeaderboardEntry[];
+}
+
+export async function getAdminDashboardData(): Promise<AdminData> {
+  const supabase = await verifyAdmin();
+
+  const challengesPromise = supabase.from('challenges').select('*').order('name', { ascending: true });
+  const usersPromise = supabase.from('leaderboard').select('*').order('rank', { ascending: true });
+  const teamsPromise = supabase.from('team_leaderboard').select('*').order('rank', { ascending: true });
+
+  const [challengesRes, usersRes, teamsRes] = await Promise.all([challengesPromise, usersPromise, teamsPromise]);
+
+  if (challengesRes.error) console.error('Error fetching challenges:', challengesRes.error);
+  if (usersRes.error) console.error('Error fetching users:', usersRes.error);
+  if (teamsRes.error) console.error('Error fetching teams:', teamsRes.error);
+
+  return {
+    challenges: (challengesRes.data as Challenge[]) || [],
+    users: (usersRes.data as LeaderboardEntry[]) || [],
+    teams: (teamsRes.data as TeamLeaderboardEntry[]) || [],
+  };
 }
 
 export async function addChallenge(challenge: Omit<Challenge, 'id'>) {

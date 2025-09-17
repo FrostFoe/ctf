@@ -1,22 +1,28 @@
 import { DashboardUsageCardGroup } from '@/components/dashboard/landing/components/dashboard-usage-card-group';
 import { DashboardTutorialCard } from '@/components/dashboard/landing/components/dashboard-tutorial-card';
 import { DashboardTeamMembersCard } from '@/components/dashboard/landing/components/dashboard-team-members-card';
-import type { LeaderboardEntry, UserStats } from '@/lib/database.types';
+import type { LeaderboardEntry, UserStats, TeamLeaderboardEntry } from '@/lib/database.types';
 
 interface DashboardLandingPageProps {
   stats: UserStats | null;
   leaderboard: LeaderboardEntry[];
+  teamLeaderboard: TeamLeaderboardEntry[];
   totalChallenges: number;
 }
 
-export function DashboardLandingPage({ stats, leaderboard, totalChallenges }: DashboardLandingPageProps) {
+export function DashboardLandingPage({
+  stats,
+  leaderboard,
+  teamLeaderboard,
+  totalChallenges,
+}: DashboardLandingPageProps) {
   return (
     <div className={'grid flex-1 items-start gap-6 p-0 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'}>
       <div className={'grid auto-rows-max items-start gap-6 lg:col-span-2'}>
         <DashboardUsageCardGroup stats={stats} totalChallenges={totalChallenges} />
       </div>
       <div className={'grid auto-rows-max items-start gap-6'}>
-        <DashboardTeamMembersCard leaderboard={leaderboard} />
+        <DashboardTeamMembersCard leaderboard={leaderboard} teamLeaderboard={teamLeaderboard} />
         <DashboardTutorialCard />
       </div>
     </div>

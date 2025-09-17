@@ -1,14 +1,14 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { createServerClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 
 interface FormData {
   email: string;
   password: string;
 }
 export async function login(data: FormData) {
-  const supabase = createServerClient();
+  const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
@@ -19,12 +19,11 @@ export async function login(data: FormData) {
 }
 
 export async function signInWithGithub() {
-  const supabase = createServerClient();
-  const origin = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const supabase = await createClient();
   const { data } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback`,
     },
   });
   if (data.url) {

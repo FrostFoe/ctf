@@ -8,7 +8,7 @@ interface Props {
 }
 
 async function AuthWrapper({ children }: Props) {
-  const supabase = await createClient();
+  const supabase = createClient();
   const { data } = await supabase.auth.getUser();
 
   return <DashboardLayout user={data.user}>{children}</DashboardLayout>;

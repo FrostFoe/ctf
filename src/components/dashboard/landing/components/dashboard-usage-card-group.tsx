@@ -16,10 +16,10 @@ export function DashboardUsageCardGroup({ stats, totalChallenges }: DashboardUsa
       change: `মোট ${totalChallenges}টি থেকে`,
     },
     {
-      title: 'মোট বিটকয়েন',
+      title: 'খরচযোগ্য বিটকয়েন',
       icon: <BcoinIcon />,
-      value: stats?.total_points ?? 0,
-      change: 'আপনার অগ্রগতি ট্র্যাক করুন',
+      value: stats?.spendable_points ?? 0,
+      change: 'আপনার বর্তমান ব্যালেন্স',
     },
     {
       title: 'বর্তমান র‍্যাঙ্ক',
@@ -28,10 +28,10 @@ export function DashboardUsageCardGroup({ stats, totalChallenges }: DashboardUsa
       change: 'লিডারবোর্ডে আপনার অবস্থান',
     },
     {
-      title: 'সঠিকতা',
+      title: 'মোট অর্জিত পয়েন্ট',
       icon: <Target className={'text-[#4B4F4F]'} size={18} />,
-      value: 'N/A',
-      change: 'শীঘ্রই আসছে...',
+      value: stats?.total_points ?? 0,
+      change: 'আপনার সর্বমোট স্কোর',
     },
   ];
 

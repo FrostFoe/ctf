@@ -9,21 +9,33 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { updateUserProfile } from '@/app/profile/actions';
 import { Loader2 } from 'lucide-react';
+import type { Profile } from '@/lib/database.types';
 
 interface ProfileFormProps {
   user: User;
+  profile: Profile;
 }
 
-export function ProfileForm({ user }: ProfileFormProps) {
+export function ProfileForm({ user, profile }: ProfileFormProps) {
   const { toast } = useToast();
-  const [fullName, setFullName] = useState(user.user_metadata?.full_name || '');
+  const [fullName, setFullName] = useState(profile?.full_name || '');
+  const [username, setUsername] = useState(profile?.username || '');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSave = async (event: React.FormEvent) => {
     event.preventDefault();
     setIsLoading(true);
 
-    const result = await updateUserProfile({ fullName });
+    if (!username) {
+      toast({
+        variant: 'destructive',
+        description: 'ব্যবহারকারীর নাম আবশ্যক।',
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    const result = await updateUserProfile({ fullName, username });
 
     setIsLoading(false);
 
@@ -43,11 +55,16 @@ export function ProfileForm({ user }: ProfileFormProps) {
     <form onSubmit={handleSave}>
       <Card>
         <CardHeader>
-          <CardTitle>নাম</CardTitle>
-          <CardDescription>এখানে আপনার পুরো নাম পরিচালনা করুন।</CardDescription>
+          <CardTitle>প্রোফাইল</CardTitle>
+          <CardDescription>এখানে আপনার প্রোফাইলের তথ্য আপডেট করুন।</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="username">ব্যবহারকারীর নাম</Label>
+              <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+              <p className="text-xs text-muted-foreground">এটি আপনার পাবলিক প্রোফাইলের URL হবে।</p>
+            </div>
             <div className="grid gap-2">
               <Label htmlFor="fullName">পুরো নাম</Label>
               <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} />

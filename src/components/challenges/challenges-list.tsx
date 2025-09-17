@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import type { Challenge } from '@/lib/database.types';
 import { useState } from 'react';
-import { ChallengeDetailDialog } from './challenge-detail-dialog';
+import Link from 'next/link';
 
 const getDifficultyBadge = (difficulty: string) => {
   switch (difficulty) {
@@ -27,15 +27,7 @@ interface ChallengesListProps {
 }
 
 export function ChallengesList({ challenges, solvedChallengeIds: initialSolvedIds }: ChallengesListProps) {
-  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
-  const [solvedChallengeIds, setSolvedChallengeIds] = useState<string[]>(initialSolvedIds);
-
-  const handleChallengeSolved = (updatedChallengeId: string) => {
-    if (!solvedChallengeIds.includes(updatedChallengeId)) {
-      setSolvedChallengeIds((prev) => [...prev, updatedChallengeId]);
-    }
-    setSelectedChallenge(null);
-  };
+  const [solvedChallengeIds] = useState<string[]>(initialSolvedIds);
 
   if (challenges.length === 0) {
     return (
@@ -83,22 +75,14 @@ export function ChallengesList({ challenges, solvedChallengeIds: initialSolvedId
                     </li>
                   ))}
                 </ul>
-                <Button onClick={() => setSelectedChallenge(challenge)} className="w-full mt-6" disabled={isSolved}>
-                  {isSolved ? 'সমাধান করা হয়েছে' : 'চ্যালেঞ্জ দেখুন'}
+                <Button asChild className="w-full mt-6" disabled={isSolved}>
+                  <Link href={`/challenges/${challenge.id}`}>{isSolved ? 'সমাধান করা হয়েছে' : 'চ্যালেঞ্জ দেখুন'}</Link>
                 </Button>
               </CardContent>
             </Card>
           );
         })}
       </div>
-      {selectedChallenge && (
-        <ChallengeDetailDialog
-          challenge={selectedChallenge}
-          isOpen={!!selectedChallenge}
-          onClose={() => setSelectedChallenge(null)}
-          onChallengeSolved={handleChallengeSolved}
-        />
-      )}
     </>
   );
 }

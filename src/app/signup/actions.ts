@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 
-import { createServerClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 
 interface FormData {
   email: string;
@@ -10,7 +10,7 @@ interface FormData {
 }
 
 export async function signup(data: FormData) {
-  const supabase = createServerClient();
+  const supabase = await createClient();
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
