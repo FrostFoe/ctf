@@ -1,6 +1,6 @@
 'use client';
 
-import { Home, ShieldCheck, UserCog } from 'lucide-react';
+import { Home, ShieldCheck, UserCog, User as UserIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -13,6 +13,7 @@ interface SidebarItem {
   icon: JSX.Element;
   href: string;
   adminOnly?: boolean;
+  authRequired?: boolean;
 }
 
 const sidebarItems: SidebarItem[] = [
@@ -25,6 +26,12 @@ const sidebarItems: SidebarItem[] = [
     title: 'চ্যালেঞ্জসমূহ',
     icon: <ShieldCheck className="h-6 w-6" />,
     href: '/challenges',
+  },
+  {
+    title: 'প্রোফাইল',
+    icon: <UserIcon className="h-6 w-6" />,
+    href: '/profile',
+    authRequired: true,
   },
   {
     title: 'অ্যাডমিন',
@@ -44,6 +51,9 @@ export function Sidebar({ user }: SidebarProps) {
   const filteredSidebarItems = sidebarItems.filter((item) => {
     if (item.adminOnly) {
       return user?.email === ADMIN_EMAIL;
+    }
+    if (item.authRequired) {
+      return !!user;
     }
     return true;
   });
