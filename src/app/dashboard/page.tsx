@@ -1,6 +1,6 @@
 import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
 import { DashboardLandingPage } from '@/components/dashboard/landing/dashboard-landing-page';
-import { createClient } from '@/utils/supabase/server';
+import { createServerClient } from '@/utils/supabase/server';
 import type { LeaderboardEntry, UserStats } from '@/lib/database.types';
 
 async function getDashboardData(userId?: string): Promise<{
@@ -8,7 +8,7 @@ async function getDashboardData(userId?: string): Promise<{
   leaderboard: LeaderboardEntry[];
   totalChallenges: number;
 }> {
-  const supabase = await createClient();
+  const supabase = createServerClient();
 
   const leaderboardPromise = supabase.from('leaderboard').select('*').limit(5);
 
@@ -42,7 +42,7 @@ async function getDashboardData(userId?: string): Promise<{
 }
 
 export default async function LandingPage() {
-  const supabase = await createClient();
+  const supabase = createServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

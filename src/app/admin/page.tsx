@@ -1,13 +1,10 @@
 import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
 import { AdminChallengesTable } from '@/components/admin/admin-challenges-table';
-import { createClient } from '@/utils/supabase/server';
+import { createServerClient } from '@/utils/supabase/server';
 import type { Challenge } from '@/lib/database.types';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChallengeFormDialog } from '@/components/admin/challenge-form-dialog';
 
 async function getChallenges(): Promise<Challenge[]> {
-  const supabase = await createClient();
+  const supabase = createServerClient();
   const { data, error } = await supabase.from('challenges').select('*').order('name', { ascending: true });
 
   if (error) {

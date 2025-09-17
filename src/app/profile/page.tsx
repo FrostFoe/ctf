@@ -1,10 +1,10 @@
 import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
-import { createClient } from '@/utils/supabase/server';
+import { createServerClient } from '@/utils/supabase/server';
 import { ProfileForm } from '@/components/profile/profile-form';
 import type { User } from '@supabase/supabase-js';
 
 async function getProfile(): Promise<User | null> {
-  const supabase = await createClient();
+  const supabase = createServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

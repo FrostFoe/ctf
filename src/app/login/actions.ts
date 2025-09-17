@@ -1,14 +1,14 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { createClient } from '@/utils/supabase/server';
+import { createServerClient } from '@/utils/supabase/server';
 
 interface FormData {
   email: string;
   password: string;
 }
 export async function login(data: FormData) {
-  const supabase = await createClient();
+  const supabase = createServerClient();
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
@@ -19,7 +19,7 @@ export async function login(data: FormData) {
 }
 
 export async function signInWithGithub() {
-  const supabase = await createClient();
+  const supabase = createServerClient();
   const { data } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {

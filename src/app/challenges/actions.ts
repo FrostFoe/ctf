@@ -1,10 +1,10 @@
 'use server';
 
-import { createClient } from '@/utils/supabase/server';
+import { createServerClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 
 export async function checkFlag(challengeId: string, submittedFlag: string) {
-  const supabase = await createClient();
+  const supabase = createServerClient();
 
   const { data: challenge, error: challengeError } = await supabase
     .from('challenges')

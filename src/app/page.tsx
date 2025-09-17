@@ -1,5 +1,5 @@
 import { HomePage } from '@/components/home/home-page';
-import { createClient } from '@/utils/supabase/server';
+import { createServerClient } from '@/utils/supabase/server';
 import type { Challenge } from '@/lib/database.types';
 
 const hardcodedChallenges: Challenge[] = [
@@ -90,7 +90,7 @@ const hardcodedChallenges: Challenge[] = [
 ];
 
 export default async function Home() {
-  const supabase = await createClient();
+  const supabase = createServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

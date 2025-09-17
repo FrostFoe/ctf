@@ -1,12 +1,12 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createClient } from '@/utils/supabase/server';
+import { createServerClient } from '@/utils/supabase/server';
 import type { Challenge } from '@/lib/database.types';
 import { ADMIN_EMAIL } from '@/constants';
 
 async function verifyAdmin() {
-  const supabase = await createClient();
+  const supabase = createServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
