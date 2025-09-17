@@ -35,9 +35,9 @@ export function ChallengeTitle({ tier }: Props) {
           <span
             className={cn(
               'text-xs px-2 py-1 rounded-full',
-              difficulty === 'easy' && 'bg-green-100 text-green-800',
-              difficulty === 'medium' && 'bg-yellow-100 text-yellow-800',
-              difficulty === 'hard' && 'bg-red-100 text-red-800',
+              difficulty === 'easy' && 'bg-green-100/10 text-green-400',
+              difficulty === 'medium' && 'bg-yellow-100/10 text-yellow-400',
+              difficulty === 'hard' && 'bg-red-100/10 text-red-400',
             )}
           >
             {getDifficultyBadge(difficulty)}
