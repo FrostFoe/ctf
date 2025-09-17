@@ -4,7 +4,7 @@ import { ProfileForm } from '@/components/profile/profile-form';
 import type { User } from '@supabase/supabase-js';
 
 async function getProfile(): Promise<User | null> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

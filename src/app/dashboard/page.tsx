@@ -8,7 +8,7 @@ async function getDashboardData(userId?: string): Promise<{
   leaderboard: LeaderboardEntry[];
   totalChallenges: number;
 }> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const leaderboardPromise = supabase.from('leaderboard').select('*').limit(5);
 
@@ -42,7 +42,7 @@ async function getDashboardData(userId?: string): Promise<{
 }
 
 export default async function LandingPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

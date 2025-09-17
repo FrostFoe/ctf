@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 import type { Challenge } from '@/lib/database.types';
 
 async function getChallenges(): Promise<Challenge[]> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase.from('challenges').select('*').order('name', { ascending: true });
   if (error) {
     console.error('Error fetching challenges', error);
@@ -15,7 +15,7 @@ async function getChallenges(): Promise<Challenge[]> {
 
 async function getSolvedChallenges(userId: string | undefined): Promise<string[]> {
   if (!userId) return [];
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase.from('solved_challenges').select('challenge_id').eq('user_id', userId);
 
   if (error) {
@@ -27,7 +27,7 @@ async function getSolvedChallenges(userId: string | undefined): Promise<string[]
 }
 
 export default async function ChallengesPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

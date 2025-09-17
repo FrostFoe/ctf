@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ChallengeFormDialog } from '@/components/admin/challenge-form-dialog';
 
 async function getChallenges(): Promise<Challenge[]> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase.from('challenges').select('*').order('name', { ascending: true });
 
   if (error) {
