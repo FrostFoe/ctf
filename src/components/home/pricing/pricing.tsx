@@ -3,7 +3,6 @@
 import { Toggle } from '@/components/shared/toggle/toggle';
 import { CTFCards } from '@/components/home/ctf/ctf-cards';
 import { Suspense, useState } from 'react';
-import { ChallengeDifficulty, IChallengeDifficulty } from '@/constants/billing-frequency';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Challenge } from '@/lib/database.types';
 
@@ -11,7 +10,7 @@ interface Props {
   challenges: Challenge[];
 }
 export function Pricing({ challenges }: Props) {
-  const [difficulty, setDifficulty] = useState<IChallengeDifficulty>(ChallengeDifficulty[0]);
+  const [difficulty, setDifficulty] = useState('beginner');
 
   return (
     <div className="mx-auto max-w-7xl relative px-6 md:px-8 flex flex-col items-center justify-between">

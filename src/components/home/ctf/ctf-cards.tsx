@@ -1,4 +1,3 @@
-import { IChallengeDifficulty } from '@/constants/billing-frequency';
 import { FeaturesList } from '@/components/home/pricing/features-list';
 import { ChallengeTitle } from '@/components/home/ctf/challenge-title';
 import { cn } from '@/lib/utils';
@@ -9,16 +8,12 @@ import Link from 'next/link';
 import type { Challenge } from '@/lib/database.types';
 
 interface Props {
-  difficulty: IChallengeDifficulty;
+  difficulty: string;
   challenges: Challenge[];
 }
 
 export function CTFCards({ difficulty, challenges }: Props) {
-  const filteredTiers = challenges.filter((tier) => {
-    if (difficulty.value === 'beginner') return tier.category === 'beginner';
-    if (difficulty.value === 'hacker') return tier.category === 'hacker';
-    return true;
-  });
+  const filteredTiers = challenges.filter((tier) => tier.category === difficulty);
 
   return (
     <div className="isolate mx-auto grid grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
