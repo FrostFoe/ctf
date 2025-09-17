@@ -23,7 +23,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="bn" className={'min-h-full dark'}>
+    <html lang="bn" className={'min-h-full dark'} suppressHydrationWarning={true}>
       <body className={hindSiliguri.className}>
         {children}
         <Toaster />
