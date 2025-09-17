@@ -9,12 +9,14 @@ import { HeroSection } from '@/components/home/hero-section/hero-section';
 import { Pricing } from '@/components/home/pricing/pricing';
 import { HomePageBackground } from '@/components/gradients/home-page-background';
 import { Footer } from '@/components/home/footer/footer';
+import type { Challenge } from '@/constants/ctf-tiers';
 
 interface Props {
   user: User | null;
+  challenges: Challenge[];
 }
 
-export function HomePage({ user }: Props) {
+export function HomePage({ user, challenges }: Props) {
   const [country, setCountry] = useState('US');
 
   return (
@@ -24,7 +26,7 @@ export function HomePage({ user }: Props) {
         <HomePageBackground />
         <Header user={user} />
         <HeroSection />
-        <Pricing />
+        <Pricing challenges={challenges} />
         <Footer />
       </div>
     </>

@@ -1,10 +1,16 @@
+'use client';
+
 import { Toggle } from '@/components/shared/toggle/toggle';
 import { CTFCards } from '@/components/home/ctf/ctf-cards';
 import { Suspense, useState } from 'react';
 import { ChallengeDifficulty, IChallengeDifficulty } from '@/constants/billing-frequency';
 import { Skeleton } from '@/components/ui/skeleton';
+import type { Challenge } from '@/constants/ctf-tiers';
 
-export function Pricing() {
+interface Props {
+  challenges: Challenge[];
+}
+export function Pricing({ challenges }: Props) {
   const [difficulty, setDifficulty] = useState<IChallengeDifficulty>(ChallengeDifficulty[0]);
 
   return (
@@ -19,7 +25,7 @@ export function Pricing() {
           </div>
         }
       >
-        <CTFCards difficulty={difficulty} />
+        <CTFCards difficulty={difficulty} challenges={challenges} />
       </Suspense>
     </div>
   );

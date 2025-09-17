@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import type { Challenge } from '@/constants/ctf-tiers';
-import { createClient } from '@/utils/supabase/server';
 
 const getDifficultyBadge = (difficulty: string) => {
   switch (difficulty) {
@@ -19,18 +18,11 @@ const getDifficultyBadge = (difficulty: string) => {
   }
 };
 
-async function getChallenges(): Promise<Challenge[]> {
-  const supabase = await createClient();
-  const { data, error } = await supabase.from('challenges').select('*').order('name', { ascending: true });
-  if (error) {
-    console.error('Error fetching challenges', error);
-    return [];
-  }
-  return data as Challenge[];
+interface ChallengesListProps {
+  challenges: Challenge[];
 }
 
-export async function ChallengesList() {
-  const challenges = await getChallenges();
+export function ChallengesList({ challenges }: ChallengesListProps) {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {challenges.map((challenge) => (
