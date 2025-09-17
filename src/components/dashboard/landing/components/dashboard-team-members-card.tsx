@@ -2,30 +2,26 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const teamMembers = [
+const leaderboard = [
   {
-    name: 'Daniel Cromitch',
-    email: 'dc@company.com',
-    initials: 'DC',
-    role: 'মালিক',
+    name: 'সাইবার নিঞ্জা',
+    score: 1250,
+    initials: 'CN',
   },
   {
-    name: 'Melissa Lee',
-    email: 'ml@company.com',
-    initials: 'ML',
-    role: 'সদস্য',
+    name: 'কোড মাস্টার',
+    score: 1100,
+    initials: 'CM',
   },
   {
-    name: 'Jackson Khan',
-    email: 'JK@company.com',
-    initials: 'JK',
-    role: 'সদস্য',
+    name: 'হ্যাকার এক্স',
+    score: 980,
+    initials: 'HX',
   },
   {
-    name: 'Isa Lopez',
-    email: 'il@company.com',
-    initials: 'IL',
-    role: 'অতিথি',
+    name: 'ডেটা উইজার্ড',
+    score: 850,
+    initials: 'DW',
   },
 ];
 
@@ -35,23 +31,24 @@ export function DashboardTeamMembersCard() {
       <CardHeader className="p-0 space-y-0">
         <CardTitle className="flex justify-between gap-2 items-center pb-6 border-border border-b">
           <div className={'flex flex-col gap-2'}>
-            <span className={'text-xl font-medium'}>দলের সদস্য</span>
-            <span className={'text-base leading-4 text-secondary'}>সহযোগিতার জন্য আপনার দলের সদস্যদের আমন্ত্রণ জানান</span>
+            <span className={'text-xl font-medium'}>লিডারবোর্ড</span>
+            <span className={'text-base leading-4 text-secondary'}>শীর্ষস্থানীয় প্রতিযোগীদের দেখুন</span>
           </div>
         </CardTitle>
       </CardHeader>
       <CardContent className={'p-0 pt-6 flex gap-6 flex-col'}>
-        {teamMembers.map((teamMember) => (
-          <div key={teamMember.email} className={'flex justify-between items-center gap-2'}>
-            <div className={'flex gap-4'}>
-              <div className={'flex items-center justify-center px-3 py-4'}>
-                <span className={'text-white text-base w-5'}>{teamMember.initials}</span>
+        {leaderboard.map((player, index) => (
+          <div key={player.name} className={'flex justify-between items-center gap-2'}>
+            <div className={'flex gap-4 items-center'}>
+              <div className={'text-sm font-bold w-6 text-center'}>{index + 1}</div>
+              <div className={'flex items-center justify-center h-10 w-10 rounded-full bg-muted-foreground/20'}>
+                <span className={'text-white text-base'}>{player.initials}</span>
               </div>
-              <div className={'flex flex-col gap-2'}>
-                <span className={'text-base leading-4 font-medium'}>{teamMember.name}</span>
-                <span className={'text-base leading-4 text-secondary'}>{teamMember.email}</span>
+              <div className={'flex flex-col'}>
+                <span className={'text-base font-medium'}>{player.name}</span>
               </div>
             </div>
+            <span className={'text-base font-bold text-primary'}>{player.score}</span>
           </div>
         ))}
       </CardContent>

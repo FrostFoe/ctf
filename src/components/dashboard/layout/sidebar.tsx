@@ -1,15 +1,20 @@
 'use client';
 
-import { Home } from 'lucide-react';
+import { Home, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 const sidebarItems = [
   {
-    title: 'Dashboard',
+    title: 'ড্যাশবোর্ড',
     icon: <Home className="h-6 w-6" />,
     href: '/dashboard',
+  },
+  {
+    title: 'চ্যালেঞ্জসমূহ',
+    icon: <ShieldCheck className="h-6 w-6" />,
+    href: '/challenges',
   },
 ];
 

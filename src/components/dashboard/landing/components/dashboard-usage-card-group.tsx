@@ -1,31 +1,30 @@
-import { Bolt, Image, Shapes, Timer } from 'lucide-react';
+import { Target, Star, Trophy, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const cards = [
   {
-    title: 'ব্যবহৃত স্টোরেজ',
-    icon: <Bolt className={'text-[#4B4F4F]'} size={18} />,
-    value: '1.2 GB',
-    change: '১০ জিবি অবশিষ্ট',
+    title: 'চ্যালেঞ্জ সমাধান',
+    icon: <CheckCircle className={'text-[#4B4F4F]'} size={18} />,
+    value: '12',
+    change: 'মোট ৩০টি থেকে',
   },
   {
-    title: 'সক্রিয় ওয়ার্কস্পেস',
-    icon: <Shapes className={'text-[#4B4F4F]'} size={18} />,
-    value: '4',
-    change: '৬টি ওয়ার্কস্পেস উপলব্ধ',
+    title: 'মোট পয়েন্ট',
+    icon: <Star className={'text-[#4B4F4F]'} size={18} />,
+    value: '1250',
+    change: 'গত মাস থেকে +১৫০',
   },
   {
-    title: 'এক্সপোর্ট করা সম্পদ',
-    // eslint-disable-next-line jsx-a11y/alt-text
-    icon: <Image className={'text-[#4B4F4F]'} size={18} />,
-    value: '286',
-    change: 'গত মাস থেকে +১৬%',
+    title: 'বর্তমান র‍্যাঙ্ক',
+    icon: <Trophy className={'text-[#4B4F4F]'} size={18} />,
+    value: '#8',
+    change: 'শীর্ষ ১০% এর মধ্যে',
   },
   {
-    title: 'সহযোগী',
-    icon: <Timer className={'text-[#4B4F4F]'} size={18} />,
-    value: '10',
-    change: 'গত মাস থেকে +২৭%',
+    title: 'সঠিকতা',
+    icon: <Target className={'text-[#4B4F4F]'} size={18} />,
+    value: '85%',
+    change: 'গত মাস থেকে +৫%',
   },
 ];
 export function DashboardUsageCardGroup() {
