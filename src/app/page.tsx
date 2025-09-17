@@ -3,7 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 import type { Challenge } from '@/lib/database.types';
 
 async function getChallenges(): Promise<Challenge[]> {
-  const supabase = await createClient();
+  const supabase = createClient();
   const { data, error } = await supabase.from('challenges').select('*').order('name', { ascending: true });
   if (error) {
     console.error('Error fetching challenges', error);
@@ -13,7 +13,7 @@ async function getChallenges(): Promise<Challenge[]> {
 }
 
 export default async function Home() {
-  const supabase = await createClient();
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

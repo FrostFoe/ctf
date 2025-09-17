@@ -3,6 +3,7 @@ import { LoginCardGradient } from '@/components/gradients/login-card-gradient';
 import { GhLoginButton } from '@/components/authentication/gh-login-button';
 import { SignupForm } from '@/components/authentication/sign-up-form';
 import { Separator } from '@/components/ui/separator';
+import Link from 'next/link';
 
 export default function SignupPage() {
   return (
@@ -36,9 +37,9 @@ export default function SignupPage() {
         >
           <div className={'text-center text-muted-foreground text-sm mt-4 font-medium'}>
             ইতিমধ্যে একটি একাউন্ট আছে?{' '}
-            <a href={'/login'} className={'text-white'}>
+            <Link href={'/login'} className={'text-white'}>
               লগ ইন
-            </a>
+            </Link>
           </div>
         </div>
       </div>

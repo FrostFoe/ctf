@@ -41,9 +41,9 @@ export default function LoginPage() {
         >
           <div className={'text-center text-muted-foreground text-sm mt-4 font-medium'}>
             আপনার কোন একাউন্ট নেই?{' '}
-            <a href={'/signup'} className={'text-white'}>
+            <Link href={'/signup'} className={'text-white'}>
               সাইন আপ করুন
-            </a>
+            </Link>
           </div>
         </div>
       </div>

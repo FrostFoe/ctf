@@ -37,6 +37,17 @@ export function ChallengesList({ challenges, solvedChallengeIds: initialSolvedId
     setSelectedChallenge(null);
   };
 
+  if (challenges.length === 0) {
+    return (
+      <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+        <div className="flex flex-col items-center gap-1 text-center">
+          <h3 className="text-2xl font-bold tracking-tight">কোনো চ্যালেঞ্জ পাওয়া যায়নি</h3>
+          <p className="text-sm text-muted-foreground">শীঘ্রই নতুন চ্যালেঞ্জ যোগ করা হবে।</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -15,6 +15,17 @@ interface Props {
 export function CTFCards({ difficulty, challenges }: Props) {
   const filteredTiers = challenges.filter((tier) => tier.category === difficulty);
 
+  if (filteredTiers.length === 0) {
+    return (
+      <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm my-8 min-h-[300px]">
+        <div className="flex flex-col items-center gap-1 text-center">
+          <h3 className="text-2xl font-bold tracking-tight">কোনো চ্যালেঞ্জ পাওয়া যায়নি</h3>
+          <p className="text-sm text-muted-foreground">এই বিভাগের জন্য কোনো চ্যালেঞ্জ এখনো যোগ করা হয়নি।</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="isolate mx-auto grid grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
       {filteredTiers.map((tier) => (

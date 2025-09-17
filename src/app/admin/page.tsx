@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 import type { Challenge } from '@/lib/database.types';
 
 async function getChallenges(): Promise<Challenge[]> {
-  const supabase = await createClient();
+  const supabase = createClient();
   const { data, error } = await supabase.from('challenges').select('*').order('name', { ascending: true });
 
   if (error) {

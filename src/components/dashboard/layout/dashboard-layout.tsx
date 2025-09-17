@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { DashboardGradient } from '@/components/gradients/dashboard-gradient';
 import { Sidebar } from '@/components/dashboard/layout/sidebar';
 import { SidebarUserInfo } from '@/components/dashboard/layout/sidebar-user-info';

@@ -3,7 +3,7 @@
 import { Separator } from '@/components/ui/separator';
 import { LogOut } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
-import { MouseEvent } from 'react';
+import type { MouseEvent } from 'react';
 import type { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';

@@ -37,12 +37,10 @@ export function AdminChallengesTable({ challenges: initialChallenges }: Props) {
 
   const handleSave = (savedChallenge: Challenge) => {
     if (selectedChallenge) {
-      // Update
       setChallenges((prev) =>
         prev.map((c) => (c.id === savedChallenge.id ? savedChallenge : c)).sort((a, b) => a.name.localeCompare(b.name)),
       );
     } else {
-      // Add
       setChallenges((prev) => [...prev, savedChallenge].sort((a, b) => a.name.localeCompare(b.name)));
     }
   };
@@ -77,29 +75,37 @@ export function AdminChallengesTable({ challenges: initialChallenges }: Props) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {challenges.map((challenge) => (
-              <TableRow key={challenge.id}>
-                <TableCell className="font-medium">{challenge.name}</TableCell>
-                <TableCell>{challenge.category}</TableCell>
-                <TableCell>{challenge.difficulty}</TableCell>
-                <TableCell className="hidden md:table-cell max-w-xs truncate">
-                  {challenge.flag || 'সেট করা নেই'}
-                </TableCell>
-                <TableCell className="hidden lg:table-cell max-w-xs truncate">
-                  {challenge.url || 'সেট করা নেই'}
-                </TableCell>
-                <TableCell className="text-right">
-                  <div className="flex gap-2 justify-end">
-                    <Button variant="outline" size="sm" onClick={() => handleEditClick(challenge)}>
-                      সম্পাদনা
-                    </Button>
-                    <Button variant="destructive" size="sm" onClick={() => setChallengeToDelete(challenge)}>
-                      মুছুন
-                    </Button>
-                  </div>
+            {challenges.length > 0 ? (
+              challenges.map((challenge) => (
+                <TableRow key={challenge.id}>
+                  <TableCell className="font-medium">{challenge.name}</TableCell>
+                  <TableCell>{challenge.category}</TableCell>
+                  <TableCell>{challenge.difficulty}</TableCell>
+                  <TableCell className="hidden md:table-cell max-w-xs truncate">
+                    {challenge.flag || 'সেট করা নেই'}
+                  </TableCell>
+                  <TableCell className="hidden lg:table-cell max-w-xs truncate">
+                    {challenge.url || 'সেট করা নেই'}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex gap-2 justify-end">
+                      <Button variant="outline" size="sm" onClick={() => handleEditClick(challenge)}>
+                        সম্পাদনা
+                      </Button>
+                      <Button variant="destructive" size="sm" onClick={() => setChallengeToDelete(challenge)}>
+                        মুছুন
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center">
+                  কোনো চ্যালেঞ্জ পাওয়া যায়নি।
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>
