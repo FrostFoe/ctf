@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { FeaturedCardGradient } from '@/components/gradients/featured-card-gradient';
 import Link from 'next/link';
-import type { Challenge } from '@/constants/ctf-tiers';
+import type { Challenge } from '@/lib/database.types';
 
 interface Props {
   difficulty: IChallengeDifficulty;
@@ -14,10 +14,9 @@ interface Props {
 }
 
 export function CTFCards({ difficulty, challenges }: Props) {
-  // Filter tiers based on selected category
   const filteredTiers = challenges.filter((tier) => {
-    if (difficulty.value === 'easy') return tier.category === 'beginner';
-    if (difficulty.value === 'hard') return tier.category === 'hacker';
+    if (difficulty.value === 'beginner') return tier.category === 'beginner';
+    if (difficulty.value === 'hacker') return tier.category === 'hacker';
     return true;
   });
 

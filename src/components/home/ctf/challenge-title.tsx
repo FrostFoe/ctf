@@ -1,9 +1,9 @@
-import { CTFTier } from '@/constants/ctf-tiers';
+import { Challenge } from '@/lib/database.types';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface Props {
-  tier: CTFTier;
+  tier: Challenge;
 }
 
 export function ChallengeTitle({ tier }: Props) {

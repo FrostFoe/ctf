@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
-import type { Challenge } from '@/constants/ctf-tiers';
+import type { Challenge } from '@/lib/database.types';
 
 const ADMIN_EMAIL = 'frostfoe@gmail.com';
 

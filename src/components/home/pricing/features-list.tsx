@@ -1,9 +1,9 @@
 import { Tier } from '@/constants/pricing-tier';
-import { CTFTier } from '@/constants/ctf-tiers';
+import { Challenge } from '@/lib/database.types';
 import { CircleCheck } from 'lucide-react';
 
 interface Props {
-  tier: Tier | CTFTier;
+  tier: Tier | Challenge;
 }
 
 export function FeaturesList({ tier }: Props) {

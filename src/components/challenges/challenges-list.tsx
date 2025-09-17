@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import type { Challenge } from '@/constants/ctf-tiers';
+import type { Challenge } from '@/lib/database.types';
 import { useState } from 'react';
 import { ChallengeDetailDialog } from './challenge-detail-dialog';
 
@@ -26,16 +26,14 @@ interface ChallengesListProps {
   solvedChallengeIds: string[];
 }
 
-export function ChallengesList({ challenges, solvedChallengeIds }: ChallengesListProps) {
+export function ChallengesList({ challenges, solvedChallengeIds: initialSolvedIds }: ChallengesListProps) {
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
+  const [solvedChallengeIds, setSolvedChallengeIds] = useState<string[]>(initialSolvedIds);
 
-  const handleChallengeUpdate = (updatedChallengeId: string) => {
-    // This is a simple way to reflect the change without a full re-fetch.
-    // In a real app, you might re-fetch or use a more robust state management.
+  const handleChallengeSolved = (updatedChallengeId: string) => {
     if (!solvedChallengeIds.includes(updatedChallengeId)) {
-      solvedChallengeIds.push(updatedChallengeId);
+      setSolvedChallengeIds((prev) => [...prev, updatedChallengeId]);
     }
-    // Force a re-render to show the updated solved state
     setSelectedChallenge(null);
   };
 
@@ -87,7 +85,7 @@ export function ChallengesList({ challenges, solvedChallengeIds }: ChallengesLis
           challenge={selectedChallenge}
           isOpen={!!selectedChallenge}
           onClose={() => setSelectedChallenge(null)}
-          onChallengeSolved={handleChallengeUpdate}
+          onChallengeSolved={handleChallengeSolved}
         />
       )}
     </>

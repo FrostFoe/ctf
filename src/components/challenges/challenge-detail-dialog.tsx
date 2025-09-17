@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { useToast } from '../ui/use-toast';
 import { checkFlag } from '@/app/challenges/actions';
-import type { Challenge } from '@/constants/ctf-tiers';
+import type { Challenge } from '@/lib/database.types';
 import Link from 'next/link';
 
 interface Props {

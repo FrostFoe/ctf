@@ -3,7 +3,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import type { Challenge } from '@/constants/ctf-tiers';
+import type { Challenge } from '@/lib/database.types';
 import { ChallengeFormDialog } from './challenge-form-dialog';
 import { deleteChallenge } from '@/app/admin/actions';
 import { useToast } from '../ui/use-toast';

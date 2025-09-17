@@ -15,7 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useState, useEffect } from 'react';
 import { useToast } from '../ui/use-toast';
 import { addChallenge, updateChallenge } from '@/app/admin/actions';
-import type { Challenge } from '@/constants/ctf-tiers';
+import type { Challenge } from '@/lib/database.types';
 import { Switch } from '../ui/switch';
 import { Select } from '../shared/select/select';
 
