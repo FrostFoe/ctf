@@ -39,7 +39,7 @@ const hardcodedChallenges: Challenge[] = [
   {
     id: 'crypto',
     name: 'ক্রিপ্টো',
-    icon: '/assets/icons/ctf-tiers/default-icon.svg',
+    icon: '/assets/icons/ctf-tiers/crypto-icon.svg',
     description: 'এনক্রিপশনের জগত - কোড ভেঙে তথ্য উদ্ধার করুন।',
     features: [
       'এডভান্সড এনক্রিপশন',
@@ -56,7 +56,7 @@ const hardcodedChallenges: Challenge[] = [
   {
     id: 'web-security',
     name: 'ওয়েব সিকিউরিটি',
-    icon: '/assets/icons/ctf-tiers/default-icon.svg',
+    icon: '/assets/icons/ctf-tiers/web-icon.svg',
     description: 'ওয়েব অ্যাপ্লিকেশন ভালনারেবিলিটি - সিকিউরিটি ফ্লস খুঁজে বের করুন।',
     features: [
       'এসকিউএল ইনজেকশন',
@@ -73,7 +73,7 @@ const hardcodedChallenges: Challenge[] = [
   {
     id: 'binary-exploit',
     name: 'বাইনারি এক্সপ্লয়েট',
-    icon: '/assets/icons/ctf-tiers/default-icon.svg',
+    icon: '/assets/icons/ctf-tiers/binary-icon.svg',
     description: 'এক্সপার্ট লেভেল - বাইনারি কোড অ্যানালাইসিস এবং এক্সপ্লয়েট।',
     features: [
       'রিভার্স ইঞ্জিনিয়ারিং',
