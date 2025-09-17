@@ -152,7 +152,7 @@ export function ChallengeFormDialog({ challenge, isOpen, onClose, onSave }: Prop
               </div>
             </div>
             <div>
-              <Label htmlFor="points">bcoin পুরস্কার</Label>
+              <Label htmlFor="points">বিটকয়েন পুরস্কার</Label>
               <Input id="points" name="points" type="number" value={formData.points || 0} onChange={handleChange} />
             </div>
             <div>

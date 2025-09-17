@@ -76,7 +76,7 @@ export function AdminChallengesTable({ challenges: initialChallenges }: Props) {
                   <TableHead>নাম</TableHead>
                   <TableHead>বিভাগ</TableHead>
                   <TableHead>কঠিনতা</TableHead>
-                  <TableHead>bcoin</TableHead>
+                  <TableHead>বিটকয়েন</TableHead>
                   <TableHead className="hidden md:table-cell">ফ্ল্যাগ</TableHead>
                   <TableHead className="text-right">ক্রিয়াকলাপ</TableHead>
                 </TableRow>

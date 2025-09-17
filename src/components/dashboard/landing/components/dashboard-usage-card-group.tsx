@@ -16,7 +16,7 @@ export function DashboardUsageCardGroup({ stats, totalChallenges }: DashboardUsa
       change: `মোট ${totalChallenges}টি থেকে`,
     },
     {
-      title: 'মোট bcoin',
+      title: 'মোট বিটকয়েন',
       icon: <BcoinIcon />,
       value: stats?.total_points ?? 0,
       change: 'আপনার অগ্রগতি ট্র্যাক করুন',
