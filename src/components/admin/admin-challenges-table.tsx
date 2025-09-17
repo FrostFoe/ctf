@@ -38,7 +38,9 @@ export function AdminChallengesTable({ challenges: initialChallenges }: Props) {
   const handleSave = (savedChallenge: Challenge) => {
     if (selectedChallenge) {
       // Update
-      setChallenges((prev) => prev.map((c) => (c.id === savedChallenge.id ? savedChallenge : c)));
+      setChallenges((prev) =>
+        prev.map((c) => (c.id === savedChallenge.id ? savedChallenge : c)).sort((a, b) => a.name.localeCompare(b.name)),
+      );
     } else {
       // Add
       setChallenges((prev) => [...prev, savedChallenge].sort((a, b) => a.name.localeCompare(b.name)));

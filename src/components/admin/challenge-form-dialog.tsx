@@ -79,7 +79,7 @@ export function ChallengeFormDialog({ challenge, isOpen, onClose, onSave }: Prop
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)/g, '');
       savedData = { ...(formData as Omit<Challenge, 'id'>), id };
-      result = await addChallenge(formData as Omit<Challenge, 'id'>);
+      result = await addChallenge(savedData);
     }
 
     if (result.error) {

@@ -1,6 +1,6 @@
 import { HomePage } from '@/components/home/home-page';
 import { createClient } from '@/utils/supabase/server';
-import type { Challenge } from '@/constants/ctf-tiers';
+import type { Challenge } from '@/lib/database.types';
 
 async function getChallenges(): Promise<Challenge[]> {
   const supabase = await createClient();

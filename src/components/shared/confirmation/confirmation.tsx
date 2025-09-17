@@ -1,3 +1,5 @@
+'use client';
+
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
@@ -21,10 +23,10 @@ export function Confirmation({ isOpen, onClose, title, description, onConfirm }:
           <DialogDescription>{description}</DialogDescription>
           <div className={'flex gap-4 items-center justify-end w-full'}>
             <Button onClick={() => onClose(false)} variant={'outline'}>
-              Close
+              বন্ধ করুন
             </Button>
             <Button onClick={() => onConfirm()} variant={'destructive'}>
-              Confirm
+              নিশ্চিত করুন
             </Button>
           </div>
         </div>

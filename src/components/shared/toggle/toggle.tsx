@@ -1,3 +1,5 @@
+'use client';
+
 import { ChallengeDifficulty, IChallengeDifficulty } from '@/constants/billing-frequency';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 

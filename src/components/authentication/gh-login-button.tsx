@@ -8,17 +8,22 @@ interface Props {
   label: string;
 }
 export function GhLoginButton({ label }: Props) {
+  const handleSignIn = async () => {
+    await signInWithGithub();
+  };
   return (
-    <Button onClick={() => signInWithGithub()} variant={'secondary'} className={'w-full'}>
-      <Image
-        height="24"
-        className={'mr-3'}
-        width="24"
-        src="https://cdn.simpleicons.org/github/878989"
-        unoptimized={true}
-        alt={'GitHub logo'}
-      />
-      {label}
-    </Button>
+    <form action={handleSignIn} className="w-full">
+      <Button type="submit" variant={'secondary'} className={'w-full'}>
+        <Image
+          height="24"
+          className={'mr-3'}
+          width="24"
+          src="https://cdn.simpleicons.org/github/878989"
+          unoptimized={true}
+          alt={'GitHub logo'}
+        />
+        {label}
+      </Button>
+    </form>
   );
 }

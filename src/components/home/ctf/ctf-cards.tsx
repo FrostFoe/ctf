@@ -33,7 +33,7 @@ export function CTFCards({ difficulty, challenges }: Props) {
             <div className={'px-8 text-[16px] leading-[24px]'}>{tier.description}</div>
           </div>
           <div className={'px-8 mt-8'}>
-            <Button className={'w-full'} variant={'secondary'}>
+            <Button className={'w-full'} variant={'secondary'} asChild>
               <Link href="/challenges">চ্যালেঞ্জ শুরু করুন</Link>
             </Button>
           </div>

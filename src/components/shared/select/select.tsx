@@ -1,3 +1,5 @@
+'use client';
+
 import { Select as ShadCnSelect, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface Props {

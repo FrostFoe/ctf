@@ -5,7 +5,7 @@ import { CTFCards } from '@/components/home/ctf/ctf-cards';
 import { Suspense, useState } from 'react';
 import { ChallengeDifficulty, IChallengeDifficulty } from '@/constants/billing-frequency';
 import { Skeleton } from '@/components/ui/skeleton';
-import type { Challenge } from '@/constants/ctf-tiers';
+import type { Challenge } from '@/lib/database.types';
 
 interface Props {
   challenges: Challenge[];

@@ -1,9 +1,8 @@
-import { Tier } from '@/constants/pricing-tier';
-import { Challenge } from '@/lib/database.types';
+import type { Challenge } from '@/lib/database.types';
 import { CircleCheck } from 'lucide-react';
 
 interface Props {
-  tier: Tier | Challenge;
+  tier: Challenge;
 }
 
 export function FeaturesList({ tier }: Props) {
