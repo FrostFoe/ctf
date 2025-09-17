@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import type { User } from '@supabase/supabase-js';
 import type { JSX } from 'react';
+import { ADMIN_EMAIL } from '@/constants';
 
 interface SidebarItem {
   title: string;
@@ -32,8 +33,6 @@ const sidebarItems: SidebarItem[] = [
     adminOnly: true,
   },
 ];
-
-const ADMIN_EMAIL = 'frostfoe@gmail.com';
 
 interface SidebarProps {
   user: User | null;

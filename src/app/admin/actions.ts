@@ -3,8 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
 import type { Challenge } from '@/lib/database.types';
-
-const ADMIN_EMAIL = 'frostfoe@gmail.com';
+import { ADMIN_EMAIL } from '@/constants';
 
 async function verifyAdmin() {
   const supabase = await createClient();
@@ -43,7 +42,7 @@ export async function addChallenge(challenge: Omit<Challenge, 'id'>) {
   revalidatePath('/challenges');
   revalidatePath('/');
 
-  return { success: true };
+  return { success: true, data: newChallenge };
 }
 
 export async function updateChallenge(challenge: Challenge) {

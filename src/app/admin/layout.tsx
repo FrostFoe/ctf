@@ -3,12 +3,11 @@ import { DashboardLayout } from '@/components/dashboard/layout/dashboard-layout'
 import { createClient } from '@/utils/supabase/server';
 import { LoadingScreen } from '@/components/dashboard/layout/loading-screen';
 import { redirect } from 'next/navigation';
+import { ADMIN_EMAIL } from '@/constants';
 
 interface Props {
   children: ReactNode;
 }
-
-const ADMIN_EMAIL = 'frostfoe@gmail.com';
 
 async function AuthWrapper({ children }: Props) {
   const supabase = await createClient();

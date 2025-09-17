@@ -6,23 +6,27 @@ import { useState } from 'react';
 import { AuthenticationForm } from '@/components/authentication/authentication-form';
 import { signup } from '@/app/signup/actions';
 import { useToast } from '@/components/ui/use-toast';
+import { Loader2 } from 'lucide-react';
 
 export function SignupForm() {
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  function handleSignup() {
-    signup({ email, password }).then((data) => {
-      if (data?.error) {
-        toast({ description: 'কিছু একটা ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন', variant: 'destructive' });
-      }
-    });
+  async function handleSignup() {
+    setIsLoading(true);
+    const data = await signup({ email, password });
+    setIsLoading(false);
+
+    if (data?.error) {
+      toast({ description: 'কিছু একটা ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন', variant: 'destructive' });
+    }
   }
 
   return (
-    <form action={'#'} className={'px-6 md:px-16 pb-6 py-8 gap-6 flex flex-col items-center justify-center'}>
-      <Image src={'/logo.png'} alt={'ফ্রস্টফল লোগো'} width={80} height={80} className="rounded-full" />
+    <form action={handleSignup} className={'px-6 md:px-16 pb-6 py-8 gap-6 flex flex-col items-center justify-center'}>
+      <Image src={'/logo.png'} alt={'ফ্রস্টফল লogo'} width={80} height={80} className="rounded-full" />
       <div className={'text-[30px] leading-[36px] font-medium tracking-[-0.6px] text-center'}>
         একটি অ্যাকাউন্ট তৈরি করুন
       </div>
@@ -32,7 +36,8 @@ export function SignupForm() {
         password={password}
         onPasswordChange={(password) => setPassword(password)}
       />
-      <Button formAction={() => handleSignup()} type={'submit'} variant={'secondary'} className={'w-full'}>
+      <Button type={'submit'} variant={'secondary'} className={'w-full'} disabled={isLoading}>
+        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         সাইন আপ করুন
       </Button>
     </form>
