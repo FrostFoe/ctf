@@ -14,14 +14,7 @@ export function GhLoginButton({ label }: Props) {
   return (
     <form action={handleSignIn} className="w-full">
       <Button type="submit" variant={'secondary'} className={'w-full'}>
-        <Image
-          height="24"
-          className={'mr-3'}
-          width="24"
-          src="https://cdn.simpleicons.org/github/878989"
-          unoptimized={true}
-          alt={'GitHub logo'}
-        />
+        <Image height="24" className={'mr-3'} width="24" src="/assets/icons/github-logo.svg" alt={'GitHub লোগো'} />
         {label}
       </Button>
     </form>

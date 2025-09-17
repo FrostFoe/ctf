@@ -13,7 +13,14 @@ export default function Header({ user }: Props) {
       <div className="mx-auto max-w-7xl relative px-[32px] py-[18px] flex items-center justify-between">
         <div className="flex flex-1 items-center justify-start">
           <Link className="flex items-center" href={'/'}>
-            <Image className="w-auto block rounded-full" src="/logo.png" width={40} height={40} alt="এরোএডিট" />
+            <Image
+              className="w-auto block rounded-full"
+              src="/logo.png"
+              width={40}
+              height={40}
+              alt="ফ্রস্টফল লোগো"
+              priority
+            />
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-end">

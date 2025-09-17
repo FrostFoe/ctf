@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import { DashboardGradient } from '@/components/gradients/dashboard-gradient';
-import '../../../styles/dashboard.css';
 import { Sidebar } from '@/components/dashboard/layout/sidebar';
 import { SidebarUserInfo } from '@/components/dashboard/layout/sidebar-user-info';
 import type { User } from '@supabase/supabase-js';
@@ -20,7 +19,7 @@ export function DashboardLayout({ children, user }: Props) {
         <div className="flex h-full flex-col gap-2">
           <div className="flex items-center pt-8 pl-6 pb-10">
             <Link href="/" className="flex items-center gap-2 font-semibold">
-              <Image src={'/assets/icons/logo/aeroedit-logo-icon.svg'} alt={'AeroEdit'} width={41} height={41} />
+              <Image src={'/logo.png'} alt={'ফ্রস্টফল লোগো'} width={41} height={41} className="rounded-full" />
             </Link>
           </div>
           <div className="flex flex-col grow">

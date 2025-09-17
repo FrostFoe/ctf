@@ -1,11 +1,11 @@
 import { BuiltUsingTools } from '@/components/home/footer/built-using-tools';
-import { PoweredByPaddle } from '@/components/home/footer/powered-by-paddle';
+import { FooterLinks } from '@/components/home/footer/footer-links';
 
 export function Footer() {
   return (
     <>
       <BuiltUsingTools />
-      <PoweredByPaddle />
+      <FooterLinks />
     </>
   );
 }

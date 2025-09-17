@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import type { User } from '@supabase/supabase-js';
-import '../../styles/home-page.css';
 import { LocalizationBanner } from '@/components/home/header/localization-banner';
 import Header from '@/components/home/header/header';
 import { HeroSection } from '@/components/home/hero-section/hero-section';
