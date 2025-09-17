@@ -20,10 +20,11 @@ export async function login(data: FormData) {
 
 export async function signInWithGithub() {
   const supabase = createServerClient();
+  const origin = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const { data } = await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback`,
+      redirectTo: `${origin}/auth/callback`,
     },
   });
   if (data.url) {
