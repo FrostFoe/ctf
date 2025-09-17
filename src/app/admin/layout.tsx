@@ -3,7 +3,6 @@ import { DashboardLayout } from '@/components/dashboard/layout/dashboard-layout'
 import { createClient } from '@/utils/supabase/server';
 import { LoadingScreen } from '@/components/dashboard/layout/loading-screen';
 import { redirect } from 'next/navigation';
-import type { User } from '@supabase/supabase-js';
 
 interface Props {
   children: ReactNode;

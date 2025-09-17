@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import type { User } from '@supabase/supabase-js';
+import type { JSX } from 'react';
 
 interface SidebarItem {
   title: string;

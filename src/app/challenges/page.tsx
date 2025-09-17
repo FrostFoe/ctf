@@ -1,7 +1,7 @@
 import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
 import { ChallengesList } from '@/components/challenges/challenges-list';
 import { createClient } from '@/utils/supabase/server';
-import type { Challenge } from '@/constants/ctf-tiers';
+import type { Challenge } from '@/lib/database.types';
 
 async function getChallenges(): Promise<Challenge[]> {
   const supabase = await createClient();
