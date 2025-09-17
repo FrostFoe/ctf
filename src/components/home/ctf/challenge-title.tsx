@@ -32,12 +32,14 @@ export function ChallengeTitle({ tier }: Props) {
         <Image src={icon} height={40} width={40} alt={name} />
         <div>
           <p className={'text-[20px] leading-[30px] font-semibold'}>{name}</p>
-          <span className={cn(
-            'text-xs px-2 py-1 rounded-full',
-            difficulty === 'easy' && 'bg-green-100 text-green-800',
-            difficulty === 'medium' && 'bg-yellow-100 text-yellow-800',
-            difficulty === 'hard' && 'bg-red-100 text-red-800'
-          )}>
+          <span
+            className={cn(
+              'text-xs px-2 py-1 rounded-full',
+              difficulty === 'easy' && 'bg-green-100 text-green-800',
+              difficulty === 'medium' && 'bg-yellow-100 text-yellow-800',
+              difficulty === 'hard' && 'bg-red-100 text-red-800',
+            )}
+          >
             {getDifficultyBadge(difficulty)}
           </span>
         </div>

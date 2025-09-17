@@ -23,7 +23,9 @@ export function SignupForm() {
   return (
     <form action={'#'} className={'px-6 md:px-16 pb-6 py-8 gap-6 flex flex-col items-center justify-center'}>
       <Image src={'/assets/icons/logo/aeroedit-icon.svg'} alt={'এরোএডিট'} width={80} height={80} />
-      <div className={'text-[30px] leading-[36px] font-medium tracking-[-0.6px] text-center'}>একটি অ্যাকাউন্ট তৈরি করুন</div>
+      <div className={'text-[30px] leading-[36px] font-medium tracking-[-0.6px] text-center'}>
+        একটি অ্যাকাউন্ট তৈরি করুন
+      </div>
       <AuthenticationForm
         email={email}
         onEmailChange={(email) => setEmail(email)}

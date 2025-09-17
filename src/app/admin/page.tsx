@@ -19,7 +19,9 @@ export default async function AdminPage() {
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-8">
       <DashboardPageHeader pageTitle={'অ্যাডমিন প্যানেল'} />
-      <AdminChallengesTable challenges={challenges} />
+      <div className="flex-1 rounded-lg border bg-card text-card-foreground shadow-xs p-6">
+        <AdminChallengesTable challenges={challenges} />
+      </div>
     </main>
   );
 }
