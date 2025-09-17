@@ -98,7 +98,9 @@ export function ChallengeDetailDialog({ challenge, isOpen, onClose, onChallengeS
               </Link>
             </Button>
           ) : (
-            <div></div>
+            <Button variant="outline" disabled>
+              কোনো রিসোর্স নেই
+            </Button>
           )}
           <Button onClick={handleSubmit} disabled={isChecking}>
             {isChecking ? 'চেক করা হচ্ছে...' : 'ফ্ল্যাগ জমা দিন'}
