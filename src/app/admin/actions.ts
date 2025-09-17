@@ -3,11 +3,18 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
 import type { Challenge } from '@/constants/ctf-tiers';
-import { validateUserSession } from '@/utils/supabase/server';
+
+const ADMIN_EMAIL = 'frostfoe@gmail.com';
 
 export async function updateChallenge(challenge: Challenge) {
-  const { user } = await validateUserSession();
   const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user || user.email !== ADMIN_EMAIL) {
+    return { error: 'Unauthorized: You do not have permission to perform this action.' };
+  }
 
   // Ensure we only update specific, editable fields.
   const { id, flag, url } = challenge;
@@ -21,7 +28,6 @@ export async function updateChallenge(challenge: Challenge) {
     .update({
       flag: flag || null,
       url: url || null,
-      // You can add other fields here if they become editable in the future
     })
     .eq('id', id);
 
