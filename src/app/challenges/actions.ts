@@ -32,6 +32,7 @@ export async function checkFlag(challengeId: string, submittedFlag: string) {
         return { error: 'Failed to save progress.' };
       }
       revalidatePath('/challenges');
+      revalidatePath('/dashboard');
     }
 
     return { success: true, message: 'সঠিক ফ্ল্যাগ! চ্যালেঞ্জ সমাধান করা হয়েছে।' };
