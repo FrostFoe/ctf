@@ -1,23 +1,26 @@
 import { cn } from '@/lib/utils';
+import type { SVGProps } from 'react';
 
-export function BcoinIcon({ className }: { className?: string }) {
+export function BcoinIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={cn('h-5 w-5 text-yellow-400', className)}
+      width="1em"
+      height="1em"
+      className={cn('h-5 w-5 text-yellow-400', props.className)}
+      {...props}
     >
-      <path d="M16.5 13.5c1.2-1.2 1-3.3-.6-4.9a5 5 0 0 0-7 7c1.6 1.6 3.7 1.8 4.9.6" />
-      <path d="M12 8v8" />
-      <path d="M15 11h-1" />
-      <path d="M15 14h-2" />
-      <path d="M7 12h1" />
-      <path d="M8 9H7" />
+      <path
+        fill="currentColor"
+        d="M10.864 14.36c.806.213 2.567.678 2.847-.447c.287-1.151-1.422-1.534-2.255-1.721q-.14-.031-.243-.056l-.542 2.174q.083.02.193.05m.759-3.177c.672.18 2.138.57 2.393-.452c.26-1.046-1.164-1.36-1.86-1.515l-.203-.047l-.492 1.972q.07.017.162.042"
+      ></path>
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M9.822 20.73a9 9 0 0 0 4.354-17.46A9 9 0 0 0 3.27 9.823A8.997 8.997 0 0 0 9.822 20.73m4.165-12.252c1.247.43 2.16 1.073 1.98 2.27c-.13.877-.616 1.302-1.261 1.45c.886.462 1.337 1.17.907 2.396c-.532 1.522-1.799 1.65-3.483 1.332l-.409 1.638l-.987-.246l.403-1.616a39 39 0 0 1-.787-.204l-.405 1.623l-.986-.246l.408-1.64l-.256-.067l-.448-.115l-1.285-.32l.49-1.13s.728.193.718.178c.28.07.404-.113.453-.234l.646-2.589l.084.021l.02.005a1 1 0 0 0-.103-.033l.46-1.848c.013-.21-.06-.475-.46-.574c.016-.01-.716-.179-.716-.179l.262-1.054l1.362.34v.005q.307.075.63.148l.405-1.622l.986.246l-.396 1.59c.265.06.532.121.791.186l.394-1.58l.988.247z"
+        clipRule="evenodd"
+      ></path>
     </svg>
   );
 }
