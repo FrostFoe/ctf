@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { LeaderboardEntry } from '@/lib/database.types';
+import { BcoinIcon } from '@/components/shared/bcoin-icon';
 
 interface DashboardTeamMembersCardProps {
   leaderboard: LeaderboardEntry[];
@@ -31,7 +32,10 @@ export function DashboardTeamMembersCard({ leaderboard }: DashboardTeamMembersCa
                   <span className={'text-base font-medium'}>{player.username || 'অজানা'}</span>
                 </div>
               </div>
-              <span className={'text-base font-bold text-primary'}>{player.total_points}</span>
+              <span className={'text-base font-bold text-primary flex items-center gap-1'}>
+                <BcoinIcon />
+                {player.total_points}
+              </span>
             </div>
           ))
         ) : (

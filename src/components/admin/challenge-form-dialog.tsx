@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type ChangeEvent } from 'react';
 import { useToast } from '../ui/use-toast';
 import { addChallenge, updateChallenge } from '@/app/admin/actions';
 import type { Challenge } from '@/lib/database.types';
@@ -34,6 +34,7 @@ const INITIAL_STATE: Omit<Challenge, 'id'> = {
   featured: false,
   difficulty: 'easy',
   category: 'beginner',
+  points: 10,
   flag: '',
   url: '',
 };
@@ -47,9 +48,10 @@ export function ChallengeFormDialog({ challenge, isOpen, onClose, onSave }: Prop
     setFormData(challenge || INITIAL_STATE);
   }, [challenge, isOpen]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const finalValue = type === 'number' ? parseInt(value, 10) : value;
+    setFormData((prev) => ({ ...prev, [name]: finalValue }));
   };
 
   const handleSelectChange = (name: 'difficulty' | 'category') => (value: string) => {
@@ -60,7 +62,7 @@ export function ChallengeFormDialog({ challenge, isOpen, onClose, onSave }: Prop
     setFormData((prev) => ({ ...prev, [name]: checked }));
   };
 
-  const handleFeaturesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleFeaturesChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     const features = value.split('\n').filter((f) => f.trim() !== '');
     setFormData((prev) => ({ ...prev, features }));
@@ -148,6 +150,10 @@ export function ChallengeFormDialog({ challenge, isOpen, onClose, onSave }: Prop
                   options={['beginner', 'hacker']}
                 />
               </div>
+            </div>
+            <div>
+              <Label htmlFor="points">bcoin পুরস্কার</Label>
+              <Input id="points" name="points" type="number" value={formData.points || 0} onChange={handleChange} />
             </div>
             <div>
               <Label htmlFor="flag">ফ্ল্যাগ</Label>

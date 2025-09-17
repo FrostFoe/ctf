@@ -9,6 +9,7 @@ export interface Challenge {
   category: 'beginner' | 'hacker';
   flag?: string;
   url?: string;
+  points: number;
 }
 
 export interface LeaderboardEntry {

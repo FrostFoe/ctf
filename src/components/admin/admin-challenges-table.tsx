@@ -76,8 +76,8 @@ export function AdminChallengesTable({ challenges: initialChallenges }: Props) {
                   <TableHead>নাম</TableHead>
                   <TableHead>বিভাগ</TableHead>
                   <TableHead>কঠিনতা</TableHead>
+                  <TableHead>bcoin</TableHead>
                   <TableHead className="hidden md:table-cell">ফ্ল্যাগ</TableHead>
-                  <TableHead className="hidden lg:table-cell">URL</TableHead>
                   <TableHead className="text-right">ক্রিয়াকলাপ</TableHead>
                 </TableRow>
               </TableHeader>
@@ -88,11 +88,9 @@ export function AdminChallengesTable({ challenges: initialChallenges }: Props) {
                       <TableCell className="font-medium">{challenge.name}</TableCell>
                       <TableCell>{challenge.category}</TableCell>
                       <TableCell>{challenge.difficulty}</TableCell>
+                      <TableCell>{challenge.points}</TableCell>
                       <TableCell className="hidden md:table-cell max-w-xs truncate">
                         {challenge.flag || 'সেট করা নেই'}
-                      </TableCell>
-                      <TableCell className="hidden lg:table-cell max-w-xs truncate">
-                        {challenge.url || 'সেট করা নেই'}
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex gap-2 justify-end">

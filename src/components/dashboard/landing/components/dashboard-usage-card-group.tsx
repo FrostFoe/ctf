@@ -1,6 +1,7 @@
-import { Target, Star, Trophy, CheckCircle } from 'lucide-react';
+import { Target, Trophy, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import type { UserStats } from '@/lib/database.types';
+import { BcoinIcon } from '@/components/shared/bcoin-icon';
 
 interface DashboardUsageCardGroupProps {
   stats: UserStats | null;
@@ -15,8 +16,8 @@ export function DashboardUsageCardGroup({ stats, totalChallenges }: DashboardUsa
       change: `মোট ${totalChallenges}টি থেকে`,
     },
     {
-      title: 'মোট পয়েন্ট',
-      icon: <Star className={'text-[#4B4F4F]'} size={18} />,
+      title: 'মোট bcoin',
+      icon: <BcoinIcon />,
       value: stats?.total_points ?? 0,
       change: 'আপনার অগ্রগতি ট্র্যাক করুন',
     },
