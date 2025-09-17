@@ -29,7 +29,7 @@ export function AdminChallengesTable({ challenges: initialChallenges }: Props) {
               <TableHead>কঠিনতা</TableHead>
               <TableHead>ফ্ল্যাগ</TableHead>
               <TableHead>URL</TableHead>
-              <TableHead className="text-right">פעולות</TableHead>
+              <TableHead className="text-right">ক্রিয়াকলাপ</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

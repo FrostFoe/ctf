@@ -1,7 +1,8 @@
 import { Toggle } from '@/components/shared/toggle/toggle';
 import { CTFCards } from '@/components/home/ctf/ctf-cards';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { ChallengeDifficulty, IChallengeDifficulty } from '@/constants/billing-frequency';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function Pricing() {
   const [difficulty, setDifficulty] = useState<IChallengeDifficulty>(ChallengeDifficulty[0]);
@@ -9,7 +10,17 @@ export function Pricing() {
   return (
     <div className="mx-auto max-w-7xl relative px-[32px] flex flex-col items-center justify-between">
       <Toggle difficulty={difficulty} setDifficulty={setDifficulty} />
-      <CTFCards difficulty={difficulty} />
+      <Suspense
+        fallback={
+          <div className="isolate mx-auto grid grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            <Skeleton className="h-[400px] w-full" />
+            <Skeleton className="h-[400px] w-full" />
+            <Skeleton className="h-[400px] w-full" />
+          </div>
+        }
+      >
+        <CTFCards difficulty={difficulty} />
+      </Suspense>
     </div>
   );
 }

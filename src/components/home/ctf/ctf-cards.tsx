@@ -7,14 +7,27 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { FeaturedCardGradient } from '@/components/gradients/featured-card-gradient';
 import Link from 'next/link';
+import { createClient } from '@/utils/supabase/server';
+import type { Challenge } from '@/constants/ctf-tiers';
 
 interface Props {
   difficulty: IChallengeDifficulty;
 }
 
-export function CTFCards({ difficulty }: Props) {
+async function getChallenges(): Promise<Challenge[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from('challenges').select('*').order('name', { ascending: true });
+  if (error) {
+    console.error('Error fetching challenges', error);
+    return [];
+  }
+  return data as Challenge[];
+}
+
+export async function CTFCards({ difficulty }: Props) {
+  const challenges = await getChallenges();
   // Filter tiers based on selected category
-  const filteredTiers = CTFTiers.filter(tier => {
+  const filteredTiers = challenges.filter((tier) => {
     if (difficulty.value === 'easy') return tier.category === 'beginner';
     if (difficulty.value === 'hard') return tier.category === 'hacker';
     return true;
