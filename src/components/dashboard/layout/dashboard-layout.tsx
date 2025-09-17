@@ -24,7 +24,7 @@ export function DashboardLayout({ children, user }: Props) {
             </Link>
           </div>
           <div className="flex flex-col grow">
-            <Sidebar />
+            <Sidebar user={user} />
             <SidebarUserInfo user={user} />
           </div>
         </div>

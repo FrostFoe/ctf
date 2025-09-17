@@ -6,11 +6,9 @@ import { Menu } from 'lucide-react';
 import { Sidebar } from '@/components/dashboard/layout/sidebar';
 import { SidebarUserInfo } from '@/components/dashboard/layout/sidebar-user-info';
 import { useUserInfo } from '@/hooks/useUserInfo';
-import { createClient } from '@/utils/supabase/client';
 
 export function MobileSidebar() {
-  const supabase = createClient();
-  const { user } = useUserInfo(supabase);
+  const { user } = useUserInfo();
 
   return (
     <Sheet>
@@ -21,7 +19,7 @@ export function MobileSidebar() {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="flex flex-col">
-        <Sidebar />
+        <Sidebar user={user} />
         <SidebarUserInfo user={user} />
       </SheetContent>
     </Sheet>
