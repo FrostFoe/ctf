@@ -1,33 +1,39 @@
 import { Target, Star, Trophy, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import type { UserStats } from '@/lib/database.types';
 
-const cards = [
-  {
-    title: 'চ্যালেঞ্জ সমাধান',
-    icon: <CheckCircle className={'text-[#4B4F4F]'} size={18} />,
-    value: '12',
-    change: 'মোট ৩০টি থেকে',
-  },
-  {
-    title: 'মোট পয়েন্ট',
-    icon: <Star className={'text-[#4B4F4F]'} size={18} />,
-    value: '1250',
-    change: 'গত মাস থেকে +১৫০',
-  },
-  {
-    title: 'বর্তমান র‍্যাঙ্ক',
-    icon: <Trophy className={'text-[#4B4F4F]'} size={18} />,
-    value: '#8',
-    change: 'শীর্ষ ১০% এর মধ্যে',
-  },
-  {
-    title: 'সঠিকতা',
-    icon: <Target className={'text-[#4B4F4F]'} size={18} />,
-    value: '85%',
-    change: 'গত মাস থেকে +৫%',
-  },
-];
-export function DashboardUsageCardGroup() {
+interface DashboardUsageCardGroupProps {
+  stats: UserStats | null;
+  totalChallenges: number;
+}
+export function DashboardUsageCardGroup({ stats, totalChallenges }: DashboardUsageCardGroupProps) {
+  const cards = [
+    {
+      title: 'চ্যালেঞ্জ সমাধান',
+      icon: <CheckCircle className={'text-[#4B4F4F]'} size={18} />,
+      value: stats?.solved_challenges ?? 0,
+      change: `মোট ${totalChallenges}টি থেকে`,
+    },
+    {
+      title: 'মোট পয়েন্ট',
+      icon: <Star className={'text-[#4B4F4F]'} size={18} />,
+      value: stats?.total_points ?? 0,
+      change: 'আপনার অগ্রগতি ট্র্যাক করুন',
+    },
+    {
+      title: 'বর্তমান র‍্যাঙ্ক',
+      icon: <Trophy className={'text-[#4B4F4F]'} size={18} />,
+      value: stats?.rank ? `#${stats.rank}` : 'N/A',
+      change: 'লিডারবোর্ডে আপনার অবস্থান',
+    },
+    {
+      title: 'সঠিকতা',
+      icon: <Target className={'text-[#4B4F4F]'} size={18} />,
+      value: 'N/A',
+      change: 'শীঘ্রই আসছে...',
+    },
+  ];
+
   return (
     <div className={'grid gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2'}>
       {cards.map((card) => (

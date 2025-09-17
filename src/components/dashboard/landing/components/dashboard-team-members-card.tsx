@@ -1,31 +1,13 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import type { LeaderboardEntry } from '@/lib/database.types';
 
-const leaderboard = [
-  {
-    name: 'সাইবার নিঞ্জা',
-    score: 1250,
-    initials: 'CN',
-  },
-  {
-    name: 'কোড মাস্টার',
-    score: 1100,
-    initials: 'CM',
-  },
-  {
-    name: 'হ্যাকার এক্স',
-    score: 980,
-    initials: 'HX',
-  },
-  {
-    name: 'ডেটা উইজার্ড',
-    score: 850,
-    initials: 'DW',
-  },
-];
+interface DashboardTeamMembersCardProps {
+  leaderboard: LeaderboardEntry[];
+}
 
-export function DashboardTeamMembersCard() {
+export function DashboardTeamMembersCard({ leaderboard }: DashboardTeamMembersCardProps) {
   return (
     <Card className={'bg-background/50 backdrop-blur-[24px] border-border p-6'}>
       <CardHeader className="p-0 space-y-0">
@@ -37,20 +19,24 @@ export function DashboardTeamMembersCard() {
         </CardTitle>
       </CardHeader>
       <CardContent className={'p-0 pt-6 flex gap-6 flex-col'}>
-        {leaderboard.map((player, index) => (
-          <div key={player.name} className={'flex justify-between items-center gap-2'}>
-            <div className={'flex gap-4 items-center'}>
-              <div className={'text-sm font-bold w-6 text-center'}>{index + 1}</div>
-              <div className={'flex items-center justify-center h-10 w-10 rounded-full bg-muted-foreground/20'}>
-                <span className={'text-white text-base'}>{player.initials}</span>
+        {leaderboard.length > 0 ? (
+          leaderboard.map((player) => (
+            <div key={player.user_id} className={'flex justify-between items-center gap-2'}>
+              <div className={'flex gap-4 items-center'}>
+                <div className={'text-sm font-bold w-6 text-center'}>{player.rank}</div>
+                <div className={'flex items-center justify-center h-10 w-10 rounded-full bg-muted-foreground/20'}>
+                  <span className={'text-white text-base'}>{player.username?.charAt(0).toUpperCase() || 'U'}</span>
+                </div>
+                <div className={'flex flex-col'}>
+                  <span className={'text-base font-medium'}>{player.username || 'অজানা'}</span>
+                </div>
               </div>
-              <div className={'flex flex-col'}>
-                <span className={'text-base font-medium'}>{player.name}</span>
-              </div>
+              <span className={'text-base font-bold text-primary'}>{player.total_points}</span>
             </div>
-            <span className={'text-base font-bold text-primary'}>{player.score}</span>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-center text-muted-foreground">এখনো কোনো প্রতিযোগী নেই।</p>
+        )}
       </CardContent>
     </Card>
   );

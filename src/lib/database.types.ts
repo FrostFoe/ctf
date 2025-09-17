@@ -10,3 +10,18 @@ export interface Challenge {
   flag?: string;
   url?: string;
 }
+
+export interface LeaderboardEntry {
+  user_id: string;
+  username: string | null;
+  total_points: number;
+  rank: number;
+}
+
+export interface UserStats {
+  user_id: string;
+  username: string | null;
+  total_points: number;
+  solved_challenges: number;
+  rank: number;
+}
