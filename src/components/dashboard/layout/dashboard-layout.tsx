@@ -5,12 +5,14 @@ import { DashboardGradient } from '@/components/gradients/dashboard-gradient';
 import '../../../styles/dashboard.css';
 import { Sidebar } from '@/components/dashboard/layout/sidebar';
 import { SidebarUserInfo } from '@/components/dashboard/layout/sidebar-user-info';
+import type { User } from '@supabase/supabase-js';
 
 interface Props {
   children: ReactNode;
+  user: User | null;
 }
 
-export function DashboardLayout({ children }: Props) {
+export function DashboardLayout({ children, user }: Props) {
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] relative overflow-hidden">
       <DashboardGradient />
@@ -23,7 +25,7 @@ export function DashboardLayout({ children }: Props) {
           </div>
           <div className="flex flex-col grow">
             <Sidebar />
-            <SidebarUserInfo />
+            <SidebarUserInfo user={user} />
           </div>
         </div>
       </div>

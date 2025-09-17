@@ -4,16 +4,32 @@ import { Separator } from '@/components/ui/separator';
 import { LogOut } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import { MouseEvent } from 'react';
-import { useUserInfo } from '@/hooks/useUserInfo';
+import type { User } from '@supabase/supabase-js';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
-export function SidebarUserInfo() {
+interface Props {
+  user: User | null;
+}
+export function SidebarUserInfo({ user }: Props) {
   const supabase = createClient();
-  const { user } = useUserInfo(supabase);
 
   async function handleLogout(e: MouseEvent) {
     e.preventDefault();
     await supabase.auth.signOut();
     location.reload();
+  }
+
+  if (!user) {
+    return (
+      <div className={'flex flex-col items-start pb-8 px-2 text-sm font-medium lg:px-4 gap-4'}>
+        <Separator className={'relative mt-6 dashboard-sidebar-highlight bg-[#283031]'} />
+        <p className="text-muted-foreground">আপনার কাজ সংরক্ষণ করতে একটি অ্যাকাউন্ট তৈরি করুন।</p>
+        <Button asChild className="w-full">
+          <Link href="/signup">সাইন আপ করুন</Link>
+        </Button>
+      </div>
+    );
   }
 
   return (
@@ -22,10 +38,10 @@ export function SidebarUserInfo() {
       <div className={'flex w-full flex-row mt-6 items-center justify-between'}>
         <div className={'flex flex-col items-start justify-center overflow-hidden text-ellipsis'}>
           <div className={'text-sm leading-5 font-semibold w-full overflow-hidden text-ellipsis'}>
-            {user?.user_metadata?.full_name}
+            {user?.user_metadata?.full_name ?? 'অতিথি ব্যবহারকারী'}
           </div>
           <div className={'text-sm leading-5 text-muted-foreground w-full overflow-hidden text-ellipsis'}>
-            {user?.email}
+            {user?.email ?? 'আপনার কাজ সংরক্ষিত হচ্ছে না'}
           </div>
         </div>
         <div>
