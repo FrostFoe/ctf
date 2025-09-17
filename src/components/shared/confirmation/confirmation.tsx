@@ -10,9 +10,19 @@ interface Props {
   description: ReactNode;
   onClose: (open: boolean) => void;
   onConfirm: () => void;
+  confirmText?: string;
+  cancelText?: string;
 }
 
-export function Confirmation({ isOpen, onClose, title, description, onConfirm }: Props) {
+export function Confirmation({
+  isOpen,
+  onClose,
+  title,
+  description,
+  onConfirm,
+  confirmText = 'নিশ্চিত করুন',
+  cancelText = 'বন্ধ করুন',
+}: Props) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
@@ -23,10 +33,10 @@ export function Confirmation({ isOpen, onClose, title, description, onConfirm }:
           <DialogDescription>{description}</DialogDescription>
           <div className={'flex gap-4 items-center justify-end w-full'}>
             <Button onClick={() => onClose(false)} variant={'outline'}>
-              বন্ধ করুন
+              {cancelText}
             </Button>
             <Button onClick={() => onConfirm()} variant={'destructive'}>
-              নিশ্চিত করুন
+              {confirmText}
             </Button>
           </div>
         </div>

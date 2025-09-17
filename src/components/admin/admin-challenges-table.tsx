@@ -8,6 +8,7 @@ import { ChallengeFormDialog } from './challenge-form-dialog';
 import { deleteChallenge } from '@/app/admin/actions';
 import { useToast } from '../ui/use-toast';
 import { Confirmation } from '../shared/confirmation/confirmation';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 
 interface Props {
   challenges: Challenge[];
@@ -59,56 +60,64 @@ export function AdminChallengesTable({ challenges: initialChallenges }: Props) {
 
   return (
     <>
-      <div className="flex justify-end mb-4">
-        <Button onClick={handleAddClick}>নতুন চ্যালেঞ্জ যোগ করুন</Button>
-      </div>
-      <div className="border shadow-sm rounded-lg">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>নাম</TableHead>
-              <TableHead>বিভাগ</TableHead>
-              <TableHead>কঠিনতা</TableHead>
-              <TableHead className="hidden md:table-cell">ফ্ল্যাগ</TableHead>
-              <TableHead className="hidden lg:table-cell">URL</TableHead>
-              <TableHead className="text-right">ক্রিয়াকলাপ</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {challenges.length > 0 ? (
-              challenges.map((challenge) => (
-                <TableRow key={challenge.id}>
-                  <TableCell className="font-medium">{challenge.name}</TableCell>
-                  <TableCell>{challenge.category}</TableCell>
-                  <TableCell>{challenge.difficulty}</TableCell>
-                  <TableCell className="hidden md:table-cell max-w-xs truncate">
-                    {challenge.flag || 'সেট করা নেই'}
-                  </TableCell>
-                  <TableCell className="hidden lg:table-cell max-w-xs truncate">
-                    {challenge.url || 'সেট করা নেই'}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex gap-2 justify-end">
-                      <Button variant="outline" size="sm" onClick={() => handleEditClick(challenge)}>
-                        সম্পাদনা
-                      </Button>
-                      <Button variant="destructive" size="sm" onClick={() => setChallengeToDelete(challenge)}>
-                        মুছুন
-                      </Button>
-                    </div>
-                  </TableCell>
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>চ্যালেঞ্জসমূহ</CardTitle>
+            <CardDescription>এখানে চ্যালেঞ্জ যোগ, সম্পাদনা বা মুছে ফেলুন।</CardDescription>
+          </div>
+          <Button onClick={handleAddClick}>নতুন চ্যালেঞ্জ যোগ করুন</Button>
+        </CardHeader>
+        <CardContent>
+          <div className="border shadow-sm rounded-lg">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>নাম</TableHead>
+                  <TableHead>বিভাগ</TableHead>
+                  <TableHead>কঠিনতা</TableHead>
+                  <TableHead className="hidden md:table-cell">ফ্ল্যাগ</TableHead>
+                  <TableHead className="hidden lg:table-cell">URL</TableHead>
+                  <TableHead className="text-right">ক্রিয়াকলাপ</TableHead>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={6} className="text-center">
-                  কোনো চ্যালেঞ্জ পাওয়া যায়নি।
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              </TableHeader>
+              <TableBody>
+                {challenges.length > 0 ? (
+                  challenges.map((challenge) => (
+                    <TableRow key={challenge.id}>
+                      <TableCell className="font-medium">{challenge.name}</TableCell>
+                      <TableCell>{challenge.category}</TableCell>
+                      <TableCell>{challenge.difficulty}</TableCell>
+                      <TableCell className="hidden md:table-cell max-w-xs truncate">
+                        {challenge.flag || 'সেট করা নেই'}
+                      </TableCell>
+                      <TableCell className="hidden lg:table-cell max-w-xs truncate">
+                        {challenge.url || 'সেট করা নেই'}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex gap-2 justify-end">
+                          <Button variant="outline" size="sm" onClick={() => handleEditClick(challenge)}>
+                            সম্পাদনা
+                          </Button>
+                          <Button variant="destructive" size="sm" onClick={() => setChallengeToDelete(challenge)}>
+                            মুছুন
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center">
+                      কোনো চ্যালেঞ্জ পাওয়া যায়নি।
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
 
       <ChallengeFormDialog
         challenge={selectedChallenge}
@@ -123,6 +132,8 @@ export function AdminChallengesTable({ challenges: initialChallenges }: Props) {
         onConfirm={handleDeleteConfirm}
         title="আপনি কি নিশ্চিত?"
         description={`আপনি "${challengeToDelete?.name}" চ্যালেঞ্জটি মুছে ফেলতে চলেছেন। এই ক্রিয়াটি ফিরিয়ে আনা যাবে না।`}
+        confirmText="নিশ্চিত করুন"
+        cancelText="বন্ধ করুন"
       />
     </>
   );

@@ -98,93 +98,74 @@ export function ChallengeFormDialog({ challenge, isOpen, onClose, onSave }: Prop
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{isEditing ? 'চ্যালেঞ্জ সম্পাদনা করুন' : 'নতুন চ্যালেঞ্জ যোগ করুন'}</DialogTitle>
           <DialogDescription>
             {isEditing ? 'এখানে চ্যালেঞ্জের বিবরণ আপডেট করুন।' : 'একটি নতুন চ্যালেঞ্জের বিবরণ পূরণ করুন।'}
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              নাম
-            </Label>
-            <Input id="name" name="name" value={formData.name} onChange={handleChange} className="col-span-3" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="name">নাম</Label>
+              <Input id="name" name="name" value={formData.name} onChange={handleChange} />
+            </div>
+            <div>
+              <Label htmlFor="description">বিবরণ</Label>
+              <Textarea id="description" name="description" value={formData.description} onChange={handleChange} />
+            </div>
+            <div>
+              <Label htmlFor="features">বৈশিষ্ট্য (প্রতি লাইনে একটি)</Label>
+              <Textarea
+                id="features"
+                name="features"
+                value={formData.features.join('\n')}
+                onChange={handleFeaturesChange}
+                placeholder="প্রতি লাইনে একটি বৈশিষ্ট্য লিখুন"
+              />
+            </div>
+            <div>
+              <Label htmlFor="icon">আইকন পাথ</Label>
+              <Input id="icon" name="icon" value={formData.icon} onChange={handleChange} />
+            </div>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">
-              বিবরণ
-            </Label>
-            <Textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="col-span-3"
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="features" className="text-right">
-              বৈশিষ্ট্য
-            </Label>
-            <Textarea
-              id="features"
-              name="features"
-              value={formData.features.join('\n')}
-              onChange={handleFeaturesChange}
-              className="col-span-3"
-              placeholder="প্রতি লাইনে একটি বৈশিষ্ট্য লিখুন"
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="icon" className="text-right">
-              আইকন পাথ
-            </Label>
-            <Input id="icon" name="icon" value={formData.icon} onChange={handleChange} className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="difficulty" className="text-right">
-              কঠিনতা
-            </Label>
-            <Select
-              value={formData.difficulty}
-              onChange={handleSelectChange('difficulty')}
-              options={['easy', 'medium', 'hard']}
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="category" className="text-right">
-              বিভাগ
-            </Label>
-            <Select
-              value={formData.category}
-              onChange={handleSelectChange('category')}
-              options={['beginner', 'hacker']}
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="flag" className="text-right">
-              ফ্ল্যাগ
-            </Label>
-            <Input id="flag" name="flag" value={formData.flag || ''} onChange={handleChange} className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="url" className="text-right">
-              URL
-            </Label>
-            <Input id="url" name="url" value={formData.url || ''} onChange={handleChange} className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="featured" className="text-right">
-              জনপ্রিয়
-            </Label>
-            <Switch
-              id="featured"
-              name="featured"
-              checked={formData.featured}
-              onCheckedChange={handleSwitchChange('featured')}
-            />
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="difficulty">কঠিনতা</Label>
+                <Select
+                  value={formData.difficulty}
+                  onChange={handleSelectChange('difficulty')}
+                  options={['easy', 'medium', 'hard']}
+                />
+              </div>
+              <div>
+                <Label htmlFor="category">বিভাগ</Label>
+                <Select
+                  value={formData.category}
+                  onChange={handleSelectChange('category')}
+                  options={['beginner', 'hacker']}
+                />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="flag">ফ্ল্যাগ</Label>
+              <Input id="flag" name="flag" value={formData.flag || ''} onChange={handleChange} />
+            </div>
+            <div>
+              <Label htmlFor="url">URL</Label>
+              <Input id="url" name="url" value={formData.url || ''} onChange={handleChange} />
+            </div>
+            <div className="flex items-center space-x-2 pt-4">
+              <Switch
+                id="featured"
+                name="featured"
+                checked={formData.featured}
+                onCheckedChange={handleSwitchChange('featured')}
+              />
+              <Label htmlFor="featured">জনপ্রিয় হিসেবে চিহ্নিত করুন</Label>
+            </div>
           </div>
         </div>
         <DialogFooter>

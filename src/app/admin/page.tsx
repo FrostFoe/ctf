@@ -2,6 +2,9 @@ import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-pag
 import { AdminChallengesTable } from '@/components/admin/admin-challenges-table';
 import { createClient } from '@/utils/supabase/server';
 import type { Challenge } from '@/lib/database.types';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChallengeFormDialog } from '@/components/admin/challenge-form-dialog';
 
 async function getChallenges(): Promise<Challenge[]> {
   const supabase = createClient();
@@ -19,9 +22,7 @@ export default async function AdminPage() {
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
       <DashboardPageHeader pageTitle={'অ্যাডমিন প্যানেল'} />
-      <div className="flex-1 rounded-lg border bg-card text-card-foreground shadow-xs p-2 sm:p-6">
-        <AdminChallengesTable challenges={challenges} />
-      </div>
+      <AdminChallengesTable challenges={challenges} />
     </main>
   );
 }
