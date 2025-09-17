@@ -22,11 +22,7 @@ export function LocalizationBanner({ country, onCountryChange }: Props) {
         <div className={'flex items-center gap-4'}>
           <Image src={'/assets/icons/localization-icon.svg'} alt={'স্থানীয়করণ আইকন'} width={36} height={36} />
           <p className={'text-[16px] font-medium text-center'}>বিভাগভিত্তিক কার্যক্রম দেখুন</p>
-          <Link
-            className={'text-[16px] text-muted-foreground'}
-            href={'https://developer.paddle.com/build/products/offer-localized-pricing'}
-            target={'_blank'}
-          >
+          <Link className={'text-[16px] text-muted-foreground'} href={'#'}>
             <span className={'flex items-center gap-1'}>
               আরও জানুন
               <ArrowUpRight className={'h-4 w-4'} />

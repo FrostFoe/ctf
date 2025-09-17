@@ -13,7 +13,7 @@ export function DashboardTutorialCard() {
       </CardHeader>
       <CardContent className={'p-0 flex flex-col gap-6'}>
         <div className="text-base leading-6 text-secondary">
-          &apos;রিডল&apos; চ্যালেঞ্জটি গ্রহণ করে আপনার দক্ষতা পরীক্ষা করুন এবং আপনার বুদ্ধিমত্তার প্রমাণ দিন。
+          একটি বৈশিষ্ট্যযুক্ত চ্যালেঞ্জ গ্রহণ করে আপনার দক্ষতা পরীক্ষা করুন এবং আপনার বুদ্ধিমত্তার প্রমাণ দিন।
         </div>
         <div>
           <Button size={'sm'} asChild variant={'outline'} className={'flex gap-2 text-sm rounded-sm border-border'}>
