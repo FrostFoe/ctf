@@ -1,6 +1,6 @@
 'use client';
 
-import { Home, ShieldCheck } from 'lucide-react';
+import { Home, ShieldCheck, UserCog } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -15,6 +15,11 @@ const sidebarItems = [
     title: 'চ্যালেঞ্জসমূহ',
     icon: <ShieldCheck className="h-6 w-6" />,
     href: '/challenges',
+  },
+  {
+    title: 'অ্যাডমিন',
+    icon: <UserCog className="h-6 w-6" />,
+    href: '/admin',
   },
 ];
 

@@ -1,26 +1,23 @@
-export interface CTFTier {
+export interface Challenge {
   name: string;
-  id: 'beginner-detective' | 'beginner-riddle' | 'beginner-spy' | 'intermediate-crypto' | 'intermediate-web' | 'advanced-binary';
+  id: string;
   icon: string;
   description: string;
   features: string[];
   featured: boolean;
   difficulty: 'easy' | 'medium' | 'hard';
   category: 'beginner' | 'hacker';
+  flag?: string;
+  url?: string;
 }
 
-export const CTFTiers: CTFTier[] = [
+export const CTFTiers: Challenge[] = [
   {
     name: 'গোয়েন্দা',
     id: 'beginner-detective',
     icon: '/assets/icons/ctf-tiers/detective-icon.svg',
     description: 'সাধারণ গোয়েন্দাগিরি - ক্লু খুঁজে বের করুন এবং রহস্য সমাধান করুন।',
-    features: [
-      'বেসিক ক্লু হান্টিং',
-      'লজিকাল থিংকিং',
-      'স্টোরি বেসড চ্যালেঞ্জ',
-      '১০-১৫ মিনিট সময় লাগে'
-    ],
+    features: ['বেসিক ক্লু হান্টিং', 'লজিকাল থিংকিং', 'স্টোরি বেসড চ্যালেঞ্জ', '১০-১৫ মিনিট সময় লাগে'],
     featured: false,
     difficulty: 'easy',
     category: 'beginner',
@@ -30,12 +27,7 @@ export const CTFTiers: CTFTier[] = [
     id: 'beginner-riddle',
     icon: '/assets/icons/ctf-tiers/riddle-icon.svg',
     description: 'বুদ্ধিমত্তার পরীক্ষা - ধাঁধাঁ সমাধান করে অগ্রসর হোন।',
-    features: [
-      'ক্রিয়েটিভ রিডলস',
-      'প্যাটার্ন রেকগনিশন',
-      'ব্রেইন টিউজার',
-      '১৫-২০ মিনিট সময় লাগে'
-    ],
+    features: ['ক্রিয়েটিভ রিডলস', 'প্যাটার্ন রেকগনিশন', 'ব্রেইন টিউজার', '১৫-২০ মিনিট সময় লাগে'],
     featured: true,
     difficulty: 'easy',
     category: 'beginner',
@@ -45,12 +37,7 @@ export const CTFTiers: CTFTier[] = [
     id: 'beginner-spy',
     icon: '/assets/icons/ctf-tiers/spy-icon.svg',
     description: 'গোপন মিশন - তথ্য সংগ্রহ করে লক্ষ্য অর্জন করুন।',
-    features: [
-      'ইনফরমেশন গ্যাদারিং',
-      'স্টেলথ অপারেশন',
-      'মিশন কমপ্লিট',
-      '২০-২৫ মিনিট সময় লাগে'
-    ],
+    features: ['ইনফরমেশন গ্যাদারিং', 'স্টেলথ অপারেশন', 'মিশন কমপ্লিট', '২০-২৫ মিনিট সময় লাগে'],
     featured: false,
     difficulty: 'easy',
     category: 'beginner',
@@ -65,7 +52,7 @@ export const CTFTiers: CTFTier[] = [
       'ক্রিপ্টোগ্রাফিক অ্যাটাক',
       'কী ব্রেকিং',
       'ম্যাথমেটিক্যাল থিংকিং',
-      '২৫-৩৫ মিনিট সময় লাগে'
+      '২৫-৩৫ মিনিট সময় লাগে',
     ],
     featured: false,
     difficulty: 'medium',
@@ -81,7 +68,7 @@ export const CTFTiers: CTFTier[] = [
       'ক্রস-সাইট স্ক্রিপ্টিং',
       'ওয়েব ভালনারেবিলিটি',
       'পেন্টেস্টিং',
-      '৩০-৪০ মিনিট সময় লাগে'
+      '৩০-৪০ মিনিট সময় লাগে',
     ],
     featured: true,
     difficulty: 'medium',
@@ -97,7 +84,7 @@ export const CTFTiers: CTFTier[] = [
       'বাফার ওভারফ্লো',
       'মেমরি করাপশন',
       'এডভান্সড এক্সপ্লয়েট',
-      '৪৫+ মিনিট সময় লাগে'
+      '৪৫+ মিনিট সময় লাগে',
     ],
     featured: false,
     difficulty: 'hard',
