@@ -1,6 +1,5 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 
@@ -16,7 +15,6 @@ export async function login(data: FormData) {
     return { error: true };
   }
 
-  revalidatePath('/', 'layout');
   redirect('/');
 }
 
@@ -31,19 +29,4 @@ export async function signInWithGithub() {
   if (data.url) {
     redirect(data.url);
   }
-}
-
-export async function loginAnonymously() {
-  const supabase = await createClient();
-  const { error: signInError } = await supabase.auth.signInAnonymously();
-  const { error: updateUserError } = await supabase.auth.updateUser({
-    email: `demo+${Date.now().toString(36)}@example.com`,
-  });
-
-  if (signInError || updateUserError) {
-    return { error: true };
-  }
-
-  revalidatePath('/', 'layout');
-  redirect('/');
 }
