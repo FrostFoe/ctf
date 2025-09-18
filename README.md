@@ -38,37 +38,176 @@
 ├── README.md
 ├── src
 │   ├── app
-│   │   ├── admin/
-│   │   ├── auth/
-│   │   ├── challenges/
-│   │   ├── dashboard/
-│   │   ├── error/
-│   │   ├── hall-of-fame/
-│   │   ├── login/
-│   │   ├── p/
-│   │   ├── practice/
-│   │   ├── profile/
-│   │   ├── signup/
-│   │   ├── teams/
+│   │   ├── admin
+│   │   │   ├── actions.ts
+│   │   │   ├── challenge-form-dialog.tsx
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── auth
+│   │   │   ├── auth-code-error
+│   │   │   │   └── page.tsx
+│   │   │   ├── callback
+│   │   │   │   └── route.ts
+│   │   │   └── logout
+│   │   │       └── route.ts
+│   │   ├── challenges
+│   │   │   ├── [id]
+│   │   │   │   └── page.tsx
+│   │   │   ├── actions.ts
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── dashboard
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── error
+│   │   │   └── page.tsx
+│   │   ├── hall-of-fame
+│   │   │   ├── layout.tsx
+│   │   │   ├── page-new.tsx
+│   │   │   └── page.tsx
+│   │   ├── login
+│   │   │   ├── actions.ts
+│   │   │   └── page.tsx
+│   │   ├── p
+│   │   │   └── [slug]
+│   │   │       └── page.tsx
+│   │   ├── practice
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── profile
+│   │   │   ├── actions.ts
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── signup
+│   │   │   ├── actions.ts
+│   │   │   └── page.tsx
+│   │   ├── teams
+│   │   │   ├── [id]
+│   │   │   │   └── page.tsx
+│   │   │   ├── actions.ts
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
 │   │   ├── layout.tsx
 │   │   └── page.tsx
 │   ├── components
-│   │   ├── admin/
-│   │   ├── authentication/
-│   │   ├── challenges/
-│   │   ├── dashboard/
-│   │   ├── gradients/
-│   │   ├── home/
-│   │   ├── profile/
-│   │   ├── shared/
-│   │   ├── teams/
-│   │   └── ui/
-│   ├── constants/
-│   ├── hooks/
-│   ├── lib/
-│   ├── styles/
-│   └── utils/
-│       └── supabase/
+│   │   ├── admin
+│   │   │   ├── admin-challenges-table.tsx
+│   │   │   ├── admin-teams-table.tsx
+│   │   │   ├── admin-users-table.tsx
+│   │   │   └── challenge-form-dialog.tsx
+│   │   ├── authentication
+│   │   │   ├── authentication-form.tsx
+│   │   │   ├── gh-login-button.tsx
+│   │   │   ├── login-form.tsx
+│   │   │   └── sign-up-form.tsx
+│   │   ├── challenges
+│   │   │   ├── challenge-submission-form.tsx
+│   │   │   ├── challenges-list.tsx
+│   │   │   └── hint-display.tsx
+│   │   ├── dashboard
+│   │   │   ├── landing
+│   │   │   │   ├── components
+│   │   │   │   │   ├── dashboard-team-members-card-old.tsx
+│   │   │   │   │   ├── dashboard-team-members-card.tsx
+│   │   │   │   │   ├── dashboard-tutorial-card.tsx
+│   │   │   │   │   ├── dashboard-usage-card-group.tsx
+│   │   │   │   │   └── dashboard-welcome-hero.tsx
+│   │   │   │   └── dashboard-landing-page.tsx
+│   │   │   └── layout
+│   │   │       ├── dashboard-layout.tsx
+│   │   │       ├── dashboard-page-header.tsx
+│   │   │       ├── loading-screen.tsx
+│   │   │       ├── mobile-sidebar.tsx
+│   │   │       ├── sidebar-user-info.tsx
+│   │   │       └── sidebar.tsx
+│   │   ├── gradients
+│   │   │   ├── dashboard-gradient.tsx
+│   │   │   ├── featured-card-gradient.tsx
+│   │   │   ├── home-page-background.tsx
+│   │   │   ├── login-card-gradient.tsx
+│   │   │   └── login-gradient.tsx
+│   │   ├── home
+│   │   │   ├── ctf
+│   │   │   │   ├── challenge-title.tsx
+│   │   │   │   └── ctf-cards.tsx
+│   │   │   ├── footer
+│   │   │   │   ├── built-using-tools.tsx
+│   │   │   │   ├── footer-links.tsx
+│   │   │   │   └── footer.tsx
+│   │   │   ├── header
+│   │   │   │   ├── country-dropdown.tsx
+│   │   │   │   ├── header.tsx
+│   │   │   │   └── localization-banner.tsx
+│   │   │   ├── hero-section
+│   │   │   │   └── hero-section.tsx
+│   │   │   ├── home-page.tsx
+│   │   │   └── pricing
+│   │   │       ├── features-list.tsx
+│   │   │       └── pricing.tsx
+│   │   ├── profile
+│   │   │   └── profile-form.tsx
+│   │   ├── shared
+│   │   │   ├── bcoin-icon.tsx
+│   │   │   ├── confirmation
+│   │   │   │   └── confirmation.tsx
+│   │   │   ├── select
+│   │   │   │   └── select.tsx
+│   │   │   ├── status
+│   │   │   │   └── status.tsx
+│   │   │   └── toggle
+│   │   │       └── toggle.tsx
+│   │   ├── teams
+│   │   │   ├── create-team-card.tsx
+│   │   │   ├── team-base.tsx
+│   │   │   ├── team-chat.tsx
+│   │   │   ├── team-marketplace.tsx
+│   │   │   ├── team-view.tsx
+│   │   │   └── teams-list.tsx
+│   │   └── ui
+│   │       ├── accordion.tsx
+│   │       ├── alert.tsx
+│   │       ├── badge.tsx
+│   │       ├── button.tsx
+│   │       ├── card.tsx
+│   │       ├── dialog.tsx
+│   │       ├── dropdown-menu.tsx
+│   │       ├── input.tsx
+│   │       ├── label.tsx
+│   │       ├── modern-card.tsx
+│   │       ├── podium.tsx
+│   │       ├── scroll-area.tsx
+│   │       ├── select.tsx
+│   │       ├── separator.tsx
+│   │       ├── sheet.tsx
+│   │       ├── skeleton.tsx
+│   │       ├── stat-card.tsx
+│   │       ├── switch.tsx
+│   │       ├── table.tsx
+│   │       ├── tabs.tsx
+│   │       ├── textarea.tsx
+│   │       ├── toast.tsx
+│   │       ├── toaster.tsx
+│   │       └── use-toast.ts
+│   ├── constants
+│   │   ├── billing-frequency.ts
+│   │   └── index.ts
+│   ├── hooks
+│   │   ├── usePagination.ts
+│   │   └── useUserInfo.ts
+│   ├── lib
+│   │   ├── database.types.ts
+│   │   └── utils.ts
+│   ├── styles
+│   │   ├── dashboard.css
+│   │   ├── globals.css
+│   │   ├── home-page.css
+│   │   ├── layout.css
+│   │   └── login.css
+│   └── utils
+│       └── supabase
+│           ├── client.ts
+│           ├── middleware.ts
+│           └── server.ts
 └── tsconfig.json
 ```
 

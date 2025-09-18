@@ -1,13 +1,14 @@
 import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
-import type { Challenge } from '@/lib/database.types';
+import type { Challenge, ChallengeResource } from '@/lib/database.types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BcoinIcon } from '@/components/shared/bcoin-icon';
-import { CircleCheck } from 'lucide-react';
+import { CircleCheck, Link as LinkIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ChallengeSubmissionForm } from '@/components/challenges/challenge-submission-form';
 import { HintDisplay } from '@/components/challenges/hint-display';
 import Image from 'next/image';
+import Link from 'next/link';
 
 async function getChallenge(id: string): Promise<Challenge | null> {
   const supabase = await createClient();
@@ -59,8 +60,8 @@ function stringToHash(str: string) {
   return Math.abs(hash);
 }
 
-export default async function ChallengePage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export default async function ChallengePage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const supabase = await createClient();
   const {
     data: { user },
@@ -116,6 +117,32 @@ export default async function ChallengePage({ params }: { params: Promise<{ id: 
               <p className="text-muted-foreground">{challenge.description}</p>
             </CardContent>
           </Card>
+
+          {challenge.resources && challenge.resources.length > 0 && (
+            <Card className="bg-background/50 backdrop-blur-md">
+              <CardHeader>
+                <CardTitle>রিসোর্সসমূহ</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {(challenge.resources as ChallengeResource[]).map((resource) => (
+                    <li key={resource.url}>
+                      <a
+                        href={resource.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                      >
+                        <LinkIcon className="h-5 w-5 text-primary" />
+                        <span className="text-foreground font-medium">{resource.name}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          )}
+
           <Card className="bg-background/50 backdrop-blur-md">
             <CardHeader>
               <CardTitle>বৈশিষ্ট্য</CardTitle>
