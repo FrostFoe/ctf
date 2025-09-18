@@ -84,7 +84,7 @@ export default async function ChallengePage({ params }: { params: { id: string }
           className="object-cover"
           data-ai-hint="cybersecurity abstract"
         />
-        <div className="absolute inset-0 bg-black/60 flex flex-col justify-end p-4 md:p-8">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4 md:p-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">{challenge.name}</h1>
           <div className="flex items-center gap-4">
             <span
