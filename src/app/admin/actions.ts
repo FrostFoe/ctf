@@ -27,8 +27,8 @@ export async function getAdminDashboardData(): Promise<AdminData> {
   const supabase = await verifyAdmin();
 
   const challengesPromise = supabase.from('challenges').select('*').order('name', { ascending: true });
-  const usersPromise = supabase.from('leaderboard').select('*').order('rank', { ascending: true });
-  const teamsPromise = supabase.from('team_leaderboard').select('*').order('rank', { ascending: true });
+  const usersPromise = supabase.from('user_leaderboard').select('*').order('rank', { ascending: true });
+  const teamsPromise = supabase.from('team_leaderboard_table').select('*').order('rank', { ascending: true });
 
   const [challengesRes, usersRes, teamsRes] = await Promise.all([challengesPromise, usersPromise, teamsPromise]);
 

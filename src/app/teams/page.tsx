@@ -1,6 +1,6 @@
 import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
 import { createClient } from '@/utils/supabase/server';
-import type { Team, TeamDetails } from '@/lib/database.types';
+import type { Team, TeamDetails, TeamMember } from '@/lib/database.types';
 import { TeamsList } from '@/components/teams/teams-list';
 import { TeamView } from '@/components/teams/team-view';
 import { CreateTeamCard } from '@/components/teams/create-team-card';
@@ -67,16 +67,27 @@ async function getUserTeam(userId: string): Promise<TeamDetails | null> {
     return null;
   }
 
-  const transformedMembers = teamData.members.map((m: any) => ({
-    user_id: m.user_id,
-    role: m.role,
-    username: m.profile?.username || 'অজানা',
-  }));
+  type RawMember = {
+    user_id: string;
+    role: 'admin' | 'member';
+    profile: { username: string | null } | { username: string | null }[] | null;
+  };
+  const rawMembers = teamData.members as unknown as RawMember[];
+  const transformedMembers: TeamMember[] = (rawMembers || []).map((m) => {
+    const profile = Array.isArray(m.profile) ? m.profile[0] : m.profile;
+    return {
+      team_id: teamData.id,
+      user_id: m.user_id,
+      role: m.role,
+      username: profile?.username || 'অজানা',
+    };
+  });
 
-  return { ...teamData, members: transformedMembers };
+  return { ...teamData, members: transformedMembers } as TeamDetails;
 }
 
-export default async function TeamsPage({ searchParams }: { searchParams: { page?: string } }) {
+export default async function TeamsPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  const { page: pageParam } = await searchParams;
   const supabase = await createClient();
   const {
     data: { user },
@@ -86,7 +97,7 @@ export default async function TeamsPage({ searchParams }: { searchParams: { page
     redirect('/login');
   }
 
-  const page = parseInt(searchParams.page || '0', 10);
+  const page = parseInt(pageParam || '0', 10);
   const { teams, count } = await getTeams(page);
   const userTeam = await getUserTeam(user.id);
   const totalPages = Math.ceil(count / PAGE_SIZE);

@@ -1,7 +1,7 @@
 
 import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
 import { AdminChallengesTable } from '@/components/admin/admin-challenges-table';
-import { getAdminDashboardData, type AdminData } from '@/app/admin/actions';
+import { getAdminDashboardData } from '@/app/admin/actions';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AdminUsersTable } from '@/components/admin/admin-users-table';
 import { AdminTeamsTable } from '@/components/admin/admin-teams-table';

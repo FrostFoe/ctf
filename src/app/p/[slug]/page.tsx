@@ -2,7 +2,7 @@ import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import type { Challenge } from '@/lib/database.types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Trophy, CheckCircle, Hash, BarChart } from 'lucide-react';
+import { Trophy, CheckCircle, Hash } from 'lucide-react';
 import { BcoinIcon } from '@/components/shared/bcoin-icon';
 
 interface PublicProfile {
@@ -24,35 +24,26 @@ async function getProfileData(slug: string): Promise<{
 } | null> {
   const supabase = await createClient();
 
-  // Try to fetch by username first
-  let { data: profileData, error: profileError } = await supabase
-    .from('profiles')
-    .select('id, username, full_name')
-    .eq('username', slug)
-    .single();
+  // Try to fetch by username or ID using the new function
+  const { data: profileData, error: profileError } = await supabase
+    .rpc('get_profile_by_slug', { profile_slug: slug })
+    .maybeSingle();
 
-  // If not found by username, try by ID
   if (profileError || !profileData) {
-    const { data: byIdData, error: byIdError } = await supabase
-      .from('profiles')
-      .select('id, username, full_name')
-      .eq('id', slug)
-      .single();
-
-    if (byIdError || !byIdData) {
-      console.error('Error fetching profile by username or id:', profileError || byIdError);
-      return null;
-    }
-    profileData = byIdData;
+    console.error('Error fetching profile by username or id:', profileError);
+    return null;
   }
 
-  const userId = profileData.id;
+  const typedProfileData = profileData as {
+    id: string;
+    username: string | null;
+    full_name: string | null;
+    total_points: number;
+    rank: number;
+    solved_challenges_count: number;
+  };
 
-  const { data: leaderboardData, error: leaderboardError } = await supabase
-    .from('leaderboard')
-    .select('total_points, rank, solved_challenges')
-    .eq('user_id', userId)
-    .single();
+  const userId = typedProfileData.id;
 
   const { data: solvedChallengesData, error: solvedChallengesError } = await supabase
     .from('solved_challenges')
@@ -65,31 +56,57 @@ async function getProfileData(slug: string): Promise<{
     .eq('user_id', userId)
     .order('solved_at', { ascending: false });
 
-  if (leaderboardError || solvedChallengesError) {
-    console.error('Error fetching profile details:', leaderboardError || solvedChallengesError);
+  if (solvedChallengesError) {
+    console.error('Error fetching solved challenges:', solvedChallengesError);
     return null;
   }
 
   const profile: PublicProfile = {
-    id: profileData.id,
-    username: profileData.username,
-    full_name: profileData.full_name,
-    total_points: leaderboardData?.total_points || 0,
-    rank: leaderboardData?.rank || 0,
-    solved_challenges_count: leaderboardData?.solved_challenges || 0,
+    id: typedProfileData.id,
+    username: typedProfileData.username,
+    full_name: typedProfileData.full_name,
+    total_points: typedProfileData.total_points,
+    rank: typedProfileData.rank,
+    solved_challenges_count: typedProfileData.solved_challenges_count,
   };
 
-  const solvedChallenges: SolvedChallenge[] =
-    (solvedChallengesData?.map((item: any) => ({
-      ...item.challenge,
-      solved_at: item.solved_at,
-    })) as SolvedChallenge[]) || [];
+  type RawSolvedUnknown = { solved_at: unknown; challenge: unknown };
+
+  function isChallengeShape(v: unknown): v is Pick<Challenge, 'id' | 'name' | 'category' | 'difficulty' | 'points'> {
+    if (typeof v !== 'object' || v === null) return false;
+    const obj = v as Record<string, unknown>;
+    return (
+      typeof obj.id === 'string' &&
+      typeof obj.name === 'string' &&
+      (obj.category === 'beginner' || obj.category === 'hacker' || obj.category === 'practice') &&
+      (obj.difficulty === 'easy' || obj.difficulty === 'medium' || obj.difficulty === 'hard') &&
+      typeof obj.points === 'number'
+    );
+  }
+
+  const solvedChallenges: SolvedChallenge[] = ((solvedChallengesData as unknown as RawSolvedUnknown[]) || [])
+    .map((item) => {
+      const chRaw = (item as RawSolvedUnknown).challenge;
+      const ch = Array.isArray(chRaw) ? chRaw[0] : chRaw;
+      if (!isChallengeShape(ch)) return null;
+      const solvedAt = (item as RawSolvedUnknown).solved_at;
+      return {
+        id: ch.id,
+        name: ch.name,
+        category: ch.category,
+        difficulty: ch.difficulty,
+        points: ch.points,
+        solved_at: typeof solvedAt === 'string' ? solvedAt : new Date(String(solvedAt)).toISOString(),
+      };
+    })
+    .filter((v): v is SolvedChallenge => v !== null);
 
   return { profile, solvedChallenges };
 }
 
-export default async function PublicProfilePage({ params }: { params: { slug: string } }) {
-  const data = await getProfileData(params.slug);
+export default async function PublicProfilePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const data = await getProfileData(slug);
 
   if (!data) {
     notFound();

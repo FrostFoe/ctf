@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import type { User } from '@supabase/supabase-js';
 import type { TeamDetails, TeamChatMessage, TeamMarketplaceItem } from '@/lib/database.types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TeamChat } from './team-chat';
 import { TeamMarketplace } from './team-marketplace';
 import { createClient } from '@/utils/supabase/client';

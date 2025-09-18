@@ -12,9 +12,9 @@ async function getLeaderboardData(): Promise<{
   individual: LeaderboardEntry[];
   team: TeamLeaderboardEntry[];
 }> {
-  const supabase = createClient();
-  const individualPromise = supabase.from('leaderboard').select('*');
-  const teamPromise = supabase.from('team_leaderboard').select('*');
+  const supabase = await createClient();
+  const individualPromise = supabase.from('user_leaderboard').select('*').order('rank', { ascending: true });
+  const teamPromise = supabase.from('team_leaderboard_table').select('*').order('rank', { ascending: true });
 
   const [individualRes, teamRes] = await Promise.all([individualPromise, teamPromise]);
 

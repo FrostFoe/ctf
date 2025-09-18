@@ -27,6 +27,7 @@ export interface UserStats {
   solved_challenges: number;
   rank: number;
   spendable_points: number;
+  full_name: string | null;
 }
 
 export interface Team {

@@ -8,7 +8,7 @@ import { Crown, User, Trash2, Copy, Check } from 'lucide-react';
 import { Confirmation } from '../shared/confirmation/confirmation';
 import { useState } from 'react';
 import { leaveTeam, kickMember } from '@/app/teams/actions';
-import { useToast } from '../ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import Link from 'next/link';
 
 interface TeamViewProps {
@@ -113,7 +113,7 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
                         <TableCell className="text-right">
                           {member.user_id !== currentUserId && (
                             <Button
-                              variant="destructive-outline"
+                              variant="outline"
                               size="icon"
                               onClick={() => setMemberToKick(member)}
                             >

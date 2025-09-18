@@ -1,14 +1,14 @@
 'use client';
 
 import type { Team } from '@/lib/database.types';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { joinTeam } from '@/app/teams/actions';
 import { useToast } from '../ui/use-toast';
 import { useState } from 'react';
 import { Loader2, Lock, Unlock } from 'lucide-react';
 import { Input } from '../ui/input';
-import { useRouter } from 'next/navigation';
+
 import Link from 'next/link';
 
 interface TeamsListProps {
@@ -19,7 +19,7 @@ interface TeamsListProps {
 
 export function TeamsList({ teams, currentPage, totalPages }: TeamsListProps) {
   const { toast } = useToast();
-  const router = useRouter();
+  
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const [tokenInputs, setTokenInputs] = useState<Record<string, string>>({});
 

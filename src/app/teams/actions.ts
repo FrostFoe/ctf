@@ -2,7 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+
 
 export async function createTeam(teamName: string, isPrivate: boolean) {
   const supabase = await createClient();
@@ -60,7 +60,7 @@ export async function createTeam(teamName: string, isPrivate: boolean) {
 }
 
 export async function joinTeam(teamId: string, token: string | null) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -164,7 +164,7 @@ export async function kickMember(teamId: string, memberId: string) {
 
 
 export async function postTeamMessage(teamId: string, message: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -200,7 +200,7 @@ export async function postTeamMessage(teamId: string, message: string) {
 }
 
 export async function purchaseTeamItem(teamId: string, itemId: number) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

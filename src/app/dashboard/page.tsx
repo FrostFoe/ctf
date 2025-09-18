@@ -9,19 +9,20 @@ async function getDashboardData(userId?: string): Promise<{
   teamLeaderboard: TeamLeaderboardEntry[];
   totalChallenges: number;
 }> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
-  const leaderboardPromise = supabase.from('leaderboard').select('*').limit(5);
+  const leaderboardPromise = supabase.from('user_leaderboard').select('*').order('rank', { ascending: true }).limit(5);
 
-  const teamLeaderboardPromise = supabase.from('team_leaderboard').select('*').limit(5);
+  const teamLeaderboardPromise = supabase.from('team_leaderboard_table').select('*').order('rank', { ascending: true }).limit(5);
 
   const totalChallengesPromise = supabase
     .from('challenges')
     .select('id', { count: 'exact', head: true })
     .neq('category', 'practice');
 
+  // Use the new get_user_stats_with_profile function if user is logged in
   const userStatsPromise = userId
-    ? supabase.from('leaderboard').select('*, profile:profiles(spendable_points)').eq('user_id', userId).maybeSingle()
+    ? supabase.rpc('get_user_stats_with_profile', { user_uuid: userId })
     : Promise.resolve({ data: null, error: null });
 
   const [leaderboardRes, teamLeaderboardRes, totalChallengesRes, userStatsRes] = await Promise.all([
@@ -44,16 +45,20 @@ async function getDashboardData(userId?: string): Promise<{
     console.error('Error fetching user stats:', userStatsRes.error);
   }
 
-  // Manually combine the profile data into the stats object
-  const statsData = userStatsRes.data as any;
-  const finalStats = statsData
-    ? {
-        ...statsData,
-        spendable_points: statsData.profile?.spendable_points ?? 0,
-      }
-    : null;
-  if (finalStats) {
-    delete finalStats.profile;
+  // Process the user stats data from the RPC function
+  const statsData = userStatsRes.data?.[0] || null;
+  let finalStats: UserStats | null = null;
+
+  if (statsData) {
+    finalStats = {
+      user_id: statsData.user_id,
+      username: statsData.username,
+      total_points: statsData.total_points,
+      solved_challenges: statsData.solved_challenges,
+      rank: statsData.rank,
+      spendable_points: statsData.spendable_points,
+      full_name: statsData.full_name,
+    };
   }
 
   return {
@@ -65,7 +70,7 @@ async function getDashboardData(userId?: string): Promise<{
 }
 
 export default async function LandingPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

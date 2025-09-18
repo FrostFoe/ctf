@@ -3,7 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 import type { Challenge } from '@/lib/database.types';
 
 async function getChallenges(): Promise<Challenge[]> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('challenges')
     .select('*')

@@ -10,7 +10,7 @@ import { HintDisplay } from '@/components/challenges/hint-display';
 import Image from 'next/image';
 
 async function getChallenge(id: string): Promise<Challenge | null> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase.from('challenges').select('*').eq('id', id).single();
   if (error) {
     console.error('Error fetching challenge', error);
@@ -21,7 +21,7 @@ async function getChallenge(id: string): Promise<Challenge | null> {
 
 async function getIsSolved(userId: string | undefined, challengeId: string): Promise<boolean> {
   if (!userId) return false;
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('solved_challenges')
     .select('challenge_id')
@@ -59,13 +59,14 @@ function stringToHash(str: string) {
   return Math.abs(hash);
 }
 
-export default async function ChallengePage({ params }: { params: { id: string } }) {
-  const supabase = createClient();
+export default async function ChallengePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const challenge = await getChallenge(params.id);
+  const challenge = await getChallenge(id);
 
   if (!challenge) {
     notFound();

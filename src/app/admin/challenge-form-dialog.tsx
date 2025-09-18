@@ -13,11 +13,11 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useState, useEffect, type ChangeEvent } from 'react';
-import { useToast } from '../ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import { addChallenge, updateChallenge } from '@/app/admin/actions';
 import type { Challenge } from '@/lib/database.types';
-import { Switch } from '../ui/switch';
-import { Select } from '../shared/select/select';
+import { Switch } from '@/components/ui/switch';
+import { Select } from '@/components/shared/select/select';
 
 interface Props {
   challenge: Challenge | null;

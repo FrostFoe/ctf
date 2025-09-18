@@ -58,7 +58,7 @@ export async function checkFlag(challengeId: string, submittedFlag: string) {
 }
 
 export async function purchaseHintAction(challengeId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -67,7 +67,7 @@ export async function purchaseHintAction(challengeId: string) {
     return { error: 'আপনাকে অবশ্যই লগইন করতে হবে।' };
   }
 
-  const { data, error } = await supabase.rpc('purchase_hint', {
+  const { error } = await supabase.rpc('purchase_hint', {
     p_challenge_id: challengeId,
     p_user_id: user.id,
   });
