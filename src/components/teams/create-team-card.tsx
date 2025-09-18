@@ -47,15 +47,15 @@ export function CreateTeamCard() {
             onChange={(e) => setTeamName(e.target.value)}
             disabled={isLoading}
           />
-           <Button onClick={handleCreateTeam} disabled={isLoading}>
+          <Button onClick={handleCreateTeam} disabled={isLoading}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             তৈরি করুন
           </Button>
         </div>
-         <div className="flex items-center space-x-2">
-            <Switch id="is-private" checked={isPrivate} onCheckedChange={setIsPrivate} />
-            <Label htmlFor="is-private">প্রাইভেট দল (যোগদানের জন্য টোকেন প্রয়োজন হবে)</Label>
-          </div>
+        <div className="flex items-center space-x-2">
+          <Switch id="is-private" checked={isPrivate} onCheckedChange={setIsPrivate} />
+          <Label htmlFor="is-private">প্রাইভেট দল (যোগদানের জন্য টোকেন প্রয়োজন হবে)</Label>
+        </div>
       </CardContent>
     </Card>
   );

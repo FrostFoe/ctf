@@ -33,9 +33,7 @@ export function TeamBase({ initialTeam, currentUser }: TeamBaseProps) {
       else setMessages(chatData as TeamChatMessage[]);
 
       // Fetch marketplace items
-      const { data: marketData, error: marketError } = await supabase
-        .from('team_marketplace_items')
-        .select('*');
+      const { data: marketData, error: marketError } = await supabase.from('team_marketplace_items').select('*');
 
       if (marketError) console.error('Error fetching marketplace items:', marketError);
       else setMarketplaceItems(marketData as TeamMarketplaceItem[]);
@@ -66,18 +64,17 @@ export function TeamBase({ initialTeam, currentUser }: TeamBaseProps) {
         },
       )
       .subscribe();
-    
+
     const teamUpdateChannel = supabase
       .channel(`team-updates-${team.id}`)
       .on(
         'postgres_changes',
-        { event: 'UPDATE', schema: 'public', table: 'teams', filter: `id=eq.${team.id}`},
+        { event: 'UPDATE', schema: 'public', table: 'teams', filter: `id=eq.${team.id}` },
         (payload) => {
-            setTeam(prev => ({...prev, ...payload.new as Partial<TeamDetails>}))
-        }
+          setTeam((prev) => ({ ...prev, ...(payload.new as Partial<TeamDetails>) }));
+        },
       )
       .subscribe();
-
 
     return () => {
       supabase.removeChannel(chatChannel);
@@ -114,12 +111,14 @@ export function TeamBase({ initialTeam, currentUser }: TeamBaseProps) {
               </span>
             </div>
             <div className="space-y-2">
-                <h4 className='text-muted-foreground'>সদস্যরা</h4>
-                 <ul className='space-y-1'>
-                    {team.members.map(member => (
-                        <li key={member.user_id} className="text-sm">{member.username} {member.role === 'admin' && '(অ্যাডমিন)'}</li>
-                    ))}
-                 </ul>
+              <h4 className="text-muted-foreground">সদস্যরা</h4>
+              <ul className="space-y-1">
+                {team.members.map((member) => (
+                  <li key={member.user_id} className="text-sm">
+                    {member.username} {member.role === 'admin' && '(অ্যাডমিন)'}
+                  </li>
+                ))}
+              </ul>
             </div>
           </CardContent>
         </Card>

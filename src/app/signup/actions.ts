@@ -19,17 +19,17 @@ export async function signup(data: FormData) {
 
   if (error) {
     console.error('Signup error:', error);
-    return { 
-      error: true, 
-      message: error.message.includes('already registered') 
-        ? 'এই ইমেইল ঠিকানা ইতিমধ্যে ব্যবহৃত হচ্ছে' 
-        : 'সাইন আপে সমস্যা হয়েছে। আবার চেষ্টা করুন।'
+    return {
+      error: true,
+      message: error.message.includes('already registered')
+        ? 'এই ইমেইল ঠিকানা ইতিমধ্যে ব্যবহৃত হচ্ছে'
+        : 'সাইন আপে সমস্যা হয়েছে। আবার চেষ্টা করুন।',
     };
   }
 
   // For email confirmation flow
-  return { 
-    success: true, 
-    message: 'আপনার ইমেইল চেক করুন এবং লিংকে ক্লিক করে একাউন্ট নিশ্চিত করুন।' 
+  return {
+    success: true,
+    message: 'আপনার ইমেইল চেক করুন এবং লিংকে ক্লিক করে একাউন্ট নিশ্চিত করুন।',
   };
 }

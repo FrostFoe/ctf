@@ -9,7 +9,7 @@ import { redirect } from 'next/navigation';
 
 const PAGE_SIZE = 10;
 
-async function getTeams(page: number): Promise<{ teams: Team[], count: number }> {
+async function getTeams(page: number): Promise<{ teams: Team[]; count: number }> {
   const supabase = await createClient();
   const from = page * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
@@ -27,7 +27,6 @@ async function getTeams(page: number): Promise<{ teams: Team[], count: number }>
 
   return { teams: data || [], count: count || 0 };
 }
-
 
 async function getUserTeam(userId: string): Promise<TeamDetails | null> {
   const supabase = await createClient();

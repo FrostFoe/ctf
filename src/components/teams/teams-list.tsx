@@ -19,14 +19,14 @@ interface TeamsListProps {
 
 export function TeamsList({ teams, currentPage, totalPages }: TeamsListProps) {
   const { toast } = useToast();
-  
+
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const [tokenInputs, setTokenInputs] = useState<Record<string, string>>({});
 
   const handleJoinTeam = async (team: Team) => {
     setIsLoading(team.id);
     const token = team.is_private ? tokenInputs[team.id] || null : null;
-     if (team.is_private && !token) {
+    if (team.is_private && !token) {
       toast({ variant: 'destructive', description: 'প্রাইভেট দলে যোগদানের জন্য একটি টোকেন প্রয়োজন।' });
       setIsLoading(null);
       return;
@@ -40,10 +40,10 @@ export function TeamsList({ teams, currentPage, totalPages }: TeamsListProps) {
     }
     setIsLoading(null);
   };
-  
+
   const handleTokenInputChange = (teamId: string, value: string) => {
-    setTokenInputs(prev => ({...prev, [teamId]: value}));
-  }
+    setTokenInputs((prev) => ({ ...prev, [teamId]: value }));
+  };
 
   if (teams.length === 0 && currentPage === 0) {
     return (
@@ -58,51 +58,47 @@ export function TeamsList({ teams, currentPage, totalPages }: TeamsListProps) {
 
   return (
     <>
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {teams.map((team) => (
-        <Card key={team.id}>
-          <CardHeader>
-            <div className="flex justify-between items-center">
-               <CardTitle>{team.name}</CardTitle>
-               {team.is_private ? <Lock className="h-4 w-4 text-muted-foreground" /> : <Unlock className="h-4 w-4 text-muted-foreground" />}
-            </div>
-            <CardDescription>{team.is_private ? "প্রাইভেট দল" : "পাবলিক দল"}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-             {team.is_private && (
-                <Input 
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {teams.map((team) => (
+          <Card key={team.id}>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>{team.name}</CardTitle>
+                {team.is_private ? (
+                  <Lock className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <Unlock className="h-4 w-4 text-muted-foreground" />
+                )}
+              </div>
+              <CardDescription>{team.is_private ? 'প্রাইভেট দল' : 'পাবলিক দল'}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {team.is_private && (
+                <Input
                   placeholder="যোগদান টোকেন"
                   value={tokenInputs[team.id] || ''}
                   onChange={(e) => handleTokenInputChange(team.id, e.target.value)}
                 />
               )}
-            <Button className="w-full" onClick={() => handleJoinTeam(team)} disabled={!!isLoading}>
-              {isLoading === team.id && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              যোগ দিন
-            </Button>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-     <div className="flex items-center justify-center space-x-2 mt-8">
-        <Button
-          variant="outline"
-          disabled={currentPage === 0}
-          asChild
-        >
+              <Button className="w-full" onClick={() => handleJoinTeam(team)} disabled={!!isLoading}>
+                {isLoading === team.id && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                যোগ দিন
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      <div className="flex items-center justify-center space-x-2 mt-8">
+        <Button variant="outline" disabled={currentPage === 0} asChild>
           <Link href={`/teams?page=${currentPage - 1}`}>পূর্ববর্তী</Link>
         </Button>
         <span className="text-sm text-muted-foreground">
           পৃষ্ঠা {currentPage + 1} এর {totalPages}
         </span>
-        <Button
-          variant="outline"
-          disabled={currentPage >= totalPages - 1}
-          asChild
-        >
+        <Button variant="outline" disabled={currentPage >= totalPages - 1} asChild>
           <Link href={`/teams?page=${currentPage + 1}`}>পরবর্তী</Link>
         </Button>
       </div>
-      </>
+    </>
   );
 }

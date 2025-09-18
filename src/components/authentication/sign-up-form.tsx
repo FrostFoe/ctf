@@ -30,14 +30,14 @@ export function SignupForm() {
     setIsLoading(false);
 
     if (result?.error) {
-      toast({ 
-        description: result.message || 'কিছু একটা ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন', 
-        variant: 'destructive' 
+      toast({
+        description: result.message || 'কিছু একটা ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন',
+        variant: 'destructive',
       });
     } else if (result?.success) {
-      toast({ 
-        description: result.message || 'সফলভাবে সাইন আপ হয়েছে!', 
-        variant: 'default' 
+      toast({
+        description: result.message || 'সফলভাবে সাইন আপ হয়েছে!',
+        variant: 'default',
       });
     }
   }

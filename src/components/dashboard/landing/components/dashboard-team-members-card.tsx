@@ -54,7 +54,12 @@ export function DashboardTeamMembersCard({ leaderboard, teamLeaderboard }: Dashb
             </div>
             <p className="text-sm text-muted-foreground">শীর্ষ প্রতিযোগী ও দল</p>
           </div>
-          <Button asChild variant="outline" size="sm" className="hover:bg-primary hover:text-primary-foreground transition-colors">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="hover:bg-primary hover:text-primary-foreground transition-colors"
+          >
             <Link href="/hall-of-fame">সব দেখুন</Link>
           </Button>
         </div>
@@ -76,12 +81,17 @@ export function DashboardTeamMembersCard({ leaderboard, teamLeaderboard }: Dashb
           <TabsContent value="individual" className="mt-4 space-y-3">
             {leaderboard.length > 0 ? (
               leaderboard.map((player, index) => (
-                <div key={player.user_id} className="group/item flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                <div
+                  key={player.user_id}
+                  className="group/item flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                >
                   <div className="flex gap-3 items-center">
-                    <div className={cn(
-                      "flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm transition-colors",
-                      getRankColor(player.rank)
-                    )}>
+                    <div
+                      className={cn(
+                        'flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm transition-colors',
+                        getRankColor(player.rank),
+                      )}
+                    >
                       {player.rank <= 3 ? getRankIcon(player.rank) : player.rank}
                     </div>
                     <Link
@@ -93,8 +103,8 @@ export function DashboardTeamMembersCard({ leaderboard, teamLeaderboard }: Dashb
                       </span>
                     </Link>
                     <div>
-                      <Link 
-                        href={`/p/${player.username || player.user_id}`} 
+                      <Link
+                        href={`/p/${player.username || player.user_id}`}
                         className="font-medium hover:text-primary transition-colors"
                       >
                         {player.username || 'অজানা'}
@@ -118,12 +128,17 @@ export function DashboardTeamMembersCard({ leaderboard, teamLeaderboard }: Dashb
           <TabsContent value="team" className="mt-4 space-y-3">
             {teamLeaderboard.length > 0 ? (
               teamLeaderboard.map((team) => (
-                <div key={team.team_id} className="group/item flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                <div
+                  key={team.team_id}
+                  className="group/item flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                >
                   <div className="flex gap-3 items-center">
-                    <div className={cn(
-                      "flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm transition-colors",
-                      getRankColor(team.rank)
-                    )}>
+                    <div
+                      className={cn(
+                        'flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm transition-colors',
+                        getRankColor(team.rank),
+                      )}
+                    >
                       {team.rank <= 3 ? getRankIcon(team.rank) : team.rank}
                     </div>
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-gradient-to-r from-blue-500/20 to-cyan-500/20">

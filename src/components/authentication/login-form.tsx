@@ -26,9 +26,9 @@ export function LoginForm() {
     setIsLoading(false);
 
     if (result?.error) {
-      toast({ 
-        description: result.message || 'অবৈধ ইমেইল বা পাসওয়ার্ড', 
-        variant: 'destructive' 
+      toast({
+        description: result.message || 'অবৈধ ইমেইল বা পাসওয়ার্ড',
+        variant: 'destructive',
       });
     }
   }

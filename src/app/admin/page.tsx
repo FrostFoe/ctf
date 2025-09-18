@@ -1,4 +1,3 @@
-
 import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
 import { AdminChallengesTable } from '@/components/admin/admin-challenges-table';
 import { getAdminDashboardData } from '@/app/admin/actions';

@@ -36,12 +36,7 @@ export function GhLoginButton({ label }: Props) {
   };
 
   return (
-    <Button 
-      onClick={handleSignIn} 
-      variant={'secondary'} 
-      className={'w-full'} 
-      disabled={isLoading}
-    >
+    <Button onClick={handleSignIn} variant={'secondary'} className={'w-full'} disabled={isLoading}>
       {isLoading ? (
         <Loader2 className="mr-3 h-4 w-4 animate-spin" />
       ) : (

@@ -31,8 +31,8 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
     }
     setIsLeaveConfirmOpen(false);
   };
-  
-   const handleKickMember = async () => {
+
+  const handleKickMember = async () => {
     if (!memberToKick) return;
     const result = await kickMember(team.id, memberToKick.user_id);
     if (result.error) {
@@ -42,7 +42,6 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
     }
     setMemberToKick(null);
   };
-
 
   const handleCopyToken = () => {
     if (team.join_token) {
@@ -112,11 +111,7 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
                       {isCurrentUserAdmin && (
                         <TableCell className="text-right">
                           {member.user_id !== currentUserId && (
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              onClick={() => setMemberToKick(member)}
-                            >
+                            <Button variant="outline" size="icon" onClick={() => setMemberToKick(member)}>
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           )}
@@ -145,8 +140,8 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
         confirmText="নিশ্চিত করুন"
         cancelText="বন্ধ করুন"
       />
-      
-       <Confirmation
+
+      <Confirmation
         isOpen={!!memberToKick}
         onClose={() => setMemberToKick(null)}
         onConfirm={handleKickMember}

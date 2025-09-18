@@ -13,7 +13,11 @@ async function getDashboardData(userId?: string): Promise<{
 
   const leaderboardPromise = supabase.from('user_leaderboard').select('*').order('rank', { ascending: true }).limit(5);
 
-  const teamLeaderboardPromise = supabase.from('team_leaderboard_table').select('*').order('rank', { ascending: true }).limit(5);
+  const teamLeaderboardPromise = supabase
+    .from('team_leaderboard_table')
+    .select('*')
+    .order('rank', { ascending: true })
+    .limit(5);
 
   const totalChallengesPromise = supabase
     .from('challenges')

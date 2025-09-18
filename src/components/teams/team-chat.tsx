@@ -40,7 +40,7 @@ export function TeamChat({ messages, teamId, currentUser }: TeamChatProps) {
     const result = await postTeamMessage(teamId, newMessage);
     setNewMessage('');
     setIsSending(false);
-    if(result.error) {
+    if (result.error) {
       // You might want to show a toast here
       console.error(result.error);
     }
@@ -69,9 +69,9 @@ export function TeamChat({ messages, teamId, currentUser }: TeamChatProps) {
                 </div>
               </div>
             ))}
-             {messages.length === 0 && (
-                <div className="text-center text-muted-foreground py-16">এখনো কোনো আলোচনা শুরু হয়নি।</div>
-             )}
+            {messages.length === 0 && (
+              <div className="text-center text-muted-foreground py-16">এখনো কোনো আলোচনা শুরু হয়নি।</div>
+            )}
           </div>
         </ScrollArea>
       </CardContent>

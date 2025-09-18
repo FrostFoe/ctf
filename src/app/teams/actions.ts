@@ -3,7 +3,6 @@
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 
-
 export async function createTeam(teamName: string, isPrivate: boolean) {
   const supabase = await createClient();
   const {
@@ -141,7 +140,9 @@ export async function leaveTeam(teamId: string) {
 
 export async function kickMember(teamId: string, memberId: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) {
     return { error: 'আপনাকে অবশ্যই লগইন করতে হবে।' };
   }
@@ -161,7 +162,6 @@ export async function kickMember(teamId: string, memberId: string) {
   revalidatePath('/teams');
   return { success: true };
 }
-
 
 export async function postTeamMessage(teamId: string, message: string) {
   const supabase = await createClient();
