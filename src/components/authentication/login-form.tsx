@@ -16,12 +16,20 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleLogin() {
+    if (!email || !password) {
+      toast({ description: 'ইমেইল এবং পাসওয়ার্ড উভয়ই প্রয়োজন', variant: 'destructive' });
+      return;
+    }
+
     setIsLoading(true);
-    const data = await login({ email, password });
+    const result = await login({ email, password });
     setIsLoading(false);
 
-    if (data?.error) {
-      toast({ description: 'অবৈধ ইমেইল বা পাসওয়ার্ড', variant: 'destructive' });
+    if (result?.error) {
+      toast({ 
+        description: result.message || 'অবৈধ ইমেইল বা পাসওয়ার্ড', 
+        variant: 'destructive' 
+      });
     }
   }
 

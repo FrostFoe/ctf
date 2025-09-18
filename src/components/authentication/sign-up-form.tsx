@@ -15,12 +15,30 @@ export function SignupForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleSignup() {
+    if (!email || !password) {
+      toast({ description: 'ইমেইল এবং পাসওয়ার্ড উভয়ই প্রয়োজন', variant: 'destructive' });
+      return;
+    }
+
+    if (password.length < 6) {
+      toast({ description: 'পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে', variant: 'destructive' });
+      return;
+    }
+
     setIsLoading(true);
-    const data = await signup({ email, password });
+    const result = await signup({ email, password });
     setIsLoading(false);
 
-    if (data?.error) {
-      toast({ description: 'কিছু একটা ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন', variant: 'destructive' });
+    if (result?.error) {
+      toast({ 
+        description: result.message || 'কিছু একটা ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন', 
+        variant: 'destructive' 
+      });
+    } else if (result?.success) {
+      toast({ 
+        description: result.message || 'সফলভাবে সাইন আপ হয়েছে!', 
+        variant: 'default' 
+      });
     }
   }
 
