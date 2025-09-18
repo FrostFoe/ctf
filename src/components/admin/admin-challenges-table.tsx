@@ -4,11 +4,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import type { Challenge } from '@/lib/database.types';
-import { ChallengeFormDialog } from './challenge-form-dialog';
 import { deleteChallenge } from '@/app/admin/actions';
 import { useToast } from '../ui/use-toast';
-import { Confirmation } from '../shared/confirmation/confirmation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import dynamic from 'next/dynamic';
+
+const ChallengeFormDialog = dynamic(() =>
+  import('@/app/admin/challenge-form-dialog').then((mod) => mod.ChallengeFormDialog),
+);
+const Confirmation = dynamic(() => import('../shared/confirmation/confirmation').then((mod) => mod.Confirmation));
 
 interface Props {
   initialChallenges: Challenge[];
@@ -117,22 +121,26 @@ export function AdminChallengesTable({ initialChallenges }: Props) {
         </CardContent>
       </Card>
 
-      <ChallengeFormDialog
-        challenge={selectedChallenge}
-        isOpen={isFormOpen}
-        onClose={handleCloseForm}
-        onSave={handleSave}
-      />
+      {isFormOpen && (
+        <ChallengeFormDialog
+          challenge={selectedChallenge}
+          isOpen={isFormOpen}
+          onClose={handleCloseForm}
+          onSave={handleSave}
+        />
+      )}
 
-      <Confirmation
-        isOpen={!!challengeToDelete}
-        onClose={() => setChallengeToDelete(null)}
-        onConfirm={handleDeleteConfirm}
-        title="আপনি কি নিশ্চিত?"
-        description={`আপনি "${challengeToDelete?.name}" চ্যালেঞ্জটি মুছে ফেলতে চলেছেন। এই ক্রিয়াটি ফিরিয়ে আনা যাবে না।`}
-        confirmText="নিশ্চিত করুন"
-        cancelText="বন্ধ করুন"
-      />
+      {challengeToDelete && (
+        <Confirmation
+          isOpen={!!challengeToDelete}
+          onClose={() => setChallengeToDelete(null)}
+          onConfirm={handleDeleteConfirm}
+          title="আপনি কি নিশ্চিত?"
+          description={`আপনি "${challengeToDelete?.name}" চ্যালেঞ্জটি মুছে ফেলতে চলেছেন। এই ক্রিয়াটি ফিরিয়ে আনা যাবে না।`}
+          confirmText="নিশ্চিত করুন"
+          cancelText="বন্ধ করুন"
+        />
+      )}
     </>
   );
 }

@@ -4,13 +4,19 @@ import { getAdminDashboardData } from '@/app/admin/actions';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AdminUsersTable } from '@/components/admin/admin-users-table';
 import { AdminTeamsTable } from '@/components/admin/admin-teams-table';
+import { createClient } from '@/utils/supabase/server';
 
 export default async function AdminPage() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { challenges, users, teams } = await getAdminDashboardData();
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
-      <DashboardPageHeader pageTitle={'অ্যাডমিন প্যানেল'} />
+      <DashboardPageHeader pageTitle={'অ্যাডমিন প্যানেল'} user={user} />
       <Tabs defaultValue="challenges">
         <TabsList className="grid w-full grid-cols-3 md:w-[500px]">
           <TabsTrigger value="challenges">চ্যালেঞ্জসমূহ</TabsTrigger>

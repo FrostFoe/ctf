@@ -32,11 +32,16 @@ async function getLeaderboardData(): Promise<{
 }
 
 export default async function HallOfFamePage() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { individual, team } = await getLeaderboardData();
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
-      <DashboardPageHeader pageTitle="হল অফ ফেইম" />
+      <DashboardPageHeader pageTitle="হল অফ ফেইম" user={user} />
       <Tabs defaultValue="individual">
         <TabsList className="grid w-full grid-cols-2 md:w-[400px]">
           <TabsTrigger value="individual">ব্যক্তিগত</TabsTrigger>

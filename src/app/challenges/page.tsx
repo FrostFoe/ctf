@@ -37,7 +37,7 @@ export default async function ChallengesPage() {
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
-      <DashboardPageHeader pageTitle={'চ্যালেঞ্জসমূহ'} />
+      <DashboardPageHeader pageTitle={'চ্যালেঞ্জসমূহ'} user={user} />
       <ChallengesList challenges={challenges} solvedChallengeIds={solvedChallengeIds} />
     </main>
   );

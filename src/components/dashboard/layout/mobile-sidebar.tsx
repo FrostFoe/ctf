@@ -5,11 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 import { Sidebar } from '@/components/dashboard/layout/sidebar';
 import { SidebarUserInfo } from '@/components/dashboard/layout/sidebar-user-info';
-import { useUserInfo } from '@/hooks/useUserInfo';
+import type { User } from '@supabase/supabase-js';
 
-export function MobileSidebar() {
-  const { user } = useUserInfo();
+interface Props {
+  user: User | null;
+}
 
+export function MobileSidebar({ user }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild>

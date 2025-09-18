@@ -71,7 +71,7 @@ async function getUserTeam(userId: string): Promise<TeamDetails | null> {
     role: 'admin' | 'member';
     profile: { username: string | null } | { username: string | null }[] | null;
   };
-  const rawMembers = teamData.members as unknown as RawMember[];
+  const rawMembers = teamData.members as RawMember[];
   const transformedMembers: TeamMember[] = (rawMembers || []).map((m) => {
     const profile = Array.isArray(m.profile) ? m.profile[0] : m.profile;
     return {
@@ -85,8 +85,8 @@ async function getUserTeam(userId: string): Promise<TeamDetails | null> {
   return { ...teamData, members: transformedMembers } as TeamDetails;
 }
 
-export default async function TeamsPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
-  const { page: pageParam } = await searchParams;
+export default async function TeamsPage({ searchParams }: { searchParams: { page?: string } }) {
+  const { page: pageParam } = searchParams;
   const supabase = await createClient();
   const {
     data: { user },
@@ -103,7 +103,7 @@ export default async function TeamsPage({ searchParams }: { searchParams: Promis
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
-      <DashboardPageHeader pageTitle="দলসমূহ" />
+      <DashboardPageHeader pageTitle="দলসমূহ" user={user} />
       <div className="grid gap-8">
         {userTeam ? (
           <TeamView team={userTeam} currentUserId={user.id} />

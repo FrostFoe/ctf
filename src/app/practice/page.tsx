@@ -41,7 +41,7 @@ export default async function PracticePage() {
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
-      <DashboardPageHeader pageTitle={'অনুশীলন ক্ষেত্র'} />
+      <DashboardPageHeader pageTitle={'অনুশীলন ক্ষেত্র'} user={user} />
       <p className="text-muted-foreground">
         এখানে আপনি র‍্যাঙ্কিংয়ের চাপ ছাড়াই আপনার দক্ষতা পরীক্ষা করতে পারেন। এই চ্যালেঞ্জগুলো আপনার অগ্রগতির উপর কোনো
         প্রভাব ফেলবে না।

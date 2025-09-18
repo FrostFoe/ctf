@@ -27,7 +27,7 @@ async function getDashboardData(userId?: string): Promise<{
     console.error('Error fetching user stats:', userStatsRes.error);
   }
 
-  const statsData = userStatsRes.data?.[0] || null;
+  const statsData = userStatsRes.data?.[0];
   let finalStats: UserStats | null = null;
 
   if (statsData) {
@@ -44,7 +44,7 @@ async function getDashboardData(userId?: string): Promise<{
 
   return {
     totalChallenges: totalChallengesRes.count ?? 0,
-    stats: finalStats as UserStats | null,
+    stats: finalStats,
   };
 }
 
@@ -57,7 +57,7 @@ export default async function LandingPage() {
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
-      <DashboardPageHeader pageTitle={'ড্যাশবোর্ড'} />
+      <DashboardPageHeader pageTitle={'ড্যাশবোর্ড'} user={user} />
       <DashboardLandingPage stats={stats} totalChallenges={totalChallenges} />
     </main>
   );

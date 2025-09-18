@@ -85,6 +85,7 @@ export default async function ChallengePage({ params }: { params: { id: string }
           fill
           className="object-cover"
           data-ai-hint="cybersecurity abstract"
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4 md:p-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">{challenge.name}</h1>
@@ -118,15 +119,15 @@ export default async function ChallengePage({ params }: { params: { id: string }
             </CardContent>
           </Card>
 
-          {challenge.resources && challenge.resources.length > 0 && (
+          {challenge.resources && Array.isArray(challenge.resources) && challenge.resources.length > 0 && (
             <Card className="bg-background/50 backdrop-blur-md">
               <CardHeader>
                 <CardTitle>রিসোর্সসমূহ</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
-                  {(challenge.resources as ChallengeResource[]).map((resource) => (
-                    <li key={resource.url}>
+                  {(challenge.resources as ChallengeResource[]).map((resource, index) => (
+                    <li key={index}>
                       <a
                         href={resource.url}
                         target="_blank"
