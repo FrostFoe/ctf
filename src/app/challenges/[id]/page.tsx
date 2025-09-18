@@ -6,8 +6,8 @@ import { BcoinIcon } from '@/components/shared/bcoin-icon';
 import { CircleCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ChallengeSubmissionForm } from '@/components/challenges/challenge-submission-form';
-import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
 import { HintDisplay } from '@/components/challenges/hint-display';
+import Image from 'next/image';
 
 async function getChallenge(id: string): Promise<Challenge | null> {
   const supabase = createClient();
@@ -49,6 +49,16 @@ const getDifficultyBadge = (difficulty: string) => {
   }
 };
 
+function stringToHash(str: string) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
+}
+
 export default async function ChallengePage({ params }: { params: { id: string } }) {
   const supabase = createClient();
   const {
@@ -62,12 +72,41 @@ export default async function ChallengePage({ params }: { params: { id: string }
   }
 
   const isSolved = await getIsSolved(user?.id, challenge.id);
+  const imageSeed = stringToHash(challenge.id);
 
   return (
-    <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
-      <DashboardPageHeader pageTitle={challenge.name} />
-      <div className="max-w-4xl mx-auto w-full grid md:grid-cols-2 gap-8">
-        <div className="space-y-6">
+    <main className="flex flex-1 flex-col">
+      <div className="relative h-80 w-full">
+        <Image
+          src={`https://picsum.photos/seed/${imageSeed}/1200/400`}
+          alt={challenge.name}
+          fill
+          className="object-cover"
+          data-ai-hint="cybersecurity abstract"
+        />
+        <div className="absolute inset-0 bg-black/60 flex flex-col justify-end p-4 md:p-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">{challenge.name}</h1>
+          <div className="flex items-center gap-4">
+            <span
+              className={cn(
+                'text-sm px-3 py-1.5 rounded-full whitespace-nowrap font-semibold',
+                challenge.difficulty === 'easy' && 'bg-green-900/80 text-green-300',
+                challenge.difficulty === 'medium' && 'bg-yellow-900/80 text-yellow-300',
+                challenge.difficulty === 'hard' && 'bg-red-900/80 text-red-300',
+              )}
+            >
+              {getDifficultyBadge(challenge.difficulty)}
+            </span>
+            <span className="font-semibold capitalize text-lg text-slate-300">{challenge.category}</span>
+            <span className="font-bold text-primary flex items-center gap-1 text-lg text-yellow-400">
+              <BcoinIcon /> {challenge.points}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto w-full grid md:grid-cols-3 gap-8 p-4 md:p-8">
+        <div className="md:col-span-2 space-y-6">
           <Card className="bg-background/50 backdrop-blur-md">
             <CardHeader>
               <CardTitle>চ্যালেঞ্জের বিবরণ</CardTitle>
@@ -93,36 +132,6 @@ export default async function ChallengePage({ params }: { params: { id: string }
           </Card>
         </div>
         <div className="space-y-6">
-          <Card className="bg-background/50 backdrop-blur-md">
-            <CardHeader>
-              <CardTitle>তথ্য</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">কঠিনতা</span>
-                <span
-                  className={cn(
-                    'text-sm px-2 py-1 rounded-full whitespace-nowrap font-semibold',
-                    challenge.difficulty === 'easy' && 'bg-green-900/50 text-green-300',
-                    challenge.difficulty === 'medium' && 'bg-yellow-900/50 text-yellow-300',
-                    challenge.difficulty === 'hard' && 'bg-red-900/50 text-red-300',
-                  )}
-                >
-                  {getDifficultyBadge(challenge.difficulty)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">বিভাগ</span>
-                <span className="font-semibold capitalize">{challenge.category}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">বিটকয়েন পুরস্কার</span>
-                <span className="font-bold text-primary flex items-center gap-1">
-                  <BcoinIcon /> {challenge.points}
-                </span>
-              </div>
-            </CardContent>
-          </Card>
           <Card className="bg-background/50 backdrop-blur-md">
             <CardHeader>
               <CardTitle>ফ্ল্যাগ জমা দিন</CardTitle>

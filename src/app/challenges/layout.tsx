@@ -11,7 +11,11 @@ async function AuthWrapper({ children }: Props) {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
 
-  return <DashboardLayout user={data.user}>{children}</DashboardLayout>;
+  return (
+    <DashboardLayout user={data.user} hasNoPadding>
+      {children}
+    </DashboardLayout>
+  );
 }
 
 export default function Layout({ children }: Props) {
