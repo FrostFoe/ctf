@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
@@ -43,28 +43,26 @@ export function ChallengesList({ challenges, solvedChallengeIds: initialSolvedId
 
   return (
     <>
-      <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {challenges.map((challenge, index) => {
           const isSolved = solvedChallengeIds.includes(challenge.id);
           return (
             <Card
               key={challenge.id}
-              className="overflow-hidden bg-background/50 backdrop-blur-[24px] border-border grid md:grid-cols-2 items-stretch"
+              className="overflow-hidden relative flex flex-col justify-end bg-background/50 backdrop-blur-[24px] border-border min-h-[400px]"
             >
-              <div className="relative min-h-[200px] md:min-h-0">
-                <Image
-                  src={`https://picsum.photos/seed/${index + 10}/400/400`}
-                  alt={challenge.name}
-                  fill
-                  className="object-cover"
-                  data-ai-hint="cybersecurity abstract"
-                />
-              </div>
-
-              <div className="p-6 flex flex-col justify-between">
+              <Image
+                src={`https://picsum.photos/seed/${index + 10}/600/800`}
+                alt={challenge.name}
+                fill
+                className="object-cover z-0 opacity-20"
+                data-ai-hint="cybersecurity abstract"
+              />
+              <div className="z-10 p-6 flex flex-col justify-end h-full">
+                <div className="flex-grow"></div>
                 <div>
                   <CardTitle className="text-2xl font-bold mb-2">{challenge.name}</CardTitle>
-                  <CardDescription className="text-secondary mb-4">{challenge.description}</CardDescription>
+                  <p className="text-secondary mb-4 line-clamp-2">{challenge.description}</p>
                 </div>
 
                 <div className="flex flex-col gap-4">
