@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { leaveTeam, kickMember } from '@/app/teams/actions';
 import { useToast } from '@/components/ui/use-toast';
 import Link from 'next/link';
+import { Input } from '../ui/input';
 
 interface TeamViewProps {
   team: TeamDetails;
@@ -21,6 +22,14 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
   const [memberToKick, setMemberToKick] = useState<TeamDetails['members'][0] | null>(null);
   const [hasCopied, setHasCopied] = useState(false);
   const { toast } = useToast();
+  const [siteUrl, setSiteUrl] = useState('');
+
+  useState(() => {
+    // Ensure window is defined (runs only on client side)
+    if (typeof window !== 'undefined') {
+      setSiteUrl(window.location.origin);
+    }
+  });
 
   const handleLeaveTeam = async () => {
     const result = await leaveTeam(team.id);
@@ -43,16 +52,18 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
     setMemberToKick(null);
   };
 
-  const handleCopyToken = () => {
-    if (team.join_token) {
-      navigator.clipboard.writeText(team.join_token);
+  const handleCopyInviteLink = () => {
+    if (team.join_token && siteUrl) {
+      const inviteLink = `${siteUrl}/teams/join?token=${team.join_token}`;
+      navigator.clipboard.writeText(inviteLink);
       setHasCopied(true);
-      toast({ description: 'যোগদান টোকেন কপি করা হয়েছে!' });
+      toast({ description: 'ইনভাইট লিঙ্ক কপি করা হয়েছে!' });
       setTimeout(() => setHasCopied(false), 2000);
     }
   };
 
   const isCurrentUserAdmin = team.members.some((m) => m.user_id === currentUserId && m.role === 'admin');
+  const inviteLink = team.join_token ? `${siteUrl}/teams/join?token=${team.join_token}` : '';
 
   return (
     <>
@@ -71,18 +82,16 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
         <CardContent className="space-y-6">
           {isCurrentUserAdmin && team.is_private && team.join_token && (
             <div className="p-4 bg-muted rounded-lg">
-              <h4 className="font-semibold mb-2">প্রাইভেট দলের টোকেন</h4>
+              <h4 className="font-semibold mb-2">প্রাইভেট দলের ইনভাইট লিঙ্ক</h4>
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <p className="font-mono text-sm bg-background p-2 rounded-md flex-grow break-all sm:break-normal">
-                  {team.join_token}
-                </p>
-                <Button variant="outline" onClick={handleCopyToken} className="w-full sm:w-auto">
+                <Input readOnly value={inviteLink} className="font-mono text-sm flex-grow" />
+                <Button variant="outline" onClick={handleCopyInviteLink} className="w-full sm:w-auto">
                   {hasCopied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
-                  {hasCopied ? 'কপি হয়েছে' : 'টোকেন কপি করুন'}
+                  {hasCopied ? 'কপি হয়েছে' : 'লিঙ্ক কপি করুন'}
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                এই টোকেনটি অন্যদের সাথে শেয়ার করে আপনার দলে যোগদানের জন্য আমন্ত্রণ জানান।
+                এই লিঙ্কটি অন্যদের সাথে শেয়ার করে আপনার দলে যোগদানের জন্য আমন্ত্রণ জানান।
               </p>
             </div>
           )}

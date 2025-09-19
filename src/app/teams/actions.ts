@@ -2,6 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export async function createTeam(teamName: string, isPrivate: boolean) {
   const supabase = await createClient();
@@ -90,6 +91,36 @@ export async function joinTeam(teamId: string, token: string | null) {
 
   revalidatePath('/teams');
   return { success: true };
+}
+
+export async function joinTeamByToken(token: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect('/login?next=/teams/join?token=' + token);
+  }
+
+  const { data: team, error: teamError } = await supabase
+    .from('teams')
+    .select('id')
+    .eq('join_token', token)
+    .eq('is_private', true)
+    .single();
+
+  if (teamError || !team) {
+    return { error: 'অবৈধ বা মেয়াদোত্তীর্ণ টোকেন।' };
+  }
+
+  const result = await joinTeam(team.id, token);
+
+  if (result.success) {
+    redirect('/teams');
+  }
+
+  return result;
 }
 
 export async function leaveTeam(teamId: string) {
