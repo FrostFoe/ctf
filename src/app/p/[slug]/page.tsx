@@ -1,11 +1,15 @@
 import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
-import type { Challenge, PublicProfile, SolvedChallenge } from '@/lib/database.types';
+import type { PublicProfile, SolvedChallenge } from '@/lib/database.types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Trophy, CheckCircle, Hash } from 'lucide-react';
 import { BcoinIcon } from '@/components/shared/bcoin-icon';
 import { cn, getDifficultyBadge } from '@/lib/utils';
 import Link from 'next/link';
+
+type SolvedChallengeFromRPC = Omit<SolvedChallenge, 'solved_at'> & {
+  solved_at: string;
+};
 
 async function getProfileData(slug: string): Promise<{
   profile: PublicProfile;
@@ -27,13 +31,8 @@ async function getProfileData(slug: string): Promise<{
   const userId = profileBySlug.id;
 
   const { data: solvedChallengesData, error: solvedChallengesError } = await supabase
-    .from('solved_challenges')
-    .select(
-      `
-      solved_at,
-      challenge:challenges(id, name, description, category, difficulty, points)
-    `,
-    )
+    .from('solved_challenges_with_details')
+    .select('*')
     .eq('user_id', userId)
     .order('solved_at', { ascending: false });
 
@@ -51,41 +50,10 @@ async function getProfileData(slug: string): Promise<{
     solved_challenges_count: profileBySlug.solved_challenges_count,
   };
 
-  type RawSolvedUnknown = {
-    solved_at: unknown;
-    challenge: unknown;
-  };
-
-  function isChallengeShape(v: unknown): v is SolvedChallenge {
-    if (typeof v !== 'object' || v === null) return false;
-    const obj = v as Record<string, unknown>;
-    return (
-      typeof obj.id === 'string' &&
-      typeof obj.name === 'string' &&
-      typeof obj.description === 'string' &&
-      (obj.category === 'beginner' || obj.category === 'hacker' || obj.category === 'practice') &&
-      (obj.difficulty === 'easy' || obj.difficulty === 'medium' || obj.difficulty === 'hard') &&
-      typeof obj.points === 'number'
-    );
-  }
-
-  const solvedChallenges: SolvedChallenge[] = (solvedChallengesData || [])
-    .map((item) => {
-      const chRaw = (item as RawSolvedUnknown).challenge;
-      const ch = Array.isArray(chRaw) ? chRaw[0] : chRaw;
-      if (!isChallengeShape(ch)) return null;
-      const solvedAt = (item as RawSolvedUnknown).solved_at;
-      return {
-        id: ch.id,
-        name: ch.name,
-        description: ch.description,
-        category: ch.category,
-        difficulty: ch.difficulty,
-        points: ch.points,
-        solved_at: typeof solvedAt === 'string' ? solvedAt : new Date(String(solvedAt)).toISOString(),
-      };
-    })
-    .filter((v): v is SolvedChallenge => v !== null);
+  const solvedChallenges: SolvedChallenge[] = (solvedChallengesData || []).map((item) => ({
+    ...item,
+    solved_at: item.solved_at,
+  }));
 
   return { profile, solvedChallenges };
 }

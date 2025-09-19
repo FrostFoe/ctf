@@ -101,8 +101,13 @@ export interface PublicProfile {
   solved_challenges_count: number;
 }
 
-export interface SolvedChallenge
-  extends Pick<Challenge, 'id' | 'name' | 'category' | 'difficulty' | 'points' | 'description'> {
+export interface SolvedChallenge {
+  id: string;
+  name: string;
+  description: string;
+  category: 'beginner' | 'hacker' | 'practice';
+  difficulty: 'easy' | 'medium' | 'hard';
+  points: number;
   solved_at: string;
 }
 
