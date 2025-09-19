@@ -46,7 +46,7 @@ export function LoginForm() {
         onPasswordChange={(password) => setPassword(password)}
       />
       <div className="w-full text-right">
-        <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
+        <Link href="/forgot-password" className="text-sm text-muted-foreground hover:text-primary">
           পাসওয়ার্ড ভুলে গেছেন?
         </Link>
       </div>
