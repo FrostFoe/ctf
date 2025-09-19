@@ -6,8 +6,7 @@ import { Button } from '@/components/ui/button';
 import { createClient } from '@/utils/supabase/client';
 import { purchaseHintAction } from '@/app/challenges/actions';
 import { useToast } from '@/components/ui/use-toast';
-import { Loader2, Lightbulb } from 'lucide-react';
-import { BcoinIcon } from '@/components/shared/bcoin-icon';
+import { Loader2, Lightbulb, Bitcoin } from 'lucide-react';
 
 interface Hint {
   id: number;
@@ -125,7 +124,7 @@ export function HintDisplay({ challengeId, userId }: HintDisplayProps) {
         ) : (
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1 font-bold text-lg">
-              মূল্য: <BcoinIcon className="h-5 w-5" /> {hint.cost}
+              মূল্য: <Bitcoin className="h-5 w-5" /> {hint.cost}
             </div>
             <Button onClick={handlePurchase} disabled={isPurchasing}>
               {isPurchasing ? (

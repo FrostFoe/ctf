@@ -3,7 +3,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { LeaderboardEntry } from '@/lib/database.types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BcoinIcon } from '@/components/shared/bcoin-icon';
+import { Bitcoin } from 'lucide-react';
 import Link from 'next/link';
 
 interface Props {
@@ -40,7 +40,7 @@ export function AdminUsersTable({ users }: Props) {
                     </TableCell>
                     <TableCell className="hidden md:table-cell">{user.email || 'N/A'}</TableCell>
                     <TableCell className="text-right font-bold text-primary flex items-center justify-end gap-1">
-                      <BcoinIcon />
+                      <Bitcoin />
                       {user.total_points}
                     </TableCell>
                   </TableRow>

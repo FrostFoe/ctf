@@ -3,11 +3,10 @@
 import { useState } from 'react';
 import type { TeamDetails, TeamMarketplaceItem } from '@/lib/database.types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BcoinIcon } from '@/components/shared/bcoin-icon';
 import { Button } from '@/components/ui/button';
 import { purchaseTeamItem } from '@/app/teams/actions';
 import { useToast } from '@/components/ui/use-toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Bitcoin } from 'lucide-react';
 
 interface TeamMarketplaceProps {
   team: TeamDetails;
@@ -44,7 +43,7 @@ export function TeamMarketplace({ team, items }: TeamMarketplaceProps) {
             </div>
             <div className="text-right">
               <div className="font-bold text-lg flex items-center gap-1 justify-end">
-                <BcoinIcon /> {item.cost}
+                <Bitcoin /> {item.cost}
               </div>
               <Button size="sm" onClick={() => handlePurchase(item.id)} disabled={isPurchasing !== null}>
                 {isPurchasing === item.id && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

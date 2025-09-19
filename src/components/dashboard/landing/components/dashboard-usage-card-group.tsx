@@ -1,7 +1,6 @@
-import { Target, Trophy, CheckCircle } from 'lucide-react';
+import { Target, Trophy, CheckCircle, Bitcoin } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import type { UserStats } from '@/lib/database.types';
-import { BcoinIcon } from '@/components/shared/bcoin-icon';
 
 interface DashboardUsageCardGroupProps {
   stats: UserStats | null;
@@ -17,7 +16,7 @@ export function DashboardUsageCardGroup({ stats, totalChallenges }: DashboardUsa
     },
     {
       title: 'খরচযোগ্য বিটকয়েন',
-      icon: <BcoinIcon />,
+      icon: <Bitcoin />,
       value: stats?.spendable_points ?? 0,
       change: 'আপনার বর্তমান ব্যালেন্স',
     },

@@ -2,14 +2,9 @@ import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import type { PublicProfile, SolvedChallenge } from '@/lib/database.types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Trophy, CheckCircle, Hash } from 'lucide-react';
-import { BcoinIcon } from '@/components/shared/bcoin-icon';
+import { Trophy, CheckCircle, Hash, Bitcoin } from 'lucide-react';
 import { cn, getDifficultyBadge } from '@/lib/utils';
 import Link from 'next/link';
-
-type SolvedChallengeFromRPC = Omit<SolvedChallenge, 'solved_at'> & {
-  solved_at: string;
-};
 
 async function getProfileData(slug: string): Promise<{
   profile: PublicProfile;
@@ -50,10 +45,7 @@ async function getProfileData(slug: string): Promise<{
     solved_challenges_count: profileBySlug.solved_challenges_count,
   };
 
-  const solvedChallenges: SolvedChallenge[] = (solvedChallengesData || []).map((item) => ({
-    ...item,
-    solved_at: item.solved_at,
-  }));
+  const solvedChallenges: SolvedChallenge[] = (solvedChallengesData as SolvedChallenge[]) || [];
 
   return { profile, solvedChallenges };
 }
@@ -94,7 +86,7 @@ export default async function PublicProfilePage({ params }: { params: { slug: st
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">মোট বিটকয়েন</CardTitle>
-              <BcoinIcon className="h-4 w-4 text-muted-foreground" />
+              <Bitcoin className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{profile.total_points}</div>
@@ -148,7 +140,7 @@ export default async function PublicProfilePage({ params }: { params: { slug: st
                         </span>
                         <span className="text-xs capitalize text-slate-300">{challenge.category}</span>
                         <span className="flex items-center gap-1 text-xs font-bold text-yellow-400">
-                          <BcoinIcon /> {challenge.points}
+                          <Bitcoin /> {challenge.points}
                         </span>
                         <p className="w-full pt-2 text-xs text-muted-foreground">
                           {new Date(challenge.solved_at).toLocaleDateString('bn-BD')}

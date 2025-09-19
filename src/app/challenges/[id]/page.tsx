@@ -2,8 +2,7 @@ import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import type { Challenge, ChallengeResource } from '@/lib/database.types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { BcoinIcon } from '@/components/shared/bcoin-icon';
-import { CircleCheck, Link as LinkIcon } from 'lucide-react';
+import { CircleCheck, Link as LinkIcon, Bitcoin } from 'lucide-react';
 import { cn, getDifficultyBadge } from '@/lib/utils';
 import { ChallengeSubmissionForm } from '@/components/challenges/challenge-submission-form';
 import { HintDisplay } from '@/components/challenges/hint-display';
@@ -88,7 +87,7 @@ export default async function ChallengePage({ params }: { params: { id: string }
             </span>
             <span className="text-base font-semibold capitalize text-slate-300 md:text-lg">{challenge.category}</span>
             <span className="flex items-center gap-1 text-base font-bold text-primary text-yellow-400 md:text-lg">
-              <BcoinIcon /> {challenge.points}
+              <Bitcoin /> {challenge.points}
             </span>
           </div>
         </div>

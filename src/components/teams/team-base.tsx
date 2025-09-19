@@ -6,7 +6,7 @@ import type { TeamDetails, TeamChatMessage, TeamMarketplaceItem } from '@/lib/da
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { createClient } from '@/utils/supabase/client';
-import { BcoinIcon } from '@/components/shared/bcoin-icon';
+import { Bitcoin } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 const TeamChat = dynamic(() => import('./team-chat').then((mod) => mod.TeamChat));
@@ -109,7 +109,7 @@ export function TeamBase({ initialTeam, currentUser }: TeamBaseProps) {
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground">দলের পয়েন্ট</span>
               <span className="font-bold text-primary flex items-center gap-1 text-lg">
-                <BcoinIcon /> {team.points}
+                <Bitcoin /> {team.points}
               </span>
             </div>
             <div className="space-y-2">

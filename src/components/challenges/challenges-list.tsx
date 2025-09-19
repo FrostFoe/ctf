@@ -7,7 +7,7 @@ import { cn, getDifficultyBadge } from '@/lib/utils';
 import type { Challenge } from '@/lib/database.types';
 import { useState } from 'react';
 import Link from 'next/link';
-import { BcoinIcon } from '@/components/shared/bcoin-icon';
+import { Bitcoin } from 'lucide-react';
 
 interface ChallengesListProps {
   challenges: Challenge[];
@@ -65,7 +65,7 @@ export function ChallengesList({ challenges, solvedChallengeIds: initialSolvedId
                       {getDifficultyBadge(challenge.difficulty)}
                     </span>
                     <span className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-full whitespace-nowrap backdrop-blur-sm bg-white/10">
-                      <BcoinIcon className="w-4 h-4" /> {challenge.points} পয়েন্ট
+                      <Bitcoin className="w-4 h-4" /> {challenge.points} পয়েন্ট
                     </span>
                   </div>
                   <Button asChild className="w-full mt-2" variant={'secondary'} disabled={isSolved}>

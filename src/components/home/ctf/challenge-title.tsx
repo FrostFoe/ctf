@@ -1,7 +1,7 @@
 import type { Challenge } from '@/lib/database.types';
 import Image from 'next/image';
 import { cn, getDifficultyBadge } from '@/lib/utils';
-import { BcoinIcon } from '@/components/shared/bcoin-icon';
+import { Bitcoin } from 'lucide-react';
 
 interface Props {
   tier: Challenge;
@@ -43,7 +43,7 @@ export function ChallengeTitle({ tier }: Props) {
           </div>
         )}
         <div className="flex items-center gap-1 text-primary font-bold">
-          <BcoinIcon />
+          <Bitcoin />
           <span>{points}</span>
         </div>
       </div>
