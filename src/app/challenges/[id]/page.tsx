@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import type { Challenge, ChallengeResource } from '@/lib/database.types';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { BcoinIcon } from '@/components/shared/bcoin-icon';
 import { CircleCheck, Link as LinkIcon } from 'lucide-react';
 import { cn, getDifficultyBadge } from '@/lib/utils';
@@ -64,7 +64,7 @@ export default async function ChallengePage({ params }: { params: { id: string }
 
   return (
     <main className="flex flex-1 flex-col">
-      <div className="relative h-64 md:h-80 w-full">
+      <div className="relative h-64 w-full md:h-80">
         <Image
           src={`https://picsum.photos/seed/${imageSeed}/1200/400`}
           alt={challenge.name}
@@ -73,12 +73,12 @@ export default async function ChallengePage({ params }: { params: { id: string }
           data-ai-hint="cybersecurity abstract"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4 md:p-8">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">{challenge.name}</h1>
+        <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 md:p-8">
+          <h1 className="mb-2 text-3xl font-bold text-white md:text-5xl">{challenge.name}</h1>
           <div className="flex flex-wrap items-center gap-2 md:gap-4">
             <span
               className={cn(
-                'text-xs md:text-sm px-3 py-1.5 rounded-full whitespace-nowrap font-semibold',
+                'whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold md:text-sm',
                 challenge.difficulty === 'easy' && 'bg-green-900/80 text-green-300',
                 challenge.difficulty === 'medium' && 'bg-yellow-900/80 text-yellow-300',
                 challenge.difficulty === 'hard' && 'bg-red-900/80 text-red-300',
@@ -86,16 +86,16 @@ export default async function ChallengePage({ params }: { params: { id: string }
             >
               {getDifficultyBadge(challenge.difficulty)}
             </span>
-            <span className="font-semibold capitalize text-base md:text-lg text-slate-300">{challenge.category}</span>
-            <span className="font-bold text-primary flex items-center gap-1 text-base md:text-lg text-yellow-400">
+            <span className="text-base font-semibold capitalize text-slate-300 md:text-lg">{challenge.category}</span>
+            <span className="flex items-center gap-1 text-base font-bold text-primary text-yellow-400 md:text-lg">
               <BcoinIcon /> {challenge.points}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto w-full grid md:grid-cols-3 gap-8 p-4 md:p-8">
-        <div className="md:col-span-2 space-y-6">
+      <div className="mx-auto grid w-full max-w-7xl gap-8 p-4 md:grid-cols-3 md:p-8">
+        <div className="space-y-6 md:col-span-2">
           <Card className="bg-background/50 backdrop-blur-md">
             <CardHeader>
               <CardTitle>চ্যালেঞ্জের বিবরণ</CardTitle>
@@ -118,10 +118,10 @@ export default async function ChallengePage({ params }: { params: { id: string }
                         href={resource.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                        className="flex items-center gap-3 rounded-lg bg-muted/50 p-3 transition-colors hover:bg-muted"
                       >
                         <LinkIcon className="h-5 w-5 text-primary" />
-                        <span className="text-foreground font-medium">{resource.name}</span>
+                        <span className="font-medium text-foreground">{resource.name}</span>
                       </a>
                     </li>
                   ))}
