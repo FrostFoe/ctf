@@ -1,7 +1,7 @@
 import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
 import { DashboardLandingPage } from '@/components/dashboard/landing/dashboard-landing-page';
 import { createClient } from '@/utils/supabase/server';
-import type { LeaderboardEntry, TeamLeaderboardEntry, UserStats } from '@/lib/database.types';
+import type { UserStats } from '@/lib/database.types';
 
 async function getDashboardData(userId?: string): Promise<{
   stats: UserStats | null;
@@ -15,7 +15,7 @@ async function getDashboardData(userId?: string): Promise<{
     .neq('category', 'practice');
 
   const userStatsPromise = userId
-    ? supabase.rpc('get_user_stats_with_profile', { user_uuid: userId })
+    ? supabase.rpc('get_user_stats_with_profile', { user_uuid: userId }).single()
     : Promise.resolve({ data: null, error: null });
 
   const [totalChallengesRes, userStatsRes] = await Promise.all([totalChallengesPromise, userStatsPromise]);
@@ -27,24 +27,9 @@ async function getDashboardData(userId?: string): Promise<{
     console.error('Error fetching user stats:', userStatsRes.error);
   }
 
-  const statsData = userStatsRes.data?.[0];
-  let finalStats: UserStats | null = null;
-
-  if (statsData) {
-    finalStats = {
-      user_id: statsData.user_id,
-      username: statsData.username,
-      total_points: statsData.total_points,
-      solved_challenges: statsData.solved_challenges,
-      rank: statsData.rank,
-      spendable_points: statsData.spendable_points,
-      full_name: statsData.full_name,
-    };
-  }
-
   return {
     totalChallenges: totalChallengesRes.count ?? 0,
-    stats: finalStats,
+    stats: userStatsRes.data as UserStats | null,
   };
 }
 

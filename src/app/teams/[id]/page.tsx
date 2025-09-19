@@ -4,8 +4,25 @@ import type { TeamDetails, TeamMember } from '@/lib/database.types';
 import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
 import { TeamBase } from '@/components/teams/team-base';
 
-async function getTeamDetails(teamId: string): Promise<TeamDetails | null> {
+async function getTeamDetails(teamId: string, userId: string): Promise<TeamDetails | null> {
   const supabase = await createClient();
+
+  // First, verify if the user is a member of the team
+  const { data: memberData, error: memberError } = await supabase
+    .from('team_members')
+    .select('team_id')
+    .match({ user_id: userId, team_id: teamId })
+    .single();
+
+  // If there's an error or the user is not a member, return null
+  if (memberError || !memberData) {
+    if (memberError && memberError.code !== 'PGRST116') {
+      console.error('Error checking team membership:', memberError);
+    }
+    return null;
+  }
+
+  // If the user is a member, fetch the full team details
   const { data: teamData, error: teamError } = await supabase
     .from('teams')
     .select(
@@ -57,15 +74,10 @@ export default async function TeamBasePage({ params }: { params: Promise<{ id: s
     redirect('/login');
   }
 
-  const team = await getTeamDetails(id);
+  const team = await getTeamDetails(id, user.id);
 
+  // If the user is not a member of the team, getTeamDetails returns null
   if (!team) {
-    notFound();
-  }
-
-  const isUserMember = team.members.some((member) => member.user_id === user.id);
-  if (!isUserMember) {
-    // Or show an "unauthorized" page
     notFound();
   }
 
