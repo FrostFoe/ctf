@@ -6,7 +6,6 @@ import { Sidebar } from '@/components/dashboard/layout/sidebar';
 import { SidebarUserInfo } from '@/components/dashboard/layout/sidebar-user-info';
 import type { User } from '@supabase/supabase-js';
 import { cn } from '@/lib/utils';
-import { MobileSidebar } from '@/components/dashboard/layout/mobile-sidebar';
 
 interface Props {
   children: ReactNode;
