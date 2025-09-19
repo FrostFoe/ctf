@@ -82,23 +82,10 @@ export function ChallengeSubmissionForm({ challenge, isSolved: initialIsSolved }
           disabled={isChecking || isSolved}
         />
       </div>
-      <div className="flex justify-between w-full">
-        {challenge.url ? (
-          <Button variant="outline" asChild>
-            <Link href={challenge.url} target="_blank">
-              রিসোর্স অ্যাক্সেস করুন
-            </Link>
-          </Button>
-        ) : (
-          <Button variant="outline" disabled>
-            কোনো রিসোর্স নেই
-          </Button>
-        )}
-        <Button type="submit" disabled={isChecking || isSolved}>
-          {isChecking && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {isChecking ? 'চেক করা হচ্ছে...' : 'ফ্ল্যাগ জমা দিন'}
-        </Button>
-      </div>
+      <Button type="submit" disabled={isChecking || isSolved} className="w-full">
+        {isChecking && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        {isChecking ? 'চেক করা হচ্ছে...' : 'ফ্ল্যাগ জমা দিন'}
+      </Button>
     </form>
   );
 }

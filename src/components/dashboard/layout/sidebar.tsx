@@ -1,6 +1,6 @@
 'use client';
 
-import { Home, ShieldCheck, UserCog, User as UserIcon, Users, Swords, Trophy } from 'lucide-react';
+import { Home, ShieldCheck, UserCog, User as UserIcon, Trophy } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -28,20 +28,9 @@ const sidebarItems: SidebarItem[] = [
     href: '/challenges',
   },
   {
-    title: 'অনুশীলন ক্ষেত্র',
-    icon: <Swords className="h-6 w-6" />,
-    href: '/practice',
-  },
-  {
     title: 'হল অফ ফেইম',
     icon: <Trophy className="h-6 w-6" />,
     href: '/hall-of-fame',
-  },
-  {
-    title: 'দল',
-    icon: <Users className="h-6 w-6" />,
-    href: '/teams',
-    authRequired: true,
   },
   {
     title: 'প্রোফাইল',

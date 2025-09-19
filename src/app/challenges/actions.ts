@@ -56,27 +56,3 @@ export async function checkFlag(challengeId: string, submittedFlag: string) {
     return { success: false, message: 'ভুল ফ্ল্যাগ। আবার চেষ্টা করুন।' };
   }
 }
-
-export async function purchaseHintAction(challengeId: string) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return { error: 'আপনাকে অবশ্যই লগইন করতে হবে।' };
-  }
-
-  const { error } = await supabase.rpc('purchase_hint', {
-    p_challenge_id: challengeId,
-    p_user_id: user.id,
-  });
-
-  if (error) {
-    console.error('Error purchasing hint:', error);
-    return { error: 'ইঙ্গিত কেনা যায়নি। আপনার কি যথেষ্ট পয়েন্ট আছে?' };
-  }
-
-  revalidatePath(`/challenges/${challengeId}`);
-  return { success: true, message: 'ইঙ্গিত সফলভাবে কেনা হয়েছে!' };
-}

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server';
-import type { Challenge, LeaderboardEntry, TeamLeaderboardEntry } from '@/lib/database.types';
+import type { Challenge, LeaderboardEntry } from '@/lib/database.types';
 import { ADMIN_EMAIL } from '@/constants';
 
 async function verifyAdmin() {
@@ -20,7 +20,6 @@ async function verifyAdmin() {
 export interface AdminData {
   challenges: Challenge[];
   users: LeaderboardEntry[];
-  teams: TeamLeaderboardEntry[];
 }
 
 export async function getAdminDashboardData(): Promise<AdminData> {
@@ -28,18 +27,15 @@ export async function getAdminDashboardData(): Promise<AdminData> {
 
   const challengesPromise = supabase.from('challenges').select('*').order('name', { ascending: true });
   const usersPromise = supabase.from('user_leaderboard').select('*').order('rank', { ascending: true });
-  const teamsPromise = supabase.from('team_leaderboard_table').select('*').order('rank', { ascending: true });
 
-  const [challengesRes, usersRes, teamsRes] = await Promise.all([challengesPromise, usersPromise, teamsPromise]);
+  const [challengesRes, usersRes] = await Promise.all([challengesPromise, usersPromise]);
 
   if (challengesRes.error) console.error('Error fetching challenges:', challengesRes.error);
   if (usersRes.error) console.error('Error fetching users:', usersRes.error);
-  if (teamsRes.error) console.error('Error fetching teams:', teamsRes.error);
 
   return {
     challenges: (challengesRes.data as Challenge[]) || [],
     users: (usersRes.data as LeaderboardEntry[]) || [],
-    teams: (teamsRes.data as TeamLeaderboardEntry[]) || [],
   };
 }
 

@@ -1,14 +1,16 @@
+'use client';
+
 import Link from 'next/link';
-import type { User } from '@supabase/supabase-js';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { MobileSidebar } from '@/components/dashboard/layout/mobile-sidebar';
+import type { User } from '@supabase/supabase-js';
 
-interface Props {
+interface HeaderProps {
   user: User | null;
 }
 
-export default function Header({ user }: Props) {
+export default function Header({ user }: HeaderProps) {
   return (
     <nav>
       <div className="mx-auto max-w-7xl relative px-6 md:px-8 py-[18px] flex items-center justify-between">

@@ -9,10 +9,7 @@ async function getDashboardData(userId?: string): Promise<{
 }> {
   const supabase = await createClient();
 
-  const totalChallengesPromise = supabase
-    .from('challenges')
-    .select('id', { count: 'exact', head: true })
-    .neq('category', 'practice');
+  const totalChallengesPromise = supabase.from('challenges').select('id', { count: 'exact', head: true });
 
   const userStatsPromise = userId
     ? supabase.rpc('get_user_stats_with_profile', { user_uuid: userId }).single()

@@ -20,7 +20,7 @@ const CTFCards = dynamic(() => import('@/components/home/ctf/ctf-cards').then((m
 interface Props {
   challenges: Challenge[];
 }
-export function Pricing({ challenges }: Props) {
+export function ChallengesSection({ challenges }: Props) {
   const [difficulty, setDifficulty] = useState('beginner');
   const [isClient, setIsClient] = useState(false);
 
@@ -31,11 +31,11 @@ export function Pricing({ challenges }: Props) {
   return (
     <div className="mx-auto max-w-7xl relative px-6 md:px-8 flex flex-col items-center justify-between">
       {isClient ? (
-        <>
+        <div className="w-full flex flex-col items-center">
           <Toggle difficulty={difficulty} setDifficulty={setDifficulty} />
           <Suspense
             fallback={
-              <div className="isolate mx-auto grid grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+              <div className="isolate mx-auto grid grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 w-full">
                 <Skeleton className="h-[400px] w-full" />
                 <Skeleton className="h-[400px] w-full" />
                 <Skeleton className="h-[400px] w-full" />
@@ -44,7 +44,7 @@ export function Pricing({ challenges }: Props) {
           >
             <CTFCards difficulty={difficulty} challenges={challenges} />
           </Suspense>
-        </>
+        </div>
       ) : (
         <div className="isolate mx-auto grid grid-cols-1 gap-8 lg:mx-0 lg:max-w-none md:grid-cols-2 lg:grid-cols-3 w-full mt-20">
           <Skeleton className="h-[400px] w-full" />

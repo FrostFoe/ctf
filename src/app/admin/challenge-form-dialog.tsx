@@ -15,9 +15,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { useState, useEffect, type ChangeEvent } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { addChallenge, updateChallenge } from '@/app/admin/actions';
-import type { Challenge } from '@/lib/database.types';
+import type { Challenge, ChallengeResource } from '@/lib/database.types';
 import { Switch } from '@/components/ui/switch';
 import { Select } from '@/components/shared/select/select';
+import { Trash } from 'lucide-react';
 
 interface Props {
   challenge: Challenge | null;
@@ -37,6 +38,7 @@ const INITIAL_STATE: Omit<Challenge, 'id'> = {
   points: 10,
   flag: '',
   url: '',
+  resources: [],
 };
 
 export function ChallengeFormDialog({ challenge, isOpen, onClose, onSave }: Props) {
@@ -66,6 +68,24 @@ export function ChallengeFormDialog({ challenge, isOpen, onClose, onSave }: Prop
     const { value } = e.target;
     const features = value.split('\n').filter((f) => f.trim() !== '');
     setFormData((prev) => ({ ...prev, features }));
+  };
+
+  const handleResourceChange = (index: number, field: keyof ChallengeResource, value: string) => {
+    const updatedResources = [...(formData.resources || [])];
+    updatedResources[index] = { ...updatedResources[index], [field]: value };
+    setFormData((prev) => ({ ...prev, resources: updatedResources }));
+  };
+
+  const addResource = () => {
+    setFormData((prev) => ({
+      ...prev,
+      resources: [...(prev.resources || []), { name: '', url: '' }],
+    }));
+  };
+
+  const removeResource = (index: number) => {
+    const updatedResources = (formData.resources || []).filter((_, i) => i !== index);
+    setFormData((prev) => ({ ...prev, resources: updatedResources }));
   };
 
   const handleSave = async () => {
@@ -131,6 +151,29 @@ export function ChallengeFormDialog({ challenge, isOpen, onClose, onSave }: Prop
               <Label htmlFor="icon">আইকন পাথ</Label>
               <Input id="icon" name="icon" value={formData.icon} onChange={handleChange} />
             </div>
+            <div className="space-y-4">
+              <Label>রিসোর্সসমূহ</Label>
+              {(formData.resources || []).map((resource, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <Input
+                    placeholder="রিসোর্সের নাম"
+                    value={resource.name}
+                    onChange={(e) => handleResourceChange(index, 'name', e.target.value)}
+                  />
+                  <Input
+                    placeholder="রিসোর্সের URL"
+                    value={resource.url}
+                    onChange={(e) => handleResourceChange(index, 'url', e.target.value)}
+                  />
+                  <Button variant="ghost" size="icon" onClick={() => removeResource(index)}>
+                    <Trash className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+              <Button variant="outline" size="sm" onClick={addResource}>
+                রিসোর্স যোগ করুন
+              </Button>
+            </div>
           </div>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -147,7 +190,7 @@ export function ChallengeFormDialog({ challenge, isOpen, onClose, onSave }: Prop
                 <Select
                   value={formData.category}
                   onChange={handleSelectChange('category')}
-                  options={['beginner', 'hacker', 'practice']}
+                  options={['beginner', 'hacker']}
                 />
               </div>
             </div>

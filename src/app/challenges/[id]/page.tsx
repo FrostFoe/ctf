@@ -2,11 +2,12 @@ import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import type { Challenge, ChallengeResource } from '@/lib/database.types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { CircleCheck, Link as LinkIcon, Bitcoin } from 'lucide-react';
+import { CircleCheck, Link as LinkIcon, Bitcoin, ArrowRight } from 'lucide-react';
 import { cn, getDifficultyBadge } from '@/lib/utils';
 import { ChallengeSubmissionForm } from '@/components/challenges/challenge-submission-form';
-import { HintDisplay } from '@/components/challenges/hint-display';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 async function getChallenge(id: string): Promise<Challenge | null> {
   const supabase = await createClient();
@@ -101,6 +102,13 @@ export default async function ChallengePage({ params }: { params: { id: string }
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">{challenge.description}</p>
+              {challenge.url && (
+                <Button asChild className="mt-4">
+                  <Link href={challenge.url} target="_blank" rel="noopener noreferrer">
+                    রিসোর্স অ্যাক্সেস করুন <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              )}
             </CardContent>
           </Card>
 
@@ -155,7 +163,6 @@ export default async function ChallengePage({ params }: { params: { id: string }
               <ChallengeSubmissionForm challenge={challenge} isSolved={isSolved} />
             </CardContent>
           </Card>
-          {!isSolved && user && <HintDisplay challengeId={challenge.id} userId={user.id} />}
         </div>
       </div>
     </main>
