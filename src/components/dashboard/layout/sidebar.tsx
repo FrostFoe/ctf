@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils';
 import type { User } from '@supabase/supabase-js';
 import type { JSX } from 'react';
 import { ADMIN_EMAIL } from '@/constants';
-import { SheetClose } from '@/components/ui/sheet';
 
 interface SidebarItem {
   title: string;
@@ -60,9 +59,10 @@ const sidebarItems: SidebarItem[] = [
 
 interface SidebarProps {
   user: User | null;
+  onLinkClick?: () => void;
 }
 
-export function Sidebar({ user }: SidebarProps) {
+export function Sidebar({ user, onLinkClick }: SidebarProps) {
   const pathname = usePathname();
 
   const filteredSidebarItems = sidebarItems.filter((item) => {
@@ -79,18 +79,18 @@ export function Sidebar({ user }: SidebarProps) {
     <nav className="flex flex-col grow justify-between items-start px-2 text-sm font-medium lg:px-4">
       <div className={'w-full'}>
         {filteredSidebarItems.map((item) => (
-          <SheetClose asChild key={item.title}>
-            <Link
-              href={item.href}
-              className={cn('flex items-center text-base gap-3 px-4 py-3 rounded-xxs dashboard-sidebar-items', {
-                'dashboard-sidebar-items-active':
-                  item.href === '/dashboard' ? pathname === item.href : pathname.startsWith(item.href),
-              })}
-            >
-              {item.icon}
-              {item.title}
-            </Link>
-          </SheetClose>
+          <Link
+            key={item.title}
+            href={item.href}
+            onClick={onLinkClick}
+            className={cn('flex items-center text-base gap-3 px-4 py-3 rounded-xxs dashboard-sidebar-items', {
+              'dashboard-sidebar-items-active':
+                item.href === '/dashboard' ? pathname === item.href : pathname.startsWith(item.href),
+            })}
+          >
+            {item.icon}
+            {item.title}
+          </Link>
         ))}
       </div>
     </nav>
