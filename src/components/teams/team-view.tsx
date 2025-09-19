@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Crown, User, Trash2, Copy, Check } from 'lucide-react';
-import { Confirmation } from '../shared/confirmation/confirmation';
+import { Confirmation } from '@/components/shared/confirmation/confirmation';
 import { useState } from 'react';
 import { leaveTeam, kickMember } from '@/app/teams/actions';
 import { useToast } from '@/components/ui/use-toast';

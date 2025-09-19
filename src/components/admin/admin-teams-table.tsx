@@ -2,8 +2,8 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { TeamLeaderboardEntry } from '@/lib/database.types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { BcoinIcon } from '../shared/bcoin-icon';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { BcoinIcon } from '@/components/shared/bcoin-icon';
 import { Users } from 'lucide-react';
 
 interface Props {

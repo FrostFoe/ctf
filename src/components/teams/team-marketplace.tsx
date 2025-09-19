@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import type { TeamDetails, TeamMarketplaceItem } from '@/lib/database.types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { BcoinIcon } from '../shared/bcoin-icon';
-import { Button } from '../ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { BcoinIcon } from '@/components/shared/bcoin-icon';
+import { Button } from '@/components/ui/button';
 import { purchaseTeamItem } from '@/app/teams/actions';
-import { useToast } from '../ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
 
 interface TeamMarketplaceProps {

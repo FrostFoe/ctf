@@ -5,9 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/utils/supabase/client';
 import { purchaseHintAction } from '@/app/challenges/actions';
-import { useToast } from '../ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import { Loader2, Lightbulb } from 'lucide-react';
-import { BcoinIcon } from '../shared/bcoin-icon';
+import { BcoinIcon } from '@/components/shared/bcoin-icon';
 
 interface Hint {
   id: number;

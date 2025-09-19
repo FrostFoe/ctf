@@ -5,14 +5,16 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import type { Challenge } from '@/lib/database.types';
 import { deleteChallenge } from '@/app/admin/actions';
-import { useToast } from '../ui/use-toast';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { useToast } from '@/components/ui/use-toast';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import dynamic from 'next/dynamic';
 
 const ChallengeFormDialog = dynamic(() =>
   import('@/app/admin/challenge-form-dialog').then((mod) => mod.ChallengeFormDialog),
 );
-const Confirmation = dynamic(() => import('../shared/confirmation/confirmation').then((mod) => mod.Confirmation));
+const Confirmation = dynamic(() =>
+  import('@/components/shared/confirmation/confirmation').then((mod) => mod.Confirmation),
+);
 
 interface Props {
   initialChallenges: Challenge[];

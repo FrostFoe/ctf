@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import type { Challenge } from '@/lib/database.types';
 import { useState } from 'react';
 import Link from 'next/link';
-import { BcoinIcon } from '../shared/bcoin-icon';
+import { BcoinIcon } from '@/components/shared/bcoin-icon';
 
 const getDifficultyBadge = (difficulty: string) => {
   switch (difficulty) {

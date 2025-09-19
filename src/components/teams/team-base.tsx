@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TeamChat } from './team-chat';
 import { TeamMarketplace } from './team-marketplace';
 import { createClient } from '@/utils/supabase/client';
-import { BcoinIcon } from '../shared/bcoin-icon';
+import { BcoinIcon } from '@/components/shared/bcoin-icon';
 
 interface TeamBaseProps {
   initialTeam: TeamDetails;
