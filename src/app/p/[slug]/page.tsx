@@ -1,22 +1,11 @@
 import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
-import type { Challenge } from '@/lib/database.types';
+import type { Challenge, PublicProfile, SolvedChallenge } from '@/lib/database.types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Trophy, CheckCircle, Hash } from 'lucide-react';
 import { BcoinIcon } from '@/components/shared/bcoin-icon';
-
-interface PublicProfile {
-  id: string;
-  username: string | null;
-  full_name: string | null;
-  total_points: number;
-  rank: number;
-  solved_challenges_count: number;
-}
-
-interface SolvedChallenge extends Pick<Challenge, 'id' | 'name' | 'category' | 'difficulty' | 'points'> {
-  solved_at: string;
-}
+import { cn, getDifficultyBadge } from '@/lib/utils';
+import Link from 'next/link';
 
 async function getProfileData(slug: string): Promise<{
   profile: PublicProfile;
@@ -42,7 +31,7 @@ async function getProfileData(slug: string): Promise<{
     .select(
       `
       solved_at,
-      challenge:challenges(id, name, category, difficulty, points)
+      challenge:challenges(id, name, description, category, difficulty, points)
     `,
     )
     .eq('user_id', userId)
@@ -62,21 +51,25 @@ async function getProfileData(slug: string): Promise<{
     solved_challenges_count: profileBySlug.solved_challenges_count,
   };
 
-  type RawSolvedUnknown = { solved_at: unknown; challenge: unknown };
+  type RawSolvedUnknown = {
+    solved_at: unknown;
+    challenge: unknown;
+  };
 
-  function isChallengeShape(v: unknown): v is Pick<Challenge, 'id' | 'name' | 'category' | 'difficulty' | 'points'> {
+  function isChallengeShape(v: unknown): v is SolvedChallenge {
     if (typeof v !== 'object' || v === null) return false;
     const obj = v as Record<string, unknown>;
     return (
       typeof obj.id === 'string' &&
       typeof obj.name === 'string' &&
+      typeof obj.description === 'string' &&
       (obj.category === 'beginner' || obj.category === 'hacker' || obj.category === 'practice') &&
       (obj.difficulty === 'easy' || obj.difficulty === 'medium' || obj.difficulty === 'hard') &&
       typeof obj.points === 'number'
     );
   }
 
-  const solvedChallenges: SolvedChallenge[] = ((solvedChallengesData as unknown as RawSolvedUnknown[]) || [])
+  const solvedChallenges: SolvedChallenge[] = (solvedChallengesData || [])
     .map((item) => {
       const chRaw = (item as RawSolvedUnknown).challenge;
       const ch = Array.isArray(chRaw) ? chRaw[0] : chRaw;
@@ -85,6 +78,7 @@ async function getProfileData(slug: string): Promise<{
       return {
         id: ch.id,
         name: ch.name,
+        description: ch.description,
         category: ch.category,
         difficulty: ch.difficulty,
         points: ch.points,
@@ -107,13 +101,13 @@ export default async function PublicProfilePage({ params }: { params: { slug: st
   const { profile, solvedChallenges } = data;
 
   return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 bg-background text-foreground min-h-screen">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="flex-1 space-y-4 bg-background p-4 pt-6 text-foreground md:p-8 min-h-screen">
+      <div className="mx-auto max-w-6xl space-y-8">
         <div className="flex flex-col items-center text-center">
-          <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mb-4">
+          <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-muted">
             <span className="text-4xl font-bold">{(profile.username || profile.full_name || 'U').charAt(0)}</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold">
+          <h1 className="text-3xl font-bold md:text-4xl">
             {profile.username || profile.full_name || 'অজানা ব্যবহারকারী'}
           </h1>
           {profile.username && profile.full_name && <p className="text-muted-foreground">{profile.full_name}</p>}
@@ -153,7 +147,7 @@ export default async function PublicProfilePage({ params }: { params: { slug: st
               <Hash className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-lg md:text-2xl font-bold truncate">{profile.id.substring(0, 8)}...</div>
+              <div className="truncate text-lg font-bold md:text-2xl">{profile.id.substring(0, 8)}...</div>
             </CardContent>
           </Card>
         </div>
@@ -165,31 +159,39 @@ export default async function PublicProfilePage({ params }: { params: { slug: st
           </CardHeader>
           <CardContent>
             {solvedChallenges.length > 0 ? (
-              <ul className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {solvedChallenges.map((challenge) => (
-                  <li
-                    key={challenge.id}
-                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
-                  >
-                    <div>
-                      <p className="font-semibold">{challenge.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        ক্যাটাগরি: {challenge.category} | কঠিনতা: {challenge.difficulty}
-                      </p>
-                    </div>
-                    <div className="text-left sm:text-right">
-                      <p className="font-bold text-primary flex items-center gap-1">
-                        <BcoinIcon /> {challenge.points}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(challenge.solved_at).toLocaleDateString('bn-BD')}
-                      </p>
-                    </div>
-                  </li>
+                  <Link href={`/challenges/${challenge.id}`} key={challenge.id}>
+                    <Card className="flex h-full flex-col justify-between transition-transform hover:scale-105 hover:bg-muted/50">
+                      <CardHeader>
+                        <CardTitle className="text-lg">{challenge.name}</CardTitle>
+                        <CardDescription className="line-clamp-2">{challenge.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex flex-wrap items-center gap-2">
+                        <span
+                          className={cn(
+                            'whitespace-nowrap rounded-full px-2 py-1 text-xs font-semibold',
+                            challenge.difficulty === 'easy' && 'bg-green-900/80 text-green-300',
+                            challenge.difficulty === 'medium' && 'bg-yellow-900/80 text-yellow-300',
+                            challenge.difficulty === 'hard' && 'bg-red-900/80 text-red-300',
+                          )}
+                        >
+                          {getDifficultyBadge(challenge.difficulty)}
+                        </span>
+                        <span className="text-xs capitalize text-slate-300">{challenge.category}</span>
+                        <span className="flex items-center gap-1 text-xs font-bold text-yellow-400">
+                          <BcoinIcon /> {challenge.points}
+                        </span>
+                        <p className="w-full pt-2 text-xs text-muted-foreground">
+                          {new Date(challenge.solved_at).toLocaleDateString('bn-BD')}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 ))}
-              </ul>
+              </div>
             ) : (
-              <p className="text-muted-foreground text-center">এখনও কোনো চ্যালেঞ্জ সমাধান করা হয়নি।</p>
+              <p className="text-center text-muted-foreground">এখনও কোনো চ্যালেঞ্জ সমাধান করা হয়নি।</p>
             )}
           </CardContent>
         </Card>

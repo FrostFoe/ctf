@@ -10,6 +10,12 @@ export interface Challenge {
   flag?: string;
   url?: string;
   points: number;
+  resources?: ChallengeResource[];
+}
+
+export interface ChallengeResource {
+  name: string;
+  url: string;
 }
 
 export interface LeaderboardEntry {
@@ -84,6 +90,20 @@ export interface TeamChatMessage {
   profile: {
     username: string | null;
   };
+}
+
+export interface PublicProfile {
+  id: string;
+  username: string | null;
+  full_name: string | null;
+  total_points: number;
+  rank: number;
+  solved_challenges_count: number;
+}
+
+export interface SolvedChallenge
+  extends Pick<Challenge, 'id' | 'name' | 'category' | 'difficulty' | 'points' | 'description'> {
+  solved_at: string;
 }
 
 export interface AdminData {
