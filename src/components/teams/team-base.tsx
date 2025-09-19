@@ -5,10 +5,12 @@ import type { User } from '@supabase/supabase-js';
 import type { TeamDetails, TeamChatMessage, TeamMarketplaceItem } from '@/lib/database.types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TeamChat } from './team-chat';
-import { TeamMarketplace } from './team-marketplace';
 import { createClient } from '@/utils/supabase/client';
 import { BcoinIcon } from '@/components/shared/bcoin-icon';
+import dynamic from 'next/dynamic';
+
+const TeamChat = dynamic(() => import('./team-chat').then((mod) => mod.TeamChat));
+const TeamMarketplace = dynamic(() => import('./team-marketplace').then((mod) => mod.TeamMarketplace));
 
 interface TeamBaseProps {
   initialTeam: TeamDetails;

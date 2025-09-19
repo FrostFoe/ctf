@@ -87,9 +87,7 @@ export interface TeamChatMessage {
   user_id: string;
   message: string;
   created_at: string;
-  profile: {
-    username: string | null;
-  };
+  profile: { username: string | null } | { username: string | null }[] | null;
 }
 
 export interface PublicProfile {

@@ -46,6 +46,14 @@ export function TeamChat({ messages, teamId, currentUser }: TeamChatProps) {
     }
   };
 
+  const getUsername = (profile: TeamChatMessage['profile']) => {
+    if (!profile) return 'অজানা';
+    if (Array.isArray(profile)) {
+      return profile[0]?.username || 'অজানা';
+    }
+    return profile.username || 'অজানা';
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -62,7 +70,7 @@ export function TeamChat({ messages, teamId, currentUser }: TeamChatProps) {
                   msg.user_id === currentUser.id ? 'ml-auto bg-primary text-primary-foreground' : 'bg-muted',
                 )}
               >
-                <div className="font-bold">{msg.profile.username || 'অজানা'}</div>
+                <div className="font-bold">{getUsername(msg.profile)}</div>
                 {msg.message}
                 <div className="text-xs self-end text-muted-foreground/80">
                   {new Date(msg.created_at).toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' })}
