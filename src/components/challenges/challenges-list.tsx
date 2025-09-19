@@ -3,24 +3,11 @@
 import { Card, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
+import { cn, getDifficultyBadge } from '@/lib/utils';
 import type { Challenge } from '@/lib/database.types';
 import { useState } from 'react';
 import Link from 'next/link';
 import { BcoinIcon } from '@/components/shared/bcoin-icon';
-
-const getDifficultyBadge = (difficulty: string) => {
-  switch (difficulty) {
-    case 'easy':
-      return 'সহজ';
-    case 'medium':
-      return 'মাঝারি';
-    case 'hard':
-      return 'কঠিন';
-    default:
-      return '';
-  }
-};
 
 interface ChallengesListProps {
   challenges: Challenge[];
