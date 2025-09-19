@@ -1,6 +1,6 @@
 import type { Challenge } from '@/lib/database.types';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
+import { cn, getDifficultyBadge } from '@/lib/utils';
 import { BcoinIcon } from '@/components/shared/bcoin-icon';
 
 interface Props {
@@ -9,19 +9,6 @@ interface Props {
 
 export function ChallengeTitle({ tier }: Props) {
   const { name, featured, icon, difficulty, points } = tier;
-
-  const getDifficultyBadge = (difficulty: string) => {
-    switch (difficulty) {
-      case 'easy':
-        return 'সহজ';
-      case 'medium':
-        return 'মাঝারি';
-      case 'hard':
-        return 'কঠিন';
-      default:
-        return '';
-    }
-  };
 
   return (
     <div

@@ -1,10 +1,10 @@
 import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import type { Challenge, ChallengeResource } from '@/lib/database.types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BcoinIcon } from '@/components/shared/bcoin-icon';
 import { CircleCheck, Link as LinkIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, getDifficultyBadge } from '@/lib/utils';
 import { ChallengeSubmissionForm } from '@/components/challenges/challenge-submission-form';
 import { HintDisplay } from '@/components/challenges/hint-display';
 import Image from 'next/image';
@@ -35,19 +35,6 @@ async function getIsSolved(userId: string | undefined, challengeId: string): Pro
 
   return !!data;
 }
-
-const getDifficultyBadge = (difficulty: string) => {
-  switch (difficulty) {
-    case 'easy':
-      return 'সহজ';
-    case 'medium':
-      return 'মাঝারি';
-    case 'hard':
-      return 'কঠিন';
-    default:
-      return '';
-  }
-};
 
 function stringToHash(str: string) {
   let hash = 0;
