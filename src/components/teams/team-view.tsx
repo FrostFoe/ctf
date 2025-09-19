@@ -5,12 +5,16 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Crown, User, Trash2, Copy, Check } from 'lucide-react';
-import { Confirmation } from '@/components/shared/confirmation/confirmation';
 import { useState } from 'react';
 import { leaveTeam, kickMember } from '@/app/teams/actions';
 import { useToast } from '@/components/ui/use-toast';
 import Link from 'next/link';
-import { Input } from '../ui/input';
+import { Input } from '@/components/ui/input';
+import dynamic from 'next/dynamic';
+
+const Confirmation = dynamic(() =>
+  import('@/components/shared/confirmation/confirmation').then((mod) => mod.Confirmation),
+);
 
 interface TeamViewProps {
   team: TeamDetails;
@@ -148,25 +152,29 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
         </CardFooter>
       </Card>
 
-      <Confirmation
-        isOpen={isLeaveConfirmOpen}
-        onClose={() => setIsLeaveConfirmOpen(false)}
-        onConfirm={handleLeaveTeam}
-        title="আপনি কি নিশ্চিত?"
-        description={`আপনি "${team.name}" দলটি ছেড়ে দিতে চলেছেন।`}
-        confirmText="নিশ্চিত করুন"
-        cancelText="বন্ধ করুন"
-      />
+      {isLeaveConfirmOpen && (
+        <Confirmation
+          isOpen={isLeaveConfirmOpen}
+          onClose={() => setIsLeaveConfirmOpen(false)}
+          onConfirm={handleLeaveTeam}
+          title="আপনি কি নিশ্চিত?"
+          description={`আপনি "${team.name}" দলটি ছেড়ে দিতে চলেছেন।`}
+          confirmText="নিশ্চিত করুন"
+          cancelText="বন্ধ করুন"
+        />
+      )}
 
-      <Confirmation
-        isOpen={!!memberToKick}
-        onClose={() => setMemberToKick(null)}
-        onConfirm={handleKickMember}
-        title="সদস্যকে বাদ দেবেন?"
-        description={`আপনি কি নিশ্চিত যে আপনি ${memberToKick?.username}-কে দল থেকে বাদ দিতে চান? এই ক্রিয়াটি ফিরিয়ে আনা যাবে না।`}
-        confirmText="নিশ্চিত করুন"
-        cancelText="বন্ধ করুন"
-      />
+      {memberToKick && (
+        <Confirmation
+          isOpen={!!memberToKick}
+          onClose={() => setMemberToKick(null)}
+          onConfirm={handleKickMember}
+          title="সদস্যকে বাদ দেবেন?"
+          description={`আপনি কি নিশ্চিত যে আপনি ${memberToKick?.username}-কে দল থেকে বাদ দিতে চান? এই ক্রিয়াটি ফিরিয়ে আনা যাবে না।`}
+          confirmText="নিশ্চিত করুন"
+          cancelText="বন্ধ করুন"
+        />
+      )}
     </>
   );
 }

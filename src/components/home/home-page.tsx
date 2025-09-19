@@ -5,10 +5,12 @@ import type { User } from '@supabase/supabase-js';
 import { LocalizationBanner } from '@/components/home/header/localization-banner';
 import Header from '@/components/home/header/header';
 import { HeroSection } from '@/components/home/hero-section/hero-section';
-import { Pricing } from '@/components/home/pricing/pricing';
 import { HomePageBackground } from '@/components/gradients/home-page-background';
-import { Footer } from '@/components/home/footer/footer';
 import type { Challenge } from '@/lib/database.types';
+import dynamic from 'next/dynamic';
+
+const Pricing = dynamic(() => import('@/components/home/pricing/pricing').then((mod) => mod.Pricing));
+const Footer = dynamic(() => import('@/components/home/footer/footer').then((mod) => mod.Footer));
 
 interface Props {
   user: User | null;
