@@ -13,14 +13,14 @@ const PAGE_SIZE = 20;
 interface LeaderboardTableProps {
   title: string;
   headers: string[];
-  data: any[];
-  renderRow: (item: any) => React.ReactNode;
+  data: LeaderboardEntry[];
+  renderRow: (item: LeaderboardEntry) => React.ReactNode;
   page: number;
   totalPages: number;
 }
 
 async function getLeaderboardData(page: number): Promise<{ data: LeaderboardEntry[]; count: number }> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const from = page * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
@@ -73,13 +73,14 @@ function LeaderboardTable({ title, headers, data, renderRow, page, totalPages }:
   );
 }
 
-export default async function HallOfFamePage({ searchParams }: { searchParams: { page?: string } }) {
+export default async function HallOfFamePage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const page = parseInt(searchParams.page || '0', 10);
+  const params = await searchParams;
+  const page = parseInt(params.page || '0', 10);
 
   if (page < 0) {
     notFound();

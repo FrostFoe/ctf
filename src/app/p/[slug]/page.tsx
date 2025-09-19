@@ -50,8 +50,8 @@ async function getProfileData(slug: string): Promise<{
   return { profile, solvedChallenges };
 }
 
-export default async function PublicProfilePage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function PublicProfilePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const data = await getProfileData(slug);
 
   if (!data) {

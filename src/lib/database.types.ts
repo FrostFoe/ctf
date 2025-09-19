@@ -7,10 +7,12 @@ export interface Challenge {
   featured: boolean;
   difficulty: 'easy' | 'medium' | 'hard';
   category: 'beginner' | 'hacker';
-  flag?: string;
+  flag: string; // Made required to match database
   points: number;
   url: string | null;
   resources: ChallengeResource[] | null;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface ChallengeResource {
@@ -41,6 +43,8 @@ export interface Profile {
   username: string | null;
   full_name: string | null;
   spendable_points: number;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface PublicProfile {
@@ -53,13 +57,14 @@ export interface PublicProfile {
 }
 
 export interface SolvedChallenge {
-  id: string;
+  user_id: string; // Added to match database view
+  solved_at: string;
+  id: string; // This is the challenge_id
   name: string;
   description: string;
   category: 'beginner' | 'hacker';
   difficulty: 'easy' | 'medium' | 'hard';
   points: number;
-  solved_at: string;
 }
 
 export interface AdminData {

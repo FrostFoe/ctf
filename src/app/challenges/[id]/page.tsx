@@ -46,8 +46,8 @@ function stringToHash(str: string) {
   return Math.abs(hash);
 }
 
-export default async function ChallengePage({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function ChallengePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const supabase = await createClient();
   const {
     data: { user },

@@ -237,7 +237,14 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
 **৪. Supabase ডাটাবেস সেটআপ করুন:**
-আপনার Supabase প্রজেক্টের SQL Editor-এ `supabase/schema.sql` ফাইলে থাকা সম্পূর্ণ স্কিমাটি রান করুন। এটি সমস্ত প্রয়োজনীয় টেবিল, ফাংশন এবং পলিসি তৈরি করবে।
+আপনার Supabase প্রজেক্টের SQL Editor-এ এখন শুধু একটিই ফাইল চালাতে হবে: `supabase/database_setup.sql`।
+
+```sql
+-- Supabase SQL Editor বা psql থেকে রান করুন
+\i supabase/database_setup.sql
+```
+
+এটি একবারেই সমস্ত টেবিল, ভিউ, ফাংশন, পলিসি, ট্রিগার, রিয়েলটাইম পাবলিকেশন, স্টোরেজ বাকেট এবং সিড ডাটা তৈরি করবে। পুনরায় চালালে কোনো ডুপ্লিকেট এরর হবে না (Idempotent design)।
 
 **৫. লোকাল সার্ভার চালান:**
 
