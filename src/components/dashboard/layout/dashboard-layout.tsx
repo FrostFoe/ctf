@@ -6,6 +6,7 @@ import { Sidebar } from '@/components/dashboard/layout/sidebar';
 import { SidebarUserInfo } from '@/components/dashboard/layout/sidebar-user-info';
 import type { User } from '@supabase/supabase-js';
 import { cn } from '@/lib/utils';
+import { MobileSidebar } from './mobile-sidebar';
 
 interface Props {
   children: ReactNode;
@@ -30,7 +31,12 @@ export function DashboardLayout({ children, user, hasNoPadding = false }: Props)
           </div>
         </div>
       </div>
-      <div className={cn('flex flex-col', !hasNoPadding && 'flex flex-1 flex-col gap-4 p-4 md:p-8')}>{children}</div>
+      <div className={cn('flex flex-col', !hasNoPadding && 'flex flex-1 flex-col gap-4 p-4 md:p-8')}>
+        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 md:hidden">
+          <MobileSidebar user={user} />
+        </header>
+        {children}
+      </div>
     </div>
   );
 }

@@ -24,26 +24,18 @@ async function getProfileData(slug: string): Promise<{
 } | null> {
   const supabase = await createClient();
 
-  // Try to fetch by username or ID using the new function
-  const { data: profileData, error: profileError } = await supabase
-    .rpc('get_profile_by_slug', { profile_slug: slug })
+  const { data: profileBySlug, error: slugError } = await supabase
+    .from('user_profile_overview')
+    .select('*')
+    .or(`username.eq.${slug},id.eq.${slug}`)
     .maybeSingle();
 
-  if (profileError || !profileData) {
-    console.error('Error fetching profile by username or id:', profileError);
+  if (slugError || !profileBySlug) {
+    console.error('Error fetching profile by slug:', slugError);
     return null;
   }
 
-  const typedProfileData = profileData as {
-    id: string;
-    username: string | null;
-    full_name: string | null;
-    total_points: number;
-    rank: number;
-    solved_challenges_count: number;
-  };
-
-  const userId = typedProfileData.id;
+  const userId = profileBySlug.id;
 
   const { data: solvedChallengesData, error: solvedChallengesError } = await supabase
     .from('solved_challenges')
@@ -62,12 +54,12 @@ async function getProfileData(slug: string): Promise<{
   }
 
   const profile: PublicProfile = {
-    id: typedProfileData.id,
-    username: typedProfileData.username,
-    full_name: typedProfileData.full_name,
-    total_points: typedProfileData.total_points,
-    rank: typedProfileData.rank,
-    solved_challenges_count: typedProfileData.solved_challenges_count,
+    id: profileBySlug.id,
+    username: profileBySlug.username,
+    full_name: profileBySlug.full_name,
+    total_points: profileBySlug.total_points,
+    rank: profileBySlug.rank,
+    solved_challenges_count: profileBySlug.solved_challenges_count,
   };
 
   type RawSolvedUnknown = { solved_at: unknown; challenge: unknown };

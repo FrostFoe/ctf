@@ -1,11 +1,13 @@
 'use client';
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 import { Sidebar } from '@/components/dashboard/layout/sidebar';
 import { SidebarUserInfo } from '@/components/dashboard/layout/sidebar-user-info';
 import type { User } from '@supabase/supabase-js';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface Props {
   user: User | null;
@@ -24,8 +26,20 @@ export function MobileSidebar({ user }: Props) {
         <SheetHeader>
           <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
         </SheetHeader>
-        <Sidebar user={user} />
-        <SidebarUserInfo user={user} />
+        <div className="flex h-full max-h-screen flex-col gap-2">
+          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+            <SheetClose asChild>
+              <Link href="/" className="flex items-center gap-2 font-semibold">
+                <Image src="/logo.png" width={32} height={32} alt="Logo" className="rounded-full" />
+                <span className="">ফ্রস্টফল CTF</span>
+              </Link>
+            </SheetClose>
+          </div>
+          <div className="flex-1">
+            <Sidebar user={user} />
+          </div>
+          <SidebarUserInfo user={user} />
+        </div>
       </SheetContent>
     </Sheet>
   );

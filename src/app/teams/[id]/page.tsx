@@ -71,7 +71,7 @@ export default async function TeamBasePage({ params }: { params: Promise<{ id: s
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
-      <DashboardPageHeader pageTitle={team.name} />
+      <DashboardPageHeader pageTitle={team.name} user={user} />
       <TeamBase initialTeam={team} currentUser={user} />
     </main>
   );

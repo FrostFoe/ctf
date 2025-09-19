@@ -1,7 +1,7 @@
 import { DashboardPageHeader } from '@/components/dashboard/layout/dashboard-page-header';
 import { DashboardLandingPage } from '@/components/dashboard/landing/dashboard-landing-page';
 import { createClient } from '@/utils/supabase/server';
-import type { UserStats } from '@/lib/database.types';
+import type { LeaderboardEntry, TeamLeaderboardEntry, UserStats } from '@/lib/database.types';
 
 async function getDashboardData(userId?: string): Promise<{
   stats: UserStats | null;
