@@ -18,7 +18,7 @@ export default async function AdminPage() {
     <main className="flex flex-1 flex-col gap-4 p-4 md:p-8">
       <DashboardPageHeader pageTitle={'অ্যাডমিন প্যানেল'} user={user} />
       <Tabs defaultValue="challenges">
-        <TabsList className="grid w-full grid-cols-3 md:w-[500px]">
+        <TabsList className="grid w-full grid-cols-3 md:max-w-md">
           <TabsTrigger value="challenges">চ্যালেঞ্জসমূহ</TabsTrigger>
           <TabsTrigger value="users">ব্যবহারকারীগণ</TabsTrigger>
           <TabsTrigger value="teams">দলসমূহ</TabsTrigger>

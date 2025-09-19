@@ -53,31 +53,33 @@ export default async function HallOfFamePage() {
               <CardTitle>সেরা প্রতিযোগী</CardTitle>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[80px]">র‍্যাঙ্ক</TableHead>
-                    <TableHead>ব্যবহারকারী</TableHead>
-                    <TableHead className="text-right">পয়েন্ট</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {individual.map((player) => (
-                    <TableRow key={player.user_id}>
-                      <TableCell className="font-bold">{player.rank}</TableCell>
-                      <TableCell>
-                        <Link href={`/p/${player.username || player.user_id}`} className="hover:underline">
-                          {player.username || 'অজানা'}
-                        </Link>
-                      </TableCell>
-                      <TableCell className="text-right font-bold text-primary flex items-center justify-end gap-1">
-                        <BcoinIcon />
-                        {player.total_points}
-                      </TableCell>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[80px]">র‍্যাঙ্ক</TableHead>
+                      <TableHead>ব্যবহারকারী</TableHead>
+                      <TableHead className="text-right">পয়েন্ট</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {individual.map((player) => (
+                      <TableRow key={player.user_id}>
+                        <TableCell className="font-bold">{player.rank}</TableCell>
+                        <TableCell>
+                          <Link href={`/p/${player.username || player.user_id}`} className="hover:underline">
+                            {player.username || 'অজানা'}
+                          </Link>
+                        </TableCell>
+                        <TableCell className="text-right font-bold text-primary flex items-center justify-end gap-1">
+                          <BcoinIcon />
+                          {player.total_points}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -87,32 +89,34 @@ export default async function HallOfFamePage() {
               <CardTitle>সেরা দল</CardTitle>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[80px]">র‍্যাঙ্ক</TableHead>
-                    <TableHead>দল</TableHead>
-                    <TableHead>সদস্য</TableHead>
-                    <TableHead className="text-right">পয়েন্ট</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {team.map((t) => (
-                    <TableRow key={t.team_id}>
-                      <TableCell className="font-bold">{t.rank}</TableCell>
-                      <TableCell>{t.team_name}</TableCell>
-                      <TableCell className="flex items-center gap-1">
-                        <Users size={16} />
-                        {t.member_count}
-                      </TableCell>
-                      <TableCell className="text-right font-bold text-primary flex items-center justify-end gap-1">
-                        <BcoinIcon />
-                        {t.total_points}
-                      </TableCell>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[80px]">র‍্যাঙ্ক</TableHead>
+                      <TableHead>দল</TableHead>
+                      <TableHead>সদস্য</TableHead>
+                      <TableHead className="text-right">পয়েন্ট</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {team.map((t) => (
+                      <TableRow key={t.team_id}>
+                        <TableCell className="font-bold">{t.rank}</TableCell>
+                        <TableCell>{t.team_name}</TableCell>
+                        <TableCell className="flex items-center gap-1">
+                          <Users size={16} />
+                          {t.member_count}
+                        </TableCell>
+                        <TableCell className="text-right font-bold text-primary flex items-center justify-end gap-1">
+                          <BcoinIcon />
+                          {t.total_points}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

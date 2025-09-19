@@ -2,15 +2,22 @@ import Link from 'next/link';
 import type { User } from '@supabase/supabase-js';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { MobileSidebar } from '@/components/dashboard/layout/mobile-sidebar';
+import { createClient } from '@/utils/supabase/server';
 
 interface Props {
   user: User | null;
 }
 
-export default function Header({ user }: Props) {
+export default async function Header({ user }: Props) {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getUser();
   return (
     <nav>
       <div className="mx-auto max-w-7xl relative px-6 md:px-8 py-[18px] flex items-center justify-between">
+        <div className="flex flex-1 items-center justify-start md:hidden">
+          <MobileSidebar user={data.user} />
+        </div>
         <div className="flex flex-1 items-center justify-start">
           <Link className="flex items-center" href={'/'}>
             <Image

@@ -104,8 +104,8 @@ async function getProfileData(slug: string): Promise<{
   return { profile, solvedChallenges };
 }
 
-export default async function PublicProfilePage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function PublicProfilePage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const data = await getProfileData(slug);
 
   if (!data) {
@@ -121,7 +121,9 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
           <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mb-4">
             <span className="text-4xl font-bold">{(profile.username || profile.full_name || 'U').charAt(0)}</span>
           </div>
-          <h1 className="text-4xl font-bold">{profile.username || profile.full_name || 'অজানা ব্যবহারকারী'}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold">
+            {profile.username || profile.full_name || 'অজানা ব্যবহারকারী'}
+          </h1>
           {profile.username && profile.full_name && <p className="text-muted-foreground">{profile.full_name}</p>}
         </div>
 
@@ -159,7 +161,7 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
               <Hash className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold truncate">{profile.id.substring(0, 8)}...</div>
+              <div className="text-lg md:text-2xl font-bold truncate">{profile.id.substring(0, 8)}...</div>
             </CardContent>
           </Card>
         </div>
@@ -173,14 +175,17 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
             {solvedChallenges.length > 0 ? (
               <ul className="space-y-4">
                 {solvedChallenges.map((challenge) => (
-                  <li key={challenge.id} className="flex justify-between items-center">
+                  <li
+                    key={challenge.id}
+                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
+                  >
                     <div>
                       <p className="font-semibold">{challenge.name}</p>
                       <p className="text-sm text-muted-foreground">
                         ক্যাটাগরি: {challenge.category} | কঠিনতা: {challenge.difficulty}
                       </p>
                     </div>
-                    <div className="text-right">
+                    <div className="text-left sm:text-right">
                       <p className="font-bold text-primary flex items-center gap-1">
                         <BcoinIcon /> {challenge.points}
                       </p>

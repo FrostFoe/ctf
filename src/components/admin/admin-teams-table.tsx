@@ -18,7 +18,7 @@ export function AdminTeamsTable({ teams }: Props) {
         <CardDescription>প্ল্যাটফর্মে থাকা সমস্ত দল এবং তাদের পরিসংখ্যান দেখুন।</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="border shadow-sm rounded-lg">
+        <div className="border shadow-sm rounded-lg overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>

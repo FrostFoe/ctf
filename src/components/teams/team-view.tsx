@@ -58,7 +58,7 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
     <>
       <Card>
         <CardHeader>
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <CardTitle className="text-2xl">{team.name}</CardTitle>
               <CardDescription>আপনার দলের সদস্য এবং তথ্য দেখুন।</CardDescription>
@@ -72,10 +72,13 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
           {isCurrentUserAdmin && team.is_private && team.join_token && (
             <div className="p-4 bg-muted rounded-lg">
               <h4 className="font-semibold mb-2">প্রাইভেট দলের টোকেন</h4>
-              <div className="flex items-center gap-4">
-                <p className="font-mono text-sm bg-background p-2 rounded-md flex-grow">{team.join_token}</p>
-                <Button variant="outline" size="icon" onClick={handleCopyToken}>
-                  {hasCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <p className="font-mono text-sm bg-background p-2 rounded-md flex-grow break-all sm:break-normal">
+                  {team.join_token}
+                </p>
+                <Button variant="outline" onClick={handleCopyToken} className="w-full sm:w-auto">
+                  {hasCopied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+                  {hasCopied ? 'কপি হয়েছে' : 'টোকেন কপি করুন'}
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
@@ -86,13 +89,13 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
 
           <div>
             <h3 className="font-semibold mb-2">সদস্যরা</h3>
-            <div className="border rounded-lg">
+            <div className="border rounded-lg overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>নাম</TableHead>
                     <TableHead>ভূমিকা</TableHead>
-                    {isCurrentUserAdmin && <TableHead className="text-right">פעולות</TableHead>}
+                    {isCurrentUserAdmin && <TableHead className="text-right">ক্রিয়াকলাপ</TableHead>}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -111,7 +114,12 @@ export function TeamView({ team, currentUserId }: TeamViewProps) {
                       {isCurrentUserAdmin && (
                         <TableCell className="text-right">
                           {member.user_id !== currentUserId && (
-                            <Button variant="outline" size="icon" onClick={() => setMemberToKick(member)}>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => setMemberToKick(member)}
+                              aria-label={`Kick ${member.username}`}
+                            >
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           )}

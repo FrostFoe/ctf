@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils';
 import { ChallengeSubmissionForm } from '@/components/challenges/challenge-submission-form';
 import { HintDisplay } from '@/components/challenges/hint-display';
 import Image from 'next/image';
-import Link from 'next/link';
 
 async function getChallenge(id: string): Promise<Challenge | null> {
   const supabase = await createClient();
@@ -78,7 +77,7 @@ export default async function ChallengePage({ params }: { params: { id: string }
 
   return (
     <main className="flex flex-1 flex-col">
-      <div className="relative h-80 w-full">
+      <div className="relative h-64 md:h-80 w-full">
         <Image
           src={`https://picsum.photos/seed/${imageSeed}/1200/400`}
           alt={challenge.name}
@@ -88,11 +87,11 @@ export default async function ChallengePage({ params }: { params: { id: string }
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4 md:p-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">{challenge.name}</h1>
-          <div className="flex items-center gap-4">
+          <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">{challenge.name}</h1>
+          <div className="flex flex-wrap items-center gap-2 md:gap-4">
             <span
               className={cn(
-                'text-sm px-3 py-1.5 rounded-full whitespace-nowrap font-semibold',
+                'text-xs md:text-sm px-3 py-1.5 rounded-full whitespace-nowrap font-semibold',
                 challenge.difficulty === 'easy' && 'bg-green-900/80 text-green-300',
                 challenge.difficulty === 'medium' && 'bg-yellow-900/80 text-yellow-300',
                 challenge.difficulty === 'hard' && 'bg-red-900/80 text-red-300',
@@ -100,8 +99,8 @@ export default async function ChallengePage({ params }: { params: { id: string }
             >
               {getDifficultyBadge(challenge.difficulty)}
             </span>
-            <span className="font-semibold capitalize text-lg text-slate-300">{challenge.category}</span>
-            <span className="font-bold text-primary flex items-center gap-1 text-lg text-yellow-400">
+            <span className="font-semibold capitalize text-base md:text-lg text-slate-300">{challenge.category}</span>
+            <span className="font-bold text-primary flex items-center gap-1 text-base md:text-lg text-yellow-400">
               <BcoinIcon /> {challenge.points}
             </span>
           </div>

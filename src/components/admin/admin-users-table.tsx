@@ -18,13 +18,13 @@ export function AdminUsersTable({ users }: Props) {
         <CardDescription>প্ল্যাটফর্মে থাকা সমস্ত ব্যবহারকারী এবং তাদের পরিসংখ্যান দেখুন।</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="border shadow-sm rounded-lg">
+        <div className="border shadow-sm rounded-lg overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[80px]">র‍্যাঙ্ক</TableHead>
                 <TableHead>ব্যবহারকারীর নাম</TableHead>
-                <TableHead>ইমেইল</TableHead>
+                <TableHead className="hidden md:table-cell">ইমেইল</TableHead>
                 <TableHead className="text-right">মোট পয়েন্ট</TableHead>
               </TableRow>
             </TableHeader>
@@ -38,7 +38,7 @@ export function AdminUsersTable({ users }: Props) {
                         {user.username || 'অজানা'}
                       </Link>
                     </TableCell>
-                    <TableCell>{user.email || 'N/A'}</TableCell>
+                    <TableCell className="hidden md:table-cell">{user.email || 'N/A'}</TableCell>
                     <TableCell className="text-right font-bold text-primary flex items-center justify-end gap-1">
                       <BcoinIcon />
                       {user.total_points}

@@ -65,7 +65,7 @@ export function AdminChallengesTable({ initialChallenges }: Props) {
   return (
     <>
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <CardTitle>চ্যালেঞ্জসমূহ</CardTitle>
             <CardDescription>এখানে চ্যালেঞ্জ যোগ, সম্পাদনা বা মুছে ফেলুন।</CardDescription>
@@ -73,7 +73,7 @@ export function AdminChallengesTable({ initialChallenges }: Props) {
           <Button onClick={handleAddClick}>নতুন চ্যালেঞ্জ যোগ করুন</Button>
         </CardHeader>
         <CardContent>
-          <div className="border shadow-sm rounded-lg">
+          <div className="border shadow-sm rounded-lg overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
